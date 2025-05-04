@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational App</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --background-light: #f8f9fa;
+            --text-light: #212529;
+            --card-light: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --border-light: #e9ecef;
+            
+            --background-dark: #121212;
+            --text-dark: #f8f9fa;
+            --card-dark: #1e1e1e;
+            --shadow-dark: rgba(255, 255, 255, 0.05);
+            --border-dark: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 16px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            margin-bottom: 24px;
+        }
+
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .theme-toggle {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.98);
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .main-menu {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .menu-card {
+            background-color: var(--card-light);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        body.dark-mode .menu-card {
+            background-color: var(--card-dark);
+            box-shadow: 0 4px 12px var(--shadow-dark);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px var(--shadow-light);
+        }
+
+        body.dark-mode .menu-card:hover {
+            box-shadow: 0 6px 16px var(--shadow-dark);
+        }
+
+        .menu-card h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .menu-card i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .chapter-list, .question-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .chapter-card, .question-card {
+            background-color: var(--card-light);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px var(--shadow-light);
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-light);
+        }
+
+        body.dark-mode .chapter-card,
+        body.dark-mode .question-card {
+            background-color: var(--card-dark);
+            box-shadow: 0 2px 8px var(--shadow-dark);
+            border: 1px solid var(--border-dark);
+        }
+
+        .chapter-card:hover, .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-light);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        body.dark-mode .chapter-card:hover,
+        body.dark-mode .question-card:hover {
+            box-shadow: 0 4px 12px var(--shadow-dark);
+            background-color: rgba(67, 97, 238, 0.15);
+        }
+
+        .chapter-card h3, .question-card h3 {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-bottom: 16px;
+        }
+
+        .screen-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question-content {
+            background-color: var(--card-light);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px var(--shadow-light);
+            margin-top: 24px;
+        }
+
+        body.dark-mode .question-content {
+            background-color: var(--card-dark);
+            box-shadow: 0 4px 12px var(--shadow-dark);
+        }
+
+        .question-section, .answer-section {
+            margin-bottom: 24px;
+        }
+
+        .question-section h3, .answer-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .question-text, .answer-text, .tutorial-text {
+            background-color: rgba(67, 97, 238, 0.05);
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        body.dark-mode .question-text,
+        body.dark-mode .answer-text,
+        body.dark-mode .tutorial-text {
+            background-color: rgba(67, 97, 238, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Material Icons */
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 24px;
+                max-width: 1024px;
+            }
+
+            .main-menu {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .chapter-list, .question-list {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="app-title">Educational App</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <span class="material-icons">dark_mode</span>
+                <span>Dark Mode</span>
+            </button>
+        </header>
+
+        <main>
+            <!-- Main Menu Screen -->
+            <div class="screen active" id="mainScreen">
+                <div class="main-menu">
+                    <div class="menu-card" id="questionsBtn">
+                        <h2>Questions</h2>
+                        <span class="material-icons">help_outline</span>
+                    </div>
+                    <div class="menu-card" id="tutorialsBtn">
+                        <h2>Tutorials</h2>
+                        <span class="material-icons">menu_book</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Chapters Screen -->
+            <div class="screen" id="questionsChaptersScreen">
+                <button class="back-button" id="backToMainFromQuestionsChapters">
+                    <span class="material-icons">arrow_back</span>
+                    Back
+                </button>
+                <h2 class="screen-title">
+                    <span class="material-icons">help_outline</span>
+                    Questions
+                </h2>
+                <div class="chapter-list" id="questionsChaptersList">
+                    <!-- Chapters will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Questions List Screen -->
+            <div class="screen" id="questionsListScreen">
+                <button class="back-button" id="backToQuestionsChapters">
+                    <span class="material-icons">arrow_back</span>
+                    Back to Chapters
+                </button>
+                <h2 class="screen-title" id="questionsListTitle">
+                    <span class="material-icons">help_outline</span>
+                    Chapter Questions
+                </h2>
+                <div class="question-list" id="questionsList">
+                    <!-- Questions will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Question Detail Screen -->
+            <div class="screen" id="questionDetailScreen">
+                <button class="back-button" id="backToQuestionsList">
+                    <span class="material-icons">arrow_back</span>
+                    Back to Questions
+                </button>
+                <h2 class="screen-title" id="questionDetailTitle">
+                    <span class="material-icons">help_outline</span>
+                    Question Detail
+                </h2>
+                <div class="question-content">
+                    <div class="question-section">
+                        <h3>Question</h3>
+                        <div class="question-text" id="questionText">
+                            The question will be placed here.
+                        </div>
+                    </div>
+                    <div class="answer-section">
+                        <h3>Answer</h3>
+                        <div class="answer-text" id="answerText">
+                            The answer will be placed here.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tutorials Chapters Screen -->
+            <div class="screen" id="tutorialsChaptersScreen">
+                <button class="back-button" id="backToMainFromTutorialsChapters">
+                    <span class="material-icons">arrow_back</span>
+                    Back
+                </button>
+                <h2 class="screen-title">
+                    <span class="material-icons">menu_book</span>
+                    Tutorials
+                </h2>
+                <div class="chapter-list" id="tutorialsChaptersList">
+                    <!-- Chapters will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Tutorial Detail Screen -->
+            <div class="screen" id="tutorialDetailScreen">
+                <button class="back-button" id="backToTutorialsChapters">
+                    <span class="material-icons">arrow_back</span>
+                    Back to Chapters
+                </button>
+                <h2 class="screen-title" id="tutorialDetailTitle">
+                    <span class="material-icons">menu_book</span>
+                    Tutorial
+                </h2>
+                <div class="question-content">
+                    <div class="tutorial-text" id="tutorialText">
+                        The tutorial link will be placed here.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // DOM Elements
+        const themeToggle = document.getElementById('themeToggle');
+        const questionsBtn = document.getElementById('questionsBtn');
+        const tutorialsBtn = document.getElementById('tutorialsBtn');
+        const backToMainFromQuestionsChapters = document.getElementById('backToMainFromQuestionsChapters');
+        const backToMainFromTutorialsChapters = document.getElementById('backToMainFromTutorialsChapters');
+        const backToQuestionsChapters = document.getElementById('backToQuestionsChapters');
+        const backToQuestionsList = document.getElementById('backToQuestionsList');
+        const backToTutorialsChapters = document.getElementById('backToTutorialsChapters');
+        const questionsChaptersList = document.getElementById('questionsChaptersList');
+        const tutorialsChaptersList = document.getElementById('tutorialsChaptersList');
+        const questionsList = document.getElementById('questionsList');
+        const questionText = document.getElementById('questionText');
+        const answerText = document.getElementById('answerText');
+        const tutorialText = document.getElementById('tutorialText');
+
+        // Navigation variables
+        let currentChapter = '';
+        let currentQuestion = '';
+        let currentTutorialChapter = '';
+
+        // Screens
+        const screens = {
+            mainScreen: document.getElementById('mainScreen'),
+            questionsChaptersScreen: document.getElementById('questionsChaptersScreen'),
+            questionsListScreen: document.getElementById('questionsListScreen'),
+            questionDetailScreen: document.getElementById('questionDetailScreen'),
+            tutorialsChaptersScreen: document.getElementById('tutorialsChaptersScreen'),
+            tutorialDetailScreen: document.getElementById('tutorialDetailScreen')
+        };
+
+        // Screen titles
+        const questionsListTitle = document.getElementById('questionsListTitle');
+        const questionDetailTitle = document.getElementById('questionDetailTitle');
+        const tutorialDetailTitle = document.getElementById('tutorialDetailTitle');
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            
+            themeToggle.innerHTML = isDarkMode ? 
+                '<span class="material-icons">light_mode</span><span>Light Mode</span>' : 
+                '<span class="material-icons">dark_mode</span><span>Dark Mode</span>';
+            
+            // Save theme preference
+            localStorage.setItem('darkMode', isDarkMode);
+        });
+
+        // Check for saved theme preference
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode === 'true') {
+            document.body.classList.add('dark-mode');
+            themeToggle.innerHTML = '<span class="material-icons">light_mode</span><span>Light Mode</span>';
+        }
+
+        // Navigation function
+        function showScreen(screenId) {
+            Object.values(screens).forEach(screen => {
+                screen.classList.remove('active');
+            });
+            screens[screenId].classList.add('active');
+        }
+
+        // Generate chapters for Questions
+        function generateQuestionsChapters() {
+            questionsChaptersList.innerHTML = '';
+            for (let i = 1; i <= 20; i++) {
+                const chapter = document.createElement('div');
+                chapter.className = 'chapter-card';
+                chapter.innerHTML = `<h3>Chapter ${i}</h3>`;
+                chapter.addEventListener('click', () => {
+                    currentChapter = `Chapter ${i}`;
+                    questionsListTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter}`;
+                    generateQuestions();
+                    showScreen('questionsListScreen');
+                });
+                questionsChaptersList.appendChild(chapter);
+            }
+        }
+
+        // Generate chapters for Tutorials
+        function generateTutorialsChapters() {
+            tutorialsChaptersList.innerHTML = '';
+            for (let i = 1; i <= 20; i++) {
+                const chapter = document.createElement('div');
+                chapter.className = 'chapter-card';
+                chapter.innerHTML = `<h3>Chapter ${i}</h3>`;
+                chapter.addEventListener('click', () => {
+                    currentTutorialChapter = `Chapter ${i}`;
+                    tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${currentTutorialChapter}`;
+                    tutorialText.textContent = `The tutorial link for ${currentTutorialChapter} will be placed here.`;
+                    showScreen('tutorialDetailScreen');
+                });
+                tutorialsChaptersList.appendChild(chapter);
+            }
+        }
+
+        // Generate questions
+        function generateQuestions() {
+            questionsList.innerHTML = '';
+            for (let i = 1; i <= 100; i++) {
+                const question = document.createElement('div');
+                question.className = 'question-card';
+                question.innerHTML = `<h3>Question ${i}</h3>`;
+                question.addEventListener('click', () => {
+                    currentQuestion = `Question ${i}`;
+                    questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter} - ${currentQuestion}`;
+                    questionText.textContent = `This is the placeholder for ${currentChapter} - ${currentQuestion}.`;
+                    answerText.textContent = `The answer for ${currentChapter} - ${currentQuestion} will be placed here.`;
+                    showScreen('questionDetailScreen');
+                });
+                questionsList.appendChild(question);
+            }
+        }
+
+        // Event Listeners
+        questionsBtn.addEventListener('click', () => {
+            generateQuestionsChapters();
+            showScreen('questionsChaptersScreen');
+        });
+
+        tutorialsBtn.addEventListener('click', () => {
+            generateTutorialsChapters();
+            showScreen('tutorialsChaptersScreen');
+        });
+
+        backToMainFromQuestionsChapters.addEventListener('click', () => {
+            showScreen('mainScreen');
+        });
+
+        backToMainFromTutorialsChapters.addEventListener('click', () => {
+            showScreen('mainScreen');
+        });
+
+        backToQuestionsChapters.addEventListener('click', () => {
+            showScreen('questionsChaptersScreen');
+        });
+
+        backToQuestionsList.addEventListener('click', () => {
+            showScreen('questionsListScreen');
+        });
+
+        backToTutorialsChapters.addEventListener('click', () => {
+            showScreen('tutorialsChaptersScreen');
+        });
+
+        // Initial setup
+        generateQuestionsChapters();
+        generateTutorialsChapters();
+    </script>
+</body>
+</html> 
