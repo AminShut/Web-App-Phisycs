@@ -8,17 +8,11 @@
         :root {
             --primary-color: #4361ee;
             --secondary-color: #3f37c9;
-            --background-light: #f8f9fa;
-            --text-light: #212529;
-            --card-light: #ffffff;
-            --shadow-light: rgba(0, 0, 0, 0.1);
-            --border-light: #e9ecef;
-            
-            --background-dark: #121212;
-            --text-dark: #f8f9fa;
-            --card-dark: #1e1e1e;
-            --shadow-dark: rgba(255, 255, 255, 0.05);
-            --border-dark: #2d2d2d;
+            --background-color: #f8f9fa;
+            --text-color: #212529;
+            --card-color: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-color: #e9ecef;
         }
 
         * {
@@ -26,17 +20,11 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
         }
 
         body {
-            background-color: var(--background-light);
-            color: var(--text-light);
-        }
-
-        body.dark-mode {
-            background-color: var(--background-dark);
-            color: var(--text-dark);
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
 
         .container {
@@ -48,7 +36,7 @@
 
         header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             padding: 16px 0;
             margin-bottom: 24px;
@@ -58,24 +46,6 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary-color);
-        }
-
-        .theme-toggle {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
-        }
-
-        .theme-toggle:active {
-            transform: scale(0.98);
         }
 
         .screen {
@@ -94,10 +64,10 @@
         }
 
         .menu-card {
-            background-color: var(--card-light);
+            background-color: var(--card-color);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 4px 12px var(--shadow-light);
+            box-shadow: 0 4px 12px var(--shadow-color);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -105,18 +75,9 @@
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        body.dark-mode .menu-card {
-            background-color: var(--card-dark);
-            box-shadow: 0 4px 12px var(--shadow-dark);
-        }
-
         .menu-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px var(--shadow-light);
-        }
-
-        body.dark-mode .menu-card:hover {
-            box-shadow: 0 6px 16px var(--shadow-dark);
+            box-shadow: 0 6px 16px var(--shadow-color);
         }
 
         .menu-card h2 {
@@ -137,33 +98,20 @@
         }
 
         .chapter-card, .question-card {
-            background-color: var(--card-light);
+            background-color: var(--card-color);
             border-radius: 12px;
             padding: 16px;
-            box-shadow: 0 2px 8px var(--shadow-light);
+            box-shadow: 0 2px 8px var(--shadow-color);
             cursor: pointer;
             text-align: center;
             transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid var(--border-light);
-        }
-
-        body.dark-mode .chapter-card,
-        body.dark-mode .question-card {
-            background-color: var(--card-dark);
-            box-shadow: 0 2px 8px var(--shadow-dark);
-            border: 1px solid var(--border-dark);
+            border: 1px solid var(--border-color);
         }
 
         .chapter-card:hover, .question-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-light);
+            box-shadow: 0 4px 12px var(--shadow-color);
             background-color: rgba(67, 97, 238, 0.05);
-        }
-
-        body.dark-mode .chapter-card:hover,
-        body.dark-mode .question-card:hover {
-            box-shadow: 0 4px 12px var(--shadow-dark);
-            background-color: rgba(67, 97, 238, 0.15);
         }
 
         .chapter-card h3, .question-card h3 {
@@ -195,16 +143,11 @@
         }
 
         .question-content {
-            background-color: var(--card-light);
+            background-color: var(--card-color);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 4px 12px var(--shadow-light);
+            box-shadow: 0 4px 12px var(--shadow-color);
             margin-top: 24px;
-        }
-
-        body.dark-mode .question-content {
-            background-color: var(--card-dark);
-            box-shadow: 0 4px 12px var(--shadow-dark);
         }
 
         .question-section, .answer-section {
@@ -224,12 +167,6 @@
             border-radius: 8px;
             font-size: 1rem;
             line-height: 1.5;
-        }
-
-        body.dark-mode .question-text,
-        body.dark-mode .answer-text,
-        body.dark-mode .tutorial-text {
-            background-color: rgba(67, 97, 238, 0.15);
         }
 
         @keyframes fadeIn {
@@ -281,10 +218,6 @@
     <div class="container">
         <header>
             <h1 class="app-title">Educational App</h1>
-            <button class="theme-toggle" id="themeToggle">
-                <span class="material-icons">dark_mode</span>
-                <span>Dark Mode</span>
-            </button>
         </header>
 
         <main>
@@ -394,7 +327,6 @@
 
     <script>
         // DOM Elements
-        const themeToggle = document.getElementById('themeToggle');
         const questionsBtn = document.getElementById('questionsBtn');
         const tutorialsBtn = document.getElementById('tutorialsBtn');
         const backToMainFromQuestionsChapters = document.getElementById('backToMainFromQuestionsChapters');
@@ -428,26 +360,6 @@
         const questionsListTitle = document.getElementById('questionsListTitle');
         const questionDetailTitle = document.getElementById('questionDetailTitle');
         const tutorialDetailTitle = document.getElementById('tutorialDetailTitle');
-
-        // Theme toggle
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-mode');
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            
-            themeToggle.innerHTML = isDarkMode ? 
-                '<span class="material-icons">light_mode</span><span>Light Mode</span>' : 
-                '<span class="material-icons">dark_mode</span><span>Dark Mode</span>';
-            
-            // Save theme preference
-            localStorage.setItem('darkMode', isDarkMode);
-        });
-
-        // Check for saved theme preference
-        const savedDarkMode = localStorage.getItem('darkMode');
-        if (savedDarkMode === 'true') {
-            document.body.classList.add('dark-mode');
-            themeToggle.innerHTML = '<span class="material-icons">light_mode</span><span>Light Mode</span>';
-        }
 
         // Navigation function
         function showScreen(screenId) {
