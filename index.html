@@ -72,7 +72,7 @@
         }
 
         .app-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: white;
             text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
@@ -82,18 +82,20 @@
 
         .app-subtitle {
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-align: center;
             margin-top: 5px;
             font-weight: 400;
+            position: relative;
+            z-index: 1;
         }
 
         .main-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             background: var(--gradient-2);
             border-radius: 16px;
-            padding: 25px 15px;
+            padding: 15px;
             box-shadow: 0 8px 20px var(--shadow-color), var(--border-glow);
             position: relative;
             overflow: hidden;
@@ -112,35 +114,35 @@
         }
 
         .main-header .app-logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
             background: var(--gradient-3);
-            border-radius: 20px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
         }
 
         .main-header .app-logo .material-icons {
-            font-size: 40px;
+            font-size: 30px;
             color: white;
         }
 
         .main-menu {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .main-actions {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 10px;
         }
 
         .action-button {
@@ -148,11 +150,11 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 15px 10px;
+            padding: 10px 5px;
             background: var(--card-bg-2);
-            border-radius: 12px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 6px 15px var(--shadow-color);
+            box-shadow: 0 4px 10px var(--shadow-color);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -164,14 +166,14 @@
         }
 
         .action-button .material-icons {
-            font-size: 28px;
+            font-size: 22px;
             color: var(--highlight);
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         .action-button span {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
@@ -213,11 +215,11 @@
         }
 
         .footer {
-            margin-top: 40px;
+            margin-top: 20px;
             text-align: center;
             color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            padding: 15px 0;
+            font-size: 0.8rem;
+            padding: 10px 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
@@ -448,12 +450,52 @@
                 max-width: 1024px;
             }
 
-            .main-menu {
-                grid-template-columns: 1fr 1fr;
+            .main-header {
+                padding: 20px;
+            }
+
+            .main-header .app-logo {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 15px;
+            }
+
+            .main-header .app-logo .material-icons {
+                font-size: 40px;
+            }
+
+            .app-title {
+                font-size: 1.8rem;
+            }
+
+            .app-subtitle {
+                font-size: 1rem;
             }
             
-            .main-actions {
-                grid-template-columns: repeat(3, 1fr);
+            .menu-card {
+                padding: 20px;
+                border-radius: 16px;
+            }
+            
+            .menu-card h2 {
+                font-size: 1.4rem;
+            }
+            
+            .menu-card .material-icons {
+                font-size: 2rem;
+                padding: 12px;
+            }
+            
+            .action-button {
+                padding: 15px 10px;
+            }
+            
+            .action-button .material-icons {
+                font-size: 28px;
+            }
+            
+            .action-button span {
+                font-size: 0.9rem;
             }
 
             .chapter-list {
@@ -478,8 +520,8 @@
         }
 
         .menu-card {
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -487,7 +529,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), var(--border-glow);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3), var(--border-glow);
         }
 
         .menu-card:nth-child(1) {
@@ -515,7 +557,7 @@
         }
 
         .menu-card h2 {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: 700;
             position: relative;
             z-index: 1;
@@ -524,14 +566,14 @@
         }
 
         .menu-card .material-icons {
-            font-size: 2rem;
+            font-size: 1.6rem;
             color: var(--text-light);
             background: rgba(255, 255, 255, 0.2);
-            padding: 12px;
+            padding: 8px;
             border-radius: 50%;
             position: relative;
             z-index: 1;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
         }
     </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
