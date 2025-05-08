@@ -19,6 +19,8 @@ let currentChapter = '';
 let currentQuestion = '';
 let currentTutorialChapter = '';
 let chaptersData = [];
+let currentQuestionIndex = 0;
+let chapterQuestions = [];
 
 // Load chapters data
 let foldersData = null;
@@ -175,6 +177,20 @@ function showScreen(screenId) {
     screens[screenId].classList.add('active');
 }
 
+// Update navigation buttons state
+function updateNavigationButtons() {
+    const prevQuestionBtn = document.getElementById('prevQuestionBtn');
+    const nextQuestionBtn = document.getElementById('nextQuestionBtn');
+    
+    if (chapterQuestions.length > 0) {
+        prevQuestionBtn.disabled = currentQuestionIndex <= 0;
+        nextQuestionBtn.disabled = currentQuestionIndex >= chapterQuestions.length - 1;
+    } else {
+        prevQuestionBtn.disabled = true;
+        nextQuestionBtn.disabled = true;
+    }
+}
+
 // Generate chapters for Questions
 function generateQuestionsChapters() {
     questionsChaptersList.innerHTML = '';
@@ -261,6 +277,7 @@ function generateTutorialsChapters() {
 // Generate questions
 function generateQuestions(chapter) {
     questionsList.innerHTML = '';
+    chapterQuestions = [];
     
     // Create a container for all questions
     const container = document.createElement('div');
@@ -280,18 +297,14 @@ function generateQuestions(chapter) {
                 return numB - numA; // Reverse order (high to low)
             });
             
-            sortedQuestions.forEach(q => {
+            chapterQuestions = sortedQuestions;
+            
+            sortedQuestions.forEach((q, index) => {
                 const question = document.createElement('div');
                 question.className = 'question-card';
                 question.innerHTML = `<h3>${q.name}</h3>`;
                 question.addEventListener('click', () => {
-                    currentQuestion = q.name;
-                    questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${chapter.name} - ${currentQuestion}`;
-                    
-                    const driveLink = `https://drive.google.com/file/d/${q.id}/view`;
-                    questionText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${currentQuestion} از ${chapter.name} اینجا کلیک کنید</a>`;
-                    
-                    showScreen('questionDetailScreen');
+                    showQuestionDetails(q, index, chapter);
                 });
                 container.appendChild(question);
             });
@@ -305,21 +318,51 @@ function generateQuestions(chapter) {
     } else {
         console.log("No chapter data, falling back to default questions");
         // Fallback to default 100 questions
+        const defaultQuestions = [];
         for (let i = 1; i <= 100; i++) {
+            defaultQuestions.push({
+                name: `سوال ${i}`,
+                id: null
+            });
+        }
+        
+        chapterQuestions = defaultQuestions;
+        
+        defaultQuestions.forEach((q, index) => {
             const question = document.createElement('div');
             question.className = 'question-card';
-            question.innerHTML = `<h3>سوال ${i}</h3>`;
+            question.innerHTML = `<h3>${q.name}</h3>`;
             question.addEventListener('click', () => {
-                currentQuestion = `سوال ${i}`;
-                questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter} - ${currentQuestion}`;
-                questionText.textContent = `لینک سوال برای ${currentChapter} - ${currentQuestion} در دسترس نیست.`;
-                showScreen('questionDetailScreen');
+                showQuestionDetails(q, index);
             });
             container.appendChild(question);
-        }
+        });
     }
     
     questionsList.appendChild(container);
+}
+
+// Show question details
+function showQuestionDetails(question, index, chapter) {
+    currentQuestionIndex = index;
+    currentQuestion = question.name;
+    
+    if (chapter) {
+        questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${chapter.name} - ${currentQuestion}`;
+        
+        if (question.id) {
+            const driveLink = `https://drive.google.com/file/d/${question.id}/view`;
+            questionText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${currentQuestion} از ${chapter.name} اینجا کلیک کنید</a>`;
+        } else {
+            questionText.textContent = `لینک سوال برای ${chapter.name} - ${currentQuestion} در دسترس نیست.`;
+        }
+    } else {
+        questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter} - ${currentQuestion}`;
+        questionText.textContent = `لینک سوال برای ${currentChapter} - ${currentQuestion} در دسترس نیست.`;
+    }
+    
+    updateNavigationButtons();
+    showScreen('questionDetailScreen');
 }
 
 // Event Listeners
@@ -359,6 +402,30 @@ backToQuestionsList.addEventListener('click', () => {
 
 backToTutorialsChapters.addEventListener('click', () => {
     showScreen('tutorialsChaptersScreen');
+});
+
+// Navigation buttons event listeners
+document.getElementById('prevQuestionBtn').addEventListener('click', () => {
+    if (currentQuestionIndex > 0 && chapterQuestions.length > 0) {
+        showQuestionDetails(chapterQuestions[currentQuestionIndex - 1], currentQuestionIndex - 1, currentChapter);
+    }
+});
+
+document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+    if (currentQuestionIndex < chapterQuestions.length - 1) {
+        showQuestionDetails(chapterQuestions[currentQuestionIndex + 1], currentQuestionIndex + 1, currentChapter);
+    }
+});
+
+document.getElementById('prevTutorialBtn').addEventListener('click', () => {
+    // Placeholder for tutorial navigation
+    // This would need to be implemented similarly to the question navigation
+    alert('آموزش قبلی در دسترس نیست');
+});
+
+document.getElementById('nextTutorialBtn').addEventListener('click', () => {
+    // Placeholder for tutorial navigation
+    alert('آموزش بعدی در دسترس نیست');
 });
 
 // Call the JSON loading function when the page loads
