@@ -496,13 +496,14 @@ main {
     }
 }
 
-/* Questions container - optimized for 5 columns */
+/* Questions container - always 5 columns except on very small screens */
 .questions-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     justify-content: center;
     padding: 8px;
+    margin: 0 auto;
 }
 
 /* Media queries for responsive questions grid layout */
@@ -1203,4 +1204,41 @@ main {
 .atom-orbit.orbit-3 {
     /* Removing these styles */
     display: none;
+}
+
+/* Questions container ID specific styles */
+#questionsList {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+}
+
+@media (min-width: 480px) {
+    #questionsList {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+@media (min-width: 640px) {
+    #questionsList {
+        grid-template-columns: repeat(4, 1fr) !important;
+    }
+}
+
+@media (min-width: 768px) {
+    #questionsList {
+        grid-template-columns: repeat(5, 1fr) !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    #questionsList {
+        grid-template-columns: repeat(5, 1fr) !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    #questionsList {
+        grid-template-columns: repeat(5, 1fr) !important;
+    }
 }

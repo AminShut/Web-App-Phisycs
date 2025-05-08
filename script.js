@@ -317,9 +317,6 @@ function generateQuestions(chapter) {
     questionsList.innerHTML = '';
     chapterQuestions = [];
     
-    // Create a container for all questions
-    const container = document.createElement('div');
-    
     if (chapter && chapter.subjects) {
         // Find questions subject
         const questionsSubject = chapter.subjects.find(subject => subject.name.includes("مسائل کتاب هالیدی"));
@@ -348,14 +345,14 @@ function generateQuestions(chapter) {
                 question.addEventListener('click', () => {
                     showQuestionDetails(q, index, chapter);
                 });
-                container.appendChild(question);
+                questionsList.appendChild(question);
             });
         } else {
             console.log("No questions found for chapter, falling back to default questions");
             const noQuestions = document.createElement('div');
             noQuestions.className = 'no-questions';
             noQuestions.textContent = `هیچ سوالی برای ${chapter.name} یافت نشد.`;
-            container.appendChild(noQuestions);
+            questionsList.appendChild(noQuestions);
         }
     } else {
         console.log("No chapter data, falling back to default questions");
@@ -382,11 +379,9 @@ function generateQuestions(chapter) {
             question.addEventListener('click', () => {
                 showQuestionDetails(q, index);
             });
-            container.appendChild(question);
+            questionsList.appendChild(question);
         });
     }
-    
-    questionsList.appendChild(container);
 }
 
 // Show question details
