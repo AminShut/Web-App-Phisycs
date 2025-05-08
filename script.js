@@ -213,7 +213,16 @@ function generateQuestionsChapters() {
     if (foldersData && foldersData.files && foldersData.files.length > 0) {
         console.log("Generating chapters from JSON data");
         // Use data from JSON file
-        foldersData.files.forEach((chapter, index) => {
+        
+        // Sort chapters by number (extract number from chapter name)
+        const sortedChapters = [...foldersData.files].sort((a, b) => {
+            // Extract numbers from chapter names (e.g., "فصل 3" -> 3)
+            const numA = parseInt(a.name.match(/\d+/)?.[0] || "0");
+            const numB = parseInt(b.name.match(/\d+/)?.[0] || "0");
+            return numA - numB; // Ascending order (low to high)
+        });
+        
+        sortedChapters.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
             chapterElement.innerHTML = `
@@ -263,9 +272,18 @@ function generateTutorialsChapters() {
     if (foldersData && foldersData.files && foldersData.files.length > 0) {
         console.log("Generating tutorial chapters from JSON data");
         // Use data from JSON file
-        tutorialChapters = foldersData.files;
         
-        foldersData.files.forEach((chapter, index) => {
+        // Sort chapters by number (extract number from chapter name)
+        const sortedChapters = [...foldersData.files].sort((a, b) => {
+            // Extract numbers from chapter names (e.g., "فصل 3" -> 3)
+            const numA = parseInt(a.name.match(/\d+/)?.[0] || "0");
+            const numB = parseInt(b.name.match(/\d+/)?.[0] || "0");
+            return numA - numB; // Ascending order (low to high)
+        });
+        
+        tutorialChapters = sortedChapters;
+        
+        sortedChapters.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
             chapterElement.innerHTML = `
@@ -328,7 +346,7 @@ function generateQuestions(chapter) {
                 // Extract numbers from question names (e.g., "سوال 45" -> 45)
                 const numA = parseInt(a.name.match(/\d+/)?.[0] || "0");
                 const numB = parseInt(b.name.match(/\d+/)?.[0] || "0");
-                return numB - numA; // Reverse order (high to low)
+                return numA - numB; // Ascending order (low to high)
             });
             
             chapterQuestions = sortedQuestions;
