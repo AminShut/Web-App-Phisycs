@@ -9,23 +9,37 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="title-container">
-                <h1 class="app-title">فیزیک هالیدی</h1>
-                <p class="app-subtitle">حل مسائل و آموزش‌های مبتنی بر کتاب فیزیک هالیدی</p>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-logo">
+            <div class="atom-logo">
+                <div class="orbit-1"></div>
+                <div class="orbit-2"></div>
+                <div class="orbit-3"></div>
             </div>
-        </header>
+            <div class="header-title">
+                <h1>فیزیک هالیدی</h1>
+                <p>حل مسائل و آموزش‌های مبتنی بر کتاب فیزیک هالیدی</p>
+            </div>
+        </div>
+        <div class="theme-toggle" id="themeToggle">
+            <span class="material-icons">dark_mode</span>
+        </div>
+    </header>
 
+    <div class="container">
         <main>
             <!-- Main Screen -->
             <div class="screen active" id="mainScreen">
                 <div class="main-header">
-                    <div class="app-logo">
-                        <span class="material-icons">science</span>
+                    <div class="physics-logo">
+                        <div class="nucleus"></div>
+                        <div class="electron-orbit orbit-a"></div>
+                        <div class="electron-orbit orbit-b"></div>
+                        <div class="electron-orbit orbit-c"></div>
                     </div>
                     <h1 class="app-title">فیزیک هالیدی</h1>
-                    <p class="app-subtitle">دانشگاه تربیت دبیر شهید رجایی</p>
+                    <p class="app-subtitle">آموزش و حل مسائل فیزیک</p>
                 </div>
                 
                 <div class="main-menu">
@@ -66,11 +80,14 @@
                     درباره ما
                 </h2>
                 <div class="about-section">
-                    <div class="about-logo">
-                        <span class="material-icons">school</span>
+                    <div class="physics-about-logo">
+                        <div class="atom-nucleus"></div>
+                        <div class="atom-orbit orbit-1"></div>
+                        <div class="atom-orbit orbit-2"></div>
+                        <div class="atom-orbit orbit-3"></div>
                     </div>
-                    <h2>دانشگاه تربیت دبیر شهید رجایی</h2>
-                    <p>این اپلیکیشن به منظور کمک به دانشجویان فیزیک و دانش‌آموزان علاقه‌مند به فیزیک طراحی شده است. در این برنامه، نمونه‌های حل شده‌ی مسائل کتاب فیزیک هالیدی به همراه آموزش‌های مربوطه ارائه شده است. این برنامه توسط دانشگاه تربیت دبیر شهید رجایی تهیه شده است.</p>
+                    <h2>آموزش و حل مسائل فیزیک</h2>
+                    <p>این اپلیکیشن به منظور کمک به دانشجویان فیزیک و دانش‌آموزان علاقه‌مند به فیزیک طراحی شده است. در این برنامه، نمونه‌های حل شده‌ی مسائل کتاب فیزیک هالیدی به همراه آموزش‌های مربوطه ارائه شده است.</p>
                 </div>
             </div>
 
@@ -154,6 +171,21 @@
             </div>
         </main>
     </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-logo">
+            <div class="footer-physics-icon">
+                <div class="footer-nucleus"></div>
+                <div class="footer-orbit footer-orbit-1"></div>
+                <div class="footer-orbit footer-orbit-2"></div>
+                <div class="footer-orbit footer-orbit-3"></div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            © 2025 فیزیک هالیدی. تمامی حقوق محفوظ است.
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

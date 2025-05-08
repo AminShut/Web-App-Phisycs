@@ -25,7 +25,23 @@ let foldersData = null;
 
 // Load JSON data using XMLHttpRequest instead of fetch
 function loadJSONData() {
-    // Try multiple file options in sequence
+    console.log("Attempting to load JSON data...");
+    
+    // First try loading from a global variable if it exists (used for inline JSON)
+    if (typeof window.inlineJsonData !== 'undefined' && window.inlineJsonData) {
+        console.log("Found inline JSON data, using it");
+        try {
+            foldersData = window.inlineJsonData;
+            console.log(`Found ${foldersData.files.length} chapters in inline JSON`);
+            generateQuestionsChapters();
+            generateTutorialsChapters();
+            return;
+        } catch (e) {
+            console.error("Error using inline JSON:", e);
+        }
+    }
+    
+    // Then try loading from files
     tryLoadingJSON('foolders_utf8.json', function(success) {
         if (!success) {
             tryLoadingJSON('foolders_fixed.json', function(success) {
@@ -52,13 +68,36 @@ function tryLoadingJSON(filename, callback) {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 try {
+                    // Check if response is empty
+                    if (!xhr.responseText || xhr.responseText.trim() === '') {
+                        console.error(`${filename} loaded but is empty`);
+                        callback(false);
+                        return;
+                    }
+                    
                     // Log response details for debugging
                     console.log(`Response received for ${filename}, length:`, xhr.responseText.length);
                     console.log(`First few characters:`, xhr.responseText.substring(0, 50));
                     
-                    // Parse JSON
-                    foldersData = JSON.parse(xhr.responseText);
-                    console.log(`JSON data loaded successfully from ${filename}`);
+                    // Check for BOM characters that might cause parsing issues
+                    const firstChar = xhr.responseText.charCodeAt(0);
+                    if (firstChar === 0xFEFF || firstChar === 0xEFBBBF) {
+                        console.warn(`BOM character detected in ${filename}, removing it`);
+                        // Remove BOM character
+                        const cleanText = xhr.responseText.slice(1);
+                        try {
+                            foldersData = JSON.parse(cleanText);
+                            console.log(`JSON data loaded successfully from ${filename} (after BOM removal)`);
+                        } catch(e) {
+                            console.error(`Error parsing JSON even after BOM removal from ${filename}:`, e);
+                            callback(false);
+                            return;
+                        }
+                    } else {
+                        // Parse JSON
+                        foldersData = JSON.parse(xhr.responseText);
+                        console.log(`JSON data loaded successfully from ${filename}`);
+                    }
                     
                     if (foldersData && foldersData.files && foldersData.files.length > 0) {
                         console.log(`Found ${foldersData.files.length} chapters in ${filename}`);
@@ -79,6 +118,16 @@ function tryLoadingJSON(filename, callback) {
                     }
                 } catch (e) {
                     console.error(`Error parsing JSON from ${filename}:`, e);
+                    // Show more details about the error
+                    if (e instanceof SyntaxError) {
+                        const errorPos = e.message.match(/position (\d+)/);
+                        if (errorPos && errorPos[1]) {
+                            const pos = parseInt(errorPos[1]);
+                            const start = Math.max(0, pos - 20);
+                            const end = Math.min(xhr.responseText.length, pos + 20);
+                            console.error(`JSON syntax error near: "${xhr.responseText.substring(start, end)}"`);
+                        }
+                    }
                     callback(false);
                 }
             } else {
@@ -312,5 +361,36 @@ backToTutorialsChapters.addEventListener('click', () => {
     showScreen('tutorialsChaptersScreen');
 });
 
-// Initial load
-loadJSONData();
+// Call the JSON loading function when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadJSONData();
+    
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('.material-icons');
+    
+    // Check for saved theme preference or use default dark theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+    
+    // Toggle theme when the button is clicked
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+    
+    // Function to set the theme
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Update icon based on theme
+        if (theme === 'dark') {
+            themeIcon.textContent = 'light_mode'; // Show light mode icon when in dark mode
+        } else {
+            themeIcon.textContent = 'dark_mode'; // Show dark mode icon when in light mode
+        }
+    }
+});
