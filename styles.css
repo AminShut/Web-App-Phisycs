@@ -1,53 +1,65 @@
 :root {
-    --primary-color: #3a0ca3;
-    --secondary-color: #4361ee;
-    --accent-color: #f72585;
-    --background-color: #0d1b2a;
-    --card-bg-1: #1b263b;
-    --card-bg-2: #415a77;
-    --card-bg-3: #778da9;
-    --text-color: #e0e1dd;
-    --text-light: #ffffff;
-    --header-text: #000000;
-    --highlight: #fb8500;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --border-glow: 0 0 10px rgba(67, 97, 238, 0.5);
-    --gradient-1: linear-gradient(135deg, #3a0ca3, #4361ee);
-    --gradient-2: linear-gradient(135deg, #f72585, #7209b7);
-    --gradient-3: linear-gradient(135deg, #4361ee, #4cc9f0);
-    --gradient-4: linear-gradient(135deg, #fb8500, #ffb703);
-    --gradient-5: linear-gradient(135deg, #8338ec, #3a86ff);
-    --section-bg: #1b263b;
-    --header-bg: #415a77;
-    --footer-bg: #0d1b2a;
-    --logo-orbit: #4361ee;
-    --logo-center: #f72585;
+    --primary-color: #7c3aed;  /* purple-700 */
+    --secondary-color: #4f46e5; /* indigo-600 */
+    --accent-color: #06b6d4;  /* cyan-500 */
+    --tertiary-color: #3b82f6;
+    --background-color: #f9fafb; /* gray-50 */
+    --card-bg-1: #ffffff;
+    --card-bg-2: #f1f5f9;
+    --card-bg-3: #e2e8f0;
+    --text-color: #1f2937; /* gray-800 */
+    --text-light: #f8fafc;
+    --header-text: #ffffff;
+    --highlight: #7c3aed;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --border-glow: 0 0 15px rgba(124, 58, 237, 0.3);
+    --gradient-1: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    --gradient-2: linear-gradient(135deg, #4f46e5, #4338ca);
+    --gradient-3: linear-gradient(135deg, #06b6d4, #0891b2);
+    --gradient-4: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    --gradient-5: linear-gradient(135deg, #4f46e5, #4338ca);
+    --section-bg: #ffffff;
+    --header-bg: linear-gradient(to right, #7c3aed, #4f46e5);
+    --footer-bg: #1f2937; /* gray-800 */
+    --logo-orbit: #8b5cf6;
+    --logo-center: #06b6d4;
+    --border-radius: 12px;
+    --card-radius: 10px;
+    --button-radius: 8px;
 }
 
-[data-theme="light"] {
-    --primary-color: #4361ee;
-    --secondary-color: #3a86ff;
-    --accent-color: #f72585;
-    --background-color: #f8f9fa;
-    --card-bg-1: #e9ecef;
-    --card-bg-2: #dee2e6;
-    --card-bg-3: #ced4da;
-    --text-color: #212529;
-    --text-light: #000000;
-    --header-text: #000000;
-    --highlight: #fb8500;
-    --shadow-color: rgba(0, 0, 0, 0.2);
-    --border-glow: 0 0 10px rgba(67, 97, 238, 0.3);
-    --gradient-1: linear-gradient(135deg, #e9ecef, #ced4da);
-    --gradient-2: linear-gradient(135deg, #ffccd5, #ffb3c1);
-    --gradient-3: linear-gradient(135deg, #caf0f8, #90e0ef);
-    --gradient-4: linear-gradient(135deg, #ffe8cc, #ffd8a8);
-    --gradient-5: linear-gradient(135deg, #d8bbff, #b8c0ff);
-    --section-bg: #ffffff;
-    --header-bg: #e9ecef;
-    --footer-bg: #f8f9fa;
-    --logo-orbit: #4361ee;
-    --logo-center: #f72585;
+[data-theme="dark"] {
+    --primary-color: #8b5cf6;  /* purple-500 */
+    --secondary-color: #6366f1; /* indigo-500 */
+    --accent-color: #0891b2;  /* cyan-600 */
+    --tertiary-color: #60a5fa;
+    --background-color: #1f2937; /* gray-800 */
+    --card-bg-1: #374151; /* gray-700 */
+    --card-bg-2: #4b5563; /* gray-600 */
+    --card-bg-3: #6b7280; /* gray-500 */
+    --text-color: #f9fafb; /* gray-50 */
+    --text-light: #f9fafb; /* gray-50 */
+    --header-text: #ffffff;
+    --highlight: #8b5cf6;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --border-glow: 0 0 15px rgba(139, 92, 246, 0.5);
+    --gradient-1: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    --gradient-2: linear-gradient(135deg, #6366f1, #4f46e5);
+    --gradient-3: linear-gradient(135deg, #0891b2, #0e7490);
+    --gradient-4: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    --gradient-5: linear-gradient(135deg, #6366f1, #4f46e5);
+    --section-bg: #374151;
+    --header-bg: linear-gradient(to right, #7c3aed, #4f46e5);
+    --footer-bg: #111827; /* gray-900 */
+    --logo-orbit: #8b5cf6;
+    --logo-center: #06b6d4;
+    --border-radius: 12px;
+    --card-radius: 10px;
+    --button-radius: 8px;
 }
 
 * {
@@ -59,9 +71,7 @@
 
 body {
     background-color: var(--background-color);
-    color: var(--text-light);
-    background-image: 
-        linear-gradient(to bottom, var(--background-color), var(--footer-bg));
+    color: var(--text-color);
     min-height: 100vh;
     direction: rtl;
     display: flex;
@@ -69,50 +79,65 @@ body {
     overflow-x: hidden;
 }
 
-/* Header Based on Image */
+/* Header */
 .app-header {
     width: 100%;
-    background-color: var(--header-bg);
-    padding: 10px 20px;
+    background: var(--header-bg);
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    color: var(--header-text);
 }
 
 .header-logo {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
 }
 
-/* Atom Logo - updated to match image */
+.header-title h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--header-text);
+}
+
+.header-title p {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.9;
+    color: var(--header-text);
+}
+
+/* Atom Logo */
 .atom-logo {
     position: relative;
-    width: 40px;
-    height: 40px;
-    background-color: #ffffff;
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: visible;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-[data-theme="light"] .atom-logo {
-    background-color: #ffffff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 /* Central dot */
 .atom-logo::before {
     content: "";
     position: absolute;
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     background-color: var(--logo-center);
     border-radius: 50%;
     z-index: 1;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
 }
 
 /* Atom orbits */
@@ -120,87 +145,38 @@ body {
 .atom-logo .orbit-2,
 .atom-logo .orbit-3 {
     position: absolute;
-    border: 1.5px solid var(--logo-orbit);
+    border: 1.2px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     animation: rotate 8s linear infinite;
 }
 
-/* Horizontal orbit */
 .atom-logo .orbit-1 {
-    width: 32px;
-    height: 20px;
-    animation-duration: 3s;
+    width: 45px;
+    height: 30px;
+    transform: rotateZ(30deg);
 }
 
-/* Vertical orbit */
 .atom-logo .orbit-2 {
-    width: 20px;
-    height: 32px;
-    animation-duration: 5s;
-    animation-direction: reverse;
+    width: 30px;
+    height: 45px;
+    transform: rotateZ(-30deg);
 }
 
-/* Diagonal orbit */
 .atom-logo .orbit-3 {
-    width: 26px;
-    height: 26px;
-    transform: rotate(45deg);
-    animation-duration: 7s;
+    width: 38px;
+    height: 38px;
 }
 
-.header-title {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.header-title h1 {
-    font-size: 1.4rem;
-    color: var(--header-text);
-    margin: 0;
-}
-
-.header-title p {
-    font-size: 0.8rem;
-    color: var(--header-text);
-    margin-top: 4px;
-    opacity: 0.9;
-}
-
-.theme-toggle {
-    background-color: #333;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-[data-theme="light"] .theme-toggle {
-    background-color: #ddd;
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
-}
-
-.theme-toggle .material-icons {
-    color: var(--text-light);
-    font-size: 1.2rem;
-}
-
-[data-theme="light"] .theme-toggle .material-icons {
-    color: #333;
-}
-
-/* Container Styles */
+/* Container */
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -215,103 +191,82 @@ main {
 .screen {
     display: none;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     flex: 1;
 }
 
 .screen.active {
     display: flex;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Main screen styles */
 .main-header {
-    background: var(--gradient-1);
-    padding: 30px;
-    border-radius: 20px;
-    margin-bottom: 30px;
+    background: var(--header-bg);
+    padding: 35px 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 10px 20px var(--shadow-color);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     position: relative;
     overflow: hidden;
 }
 
-/* Physics logo based on the image */
+.main-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 70%),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Physics logo */
 .physics-logo {
     position: relative;
     width: 80px;
     height: 80px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
 }
 
-.physics-logo .nucleus {
-    width: 25px;
-    height: 25px;
-    background-color: var(--logo-center);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-
-.physics-logo .electron-orbit {
-    position: absolute;
-    border: 2px solid var(--logo-orbit);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 8s linear infinite;
-}
-
-.physics-logo .orbit-a {
-    width: 60px;
-    height: 40px;
-    animation-duration: 3s;
-}
-
-.physics-logo .orbit-b {
-    width: 40px;
-    height: 60px;
-    transform: translate(-50%, -50%) rotate(60deg);
-    animation-duration: 5s;
-    animation-direction: reverse;
-}
-
-.physics-logo .orbit-c {
-    width: 50px;
-    height: 50px;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    animation-duration: 7s;
-}
-
 .app-title {
-    color: var(--text-light);
+    color: var(--header-text);
     font-size: 2.5rem;
     margin-bottom: 10px;
     text-align: center;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .app-subtitle {
-    color: var(--text-light);
+    color: var(--header-text);
     font-size: 1.2rem;
     margin-bottom: 10px;
     text-align: center;
+    opacity: 0.9;
 }
 
 /* Main menu and action buttons */
 .main-menu {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 16px;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -319,7 +274,7 @@ main {
 .main-actions {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 12px;
     margin-bottom: 20px;
     width: 100%;
     flex-wrap: wrap;
@@ -329,21 +284,34 @@ main {
 .main-menu .action-button {
     background: var(--gradient-2);
     padding: 15px 20px;
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     text-align: right;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.2s ease;
     display: flex;
     flex-direction: row-reverse;
     gap: 15px;
     align-items: center;
     justify-content: flex-start;
-    box-shadow: 0 5px 15px var(--shadow-color);
+    box-shadow: var(--card-shadow);
     color: var(--text-light);
     min-height: 80px;
     flex: 1;
     max-width: 48%;
     min-width: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-menu .action-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 70%);
+    pointer-events: none;
 }
 
 /* Make the first button different color */
@@ -360,21 +328,34 @@ main {
 .main-actions .action-button {
     background: var(--gradient-3);
     padding: 10px 15px;
-    border-radius: 10px;
+    border-radius: var(--button-radius);
     text-align: right;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.2s ease;
     display: flex;
     flex-direction: row-reverse;
     gap: 10px;
     align-items: center;
     justify-content: flex-start;
-    box-shadow: 0 5px 10px var(--shadow-color);
+    box-shadow: var(--card-shadow);
     color: var(--text-light);
     min-height: 60px;
     flex: 1;
     max-width: 32%;
     min-width: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-actions .action-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 70%);
+    pointer-events: none;
 }
 
 /* Different colors for each secondary button */
@@ -391,18 +372,20 @@ main {
 }
 
 .action-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px var(--shadow-color), var(--border-glow);
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
 }
 
 .main-menu .action-button span.material-icons {
     font-size: 2rem;
     margin-right: 0;
+    opacity: 0.9;
 }
 
 .main-actions .action-button span.material-icons {
     font-size: 1.5rem;
     margin-right: 0;
+    opacity: 0.9;
 }
 
 .main-menu .action-button span:not(.material-icons) {
@@ -415,261 +398,331 @@ main {
     font-weight: bold;
 }
 
-/* Physics Logo in About Section */
-.physics-about-logo {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-}
-
-.physics-about-logo .atom-nucleus {
-    width: 30px;
-    height: 30px;
-    background-color: var(--logo-center);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-
-.physics-about-logo .atom-orbit {
-    position: absolute;
-    border: 2px solid var(--logo-orbit);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 8s linear infinite;
-}
-
-.physics-about-logo .orbit-1 {
-    width: 70px;
-    height: 50px;
-    animation-duration: 3s;
-}
-
-.physics-about-logo .orbit-2 {
-    width: 50px;
-    height: 70px;
-    transform: translate(-50%, -50%) rotate(60deg);
-    animation-duration: 5s;
-    animation-direction: reverse;
-}
-
-.physics-about-logo .orbit-3 {
-    width: 60px;
-    height: 60px;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    animation-duration: 7s;
-}
-
-/* Footer Styles */
-.app-footer {
-    background-color: var(--footer-bg);
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-/* Footer logo container */
-.footer-logo {
-    margin-bottom: 10px;
-    position: relative;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Footer physics icon */
-.footer-physics-icon {
-    position: relative;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.footer-physics-icon .footer-nucleus {
-    width: 8px;
-    height: 8px;
-    background-color: var(--logo-center);
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-}
-
-.footer-physics-icon .footer-orbit {
-    position: absolute;
-    border: 1px solid var(--logo-orbit);
-    border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    animation: rotate 8s linear infinite;
-}
-
-.footer-physics-icon .footer-orbit-1 {
-    width: 20px;
-    height: 12px;
-    animation-duration: 3s;
-}
-
-.footer-physics-icon .footer-orbit-2 {
-    width: 12px;
-    height: 20px;
-    transform: translate(-50%, -50%) rotate(60deg);
-    animation-duration: 5s;
-}
-
-.footer-physics-icon .footer-orbit-3 {
-    width: 16px;
-    height: 16px;
-    transform: translate(-50%, -50%) rotate(-30deg);
-    animation-duration: 7s;
-}
-
-.footer-copyright {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
 /* Back Buttons */
 .back-button {
-    background-color: var(--card-bg-3);
+    background-color: var(--primary-color);
     border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
+    border-radius: var(--button-radius);
+    padding: 10px 18px;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.25s ease;
     color: var(--text-light);
-    font-size: 1rem;
-    margin-bottom: 15px;
+    font-size: 0.95rem;
+    margin-bottom: 14px;
     align-self: flex-start;
-    font-weight: bold;
+    font-weight: 600;
+    box-shadow: var(--card-shadow);
 }
 
 .back-button:hover {
-    background-color: var(--accent-color);
-    transform: translateY(-3px);
-}
-
-/* About Us Screen */
-.about-section {
-    background: var(--section-bg);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px var(--shadow-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.about-section h2 {
-    margin-bottom: 20px;
-    color: var(--text-light);
-}
-
-.about-section p {
-    line-height: 1.8;
-    font-size: 1.1rem;
-    color: var(--text-color);
-}
-
-@keyframes rotate {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
 }
 
 /* Screen Titles */
 .screen-title {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     background: var(--gradient-1);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    font-size: 1.8rem;
+    padding: 14px 18px;
+    border-radius: var(--border-radius);
+    margin-bottom: 18px;
+    font-size: 1.4rem;
     color: var(--text-light);
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.screen-title::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 70%);
+    pointer-events: none;
 }
 
 .screen-title .material-icons {
-    font-size: 2rem;
+    font-size: 1.6rem;
 }
 
-/* Chapter Lists */
+/* Chapter Lists - always 2 columns */
 .chapter-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
     justify-content: center;
+    padding: 8px;
 }
 
-.chapter-grid, .question-list {
+/* Media queries for responsive chapter grid layout - always keep 2 columns */
+@media (min-width: 640px) {
+    .chapter-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .chapter-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .chapter-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .chapter-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1536px) {
+    .chapter-list {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+}
+
+/* Questions container - optimized for 5 columns */
+.questions-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     justify-content: center;
+    padding: 8px;
 }
 
-.chapter-card, .question-card {
-    background: var(--gradient-2);
-    padding: 12px 10px;
-    border-radius: 8px;
+/* Media queries for responsive questions grid layout */
+@media (min-width: 480px) {
+    .questions-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 640px) {
+    .questions-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .questions-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .questions-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1280px) {
+    .questions-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media (min-width: 1536px) {
+    .questions-container {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+/* Enhanced Chapter Card */
+.chapter-card {
+    background: var(--card-bg-1);
+    padding: 24px 16px;
+    border-radius: var(--card-radius);
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    height: 100px;
-    box-shadow: 0 3px 10px var(--shadow-color);
+    height: auto;
+    min-height: 190px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    margin: 5px 0;
 }
 
-.chapter-card h3, .question-card h3 {
+.chapter-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-2);
+}
+
+.chapter-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(124, 58, 237, 0.05), transparent);
+    pointer-events: none;
+}
+
+.chapter-card .chapter-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    background: rgba(124, 58, 237, 0.1);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    position: relative;
+}
+
+.chapter-card .chapter-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.7;
+    }
+    70% {
+        transform: scale(1.1);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+}
+
+.chapter-card h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    line-height: 1.4;
+    position: relative;
+    font-weight: 600;
+    color: var(--text-color);
+    padding: 0 5px;
+}
+
+.chapter-card .chapter-description {
+    font-size: 0.8rem;
+    color: var(--text-color);
+    opacity: 0.7;
+    margin-top: 8px;
+}
+
+.chapter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+    border-color: rgba(124, 58, 237, 0.5);
+}
+
+/* Enhanced Question Card */
+.question-card {
+    background: var(--card-bg-1);
+    padding: 12px 8px;
+    border-radius: var(--card-radius);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    margin: 2px 0;
+}
+
+.question-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-3);
+}
+
+.question-card .question-icon {
+    font-size: 1.4rem;
+    color: var(--accent-color);
+    margin-bottom: 8px;
+    background: rgba(6, 182, 212, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.question-card .question-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(6, 182, 212, 0.1);
+    animation: pulse 2s infinite;
+}
+
+.question-card h3 {
     font-size: 0.95rem;
     margin: 0;
+    line-height: 1.3;
+    position: relative;
+    color: var(--text-color);
 }
 
-.chapter-card:hover, .question-card:hover {
+.question-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px var(--shadow-color), var(--border-glow);
+    box-shadow: var(--hover-shadow);
+    border-color: rgba(79, 70, 229, 0.5);
 }
 
 /* Content Sections */
 .question-content, .tutorial-content {
     background: var(--section-bg);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px var(--shadow-color);
+    padding: 24px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
     width: 100%;
     min-height: 250px;
     display: flex;
@@ -679,7 +732,7 @@ main {
 }
 
 .question-text, .tutorial-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.6;
     text-align: center;
     color: var(--text-color);
@@ -691,15 +744,16 @@ main {
     font-weight: bold;
     padding: 12px 20px;
     background: var(--card-bg-2);
-    border-radius: 8px;
+    border-radius: var(--button-radius);
     display: inline-block;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    box-shadow: var(--card-shadow);
 }
 
 .question-text a:hover, .tutorial-text a:hover {
     background: var(--card-bg-3);
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    box-shadow: var(--hover-shadow);
 }
 
 /* Navigation buttons for questions/tutorials */
@@ -713,21 +767,35 @@ main {
 .nav-button {
     background: var(--gradient-3);
     border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
+    border-radius: var(--button-radius);
+    padding: 12px 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.25s ease;
     color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: bold;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
 }
 
-.nav-button:hover {
+.nav-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.1), transparent 70%);
+    pointer-events: none;
+}
+
+.nav-button:hover:not(:disabled) {
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px var(--shadow-color);
+    box-shadow: var(--hover-shadow);
 }
 
 .nav-button:disabled {
@@ -741,21 +809,68 @@ main {
     flex-direction: row-reverse;
 }
 
-/* Screen Titles */
-.screen-title {
+/* Theme toggle */
+.theme-toggle {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: var(--gradient-1);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 1.5rem;
-    color: var(--text-light);
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.screen-title .material-icons {
-    font-size: 1.8rem;
+.theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+}
+
+.theme-toggle .material-icons {
+    color: var(--header-text);
+    font-size: 1.3rem;
+}
+
+/* Footer */
+.app-footer {
+    background-color: var(--footer-bg);
+    color: var(--text-light);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.footer-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.footer-icon {
+    font-size: 2rem;
+    color: var(--text-light);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.footer-icon .material-icons {
+    font-size: 2rem;
+    opacity: 0.9;
+}
+
+.footer-copyright {
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 /* Mobile Responsiveness */
@@ -771,16 +886,16 @@ main {
     .main-menu {
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 12px;
     }
     
     .main-actions {
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 8px;
     }
     
     .main-menu .action-button {
-        min-height: 70px;
+        min-height: 65px;
         max-width: 100%;
         width: 100%;
     }
@@ -791,64 +906,47 @@ main {
         max-width: 100%;
     }
     
-    .main-menu .action-button span.material-icons {
-        font-size: 1.8rem;
+    .chapter-list {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
     }
     
-    .main-actions .action-button span.material-icons {
-        font-size: 1.2rem;
+    #questionsList {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
     }
     
-    .main-menu .action-button span:not(.material-icons) {
+    .chapter-card {
+        height: 100px;
+    }
+    
+    .chapter-card h3 {
         font-size: 1rem;
     }
     
-    .main-actions .action-button span:not(.material-icons) {
-        font-size: 0.8rem;
-    }
-    
-    .header-title h1 {
-        font-size: 1.2rem;
-    }
-    
-    .header-title p {
-        font-size: 0.7rem;
-    }
-    
-    .physics-logo {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .physics-about-logo {
-        width: 80px;
+    .question-card {
         height: 80px;
     }
     
-    .chapter-grid, .question-list {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .chapter-card, .question-card {
-        height: 85px;
-        padding: 8px;
-    }
-    
-    .chapter-card h3, .question-card h3 {
-        font-size: 0.85rem;
+    .question-card h3 {
+        font-size: 0.9rem;
     }
     
     .screen-title {
         padding: 12px;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     
     .screen-title .material-icons {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
     .app-title {
         font-size: 1.6rem;
     }
@@ -866,44 +964,243 @@ main {
         max-width: 100%;
     }
     
-    .atom-logo {
-        width: 30px;
-        height: 30px;
+    .chapter-list {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 10px;
     }
     
-    .header-title h1 {
-        font-size: 1rem;
-    }
-    
-    .header-title p {
-        font-size: 0.6rem;
-    }
-    
-    .container {
-        padding: 10px;
-    }
-    
-    .chapter-grid, .question-list {
-        grid-template-columns: repeat(2, 1fr);
+    #questionsList {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
         gap: 8px;
     }
     
-    .chapter-card, .question-card {
-        height: 75px;
-        padding: 6px;
+    .chapter-card {
+        height: 90px;
+        padding: 12px;
     }
     
-    .chapter-card h3, .question-card h3 {
-        font-size: 0.8rem;
+    .question-card {
+        height: 70px;
+        padding: 8px;
     }
     
     .question-navigation, .tutorial-navigation {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
     }
     
     .nav-button {
         width: 100%;
         justify-content: center;
     }
+}
+
+/* After app-header styles */
+.search-container,
+.search-box,
+.search-box::placeholder,
+.search-box:focus {
+    /* Removing these styles */
+    display: none;
+}
+
+/* After physics-logo styles */
+.atom-core {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: var(--logo-center);
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+}
+
+.electron-orbit {
+    position: absolute;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+}
+
+.orbit-a {
+    width: 60px;
+    height: 40px;
+    transform: rotateZ(30deg);
+    animation: rotate-a 8s linear infinite;
+}
+
+.orbit-b {
+    width: 40px;
+    height: 60px;
+    transform: rotateZ(-30deg);
+    animation: rotate-b 6s linear infinite;
+}
+
+.orbit-c {
+    width: 50px;
+    height: 50px;
+    animation: rotate-c 10s linear infinite;
+}
+
+.electron {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: var(--text-light);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.electron-1 {
+    top: 0;
+    left: calc(50% - 4px);
+    animation: orbit-1 8s linear infinite;
+}
+
+.electron-2 {
+    bottom: 16px;
+    right: 8px;
+    animation: orbit-2 6s linear infinite;
+}
+
+.electron-3 {
+    bottom: 16px;
+    left: 8px;
+    animation: orbit-3 10s linear infinite;
+}
+
+@keyframes rotate-a {
+    0% { transform: rotateZ(30deg) rotateX(0deg); }
+    100% { transform: rotateZ(30deg) rotateX(360deg); }
+}
+
+@keyframes rotate-b {
+    0% { transform: rotateZ(-30deg) rotateY(0deg); }
+    100% { transform: rotateZ(-30deg) rotateY(360deg); }
+}
+
+@keyframes rotate-c {
+    0% { transform: rotateZ(0deg); }
+    100% { transform: rotateZ(360deg); }
+}
+
+@keyframes orbit-1 {
+    0% { transform: rotate(0deg) translateY(-20px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateY(-20px) rotate(-360deg); }
+}
+
+@keyframes orbit-2 {
+    0% { transform: rotate(0deg) translate(16px, 12px) rotate(0deg); }
+    100% { transform: rotate(360deg) translate(16px, 12px) rotate(-360deg); }
+}
+
+@keyframes orbit-3 {
+    0% { transform: rotate(0deg) translate(-16px, 12px) rotate(0deg); }
+    100% { transform: rotate(360deg) translate(-16px, 12px) rotate(-360deg); }
+}
+
+/* After main styles, before mobile responsive section */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--gradient-1);
+    color: var(--text-light);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--card-shadow);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+}
+
+.back-to-top .material-icons {
+    font-size: 1.5rem;
+}
+
+/* Add About section styles */
+.about-section {
+    background: var(--section-bg);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.about-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    background: rgba(124, 58, 237, 0.1);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.about-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.1);
+    animation: pulse 2s infinite;
+}
+
+.about-icon .material-icons {
+    font-size: 3rem;
+}
+
+.about-section h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.about-section p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    max-width: 700px;
+}
+
+/* Remove old footer atom styles that are no longer needed */
+.footer-physics-icon,
+.footer-nucleus,
+.footer-orbit,
+.footer-orbit-1,
+.footer-orbit-2,
+.footer-orbit-3,
+.physics-about-logo,
+.atom-nucleus,
+.atom-orbit.orbit-1,
+.atom-orbit.orbit-2,
+.atom-orbit.orbit-3 {
+    /* Removing these styles */
+    display: none;
 }

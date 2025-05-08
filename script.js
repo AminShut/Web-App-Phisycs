@@ -18,9 +18,11 @@ const tutorialText = document.getElementById('tutorialText');
 let currentChapter = '';
 let currentQuestion = '';
 let currentTutorialChapter = '';
+let currentTutorialIndex = 0;
 let chaptersData = [];
 let currentQuestionIndex = 0;
 let chapterQuestions = [];
+let tutorialChapters = [];
 
 // Load chapters data
 let foldersData = null;
@@ -191,6 +193,19 @@ function updateNavigationButtons() {
     }
 }
 
+function updateTutorialNavigationButtons() {
+    const prevTutorialBtn = document.getElementById('prevTutorialBtn');
+    const nextTutorialBtn = document.getElementById('nextTutorialBtn');
+    
+    if (tutorialChapters.length > 0) {
+        prevTutorialBtn.disabled = currentTutorialIndex <= 0;
+        nextTutorialBtn.disabled = currentTutorialIndex >= tutorialChapters.length - 1;
+    } else {
+        prevTutorialBtn.disabled = true;
+        nextTutorialBtn.disabled = true;
+    }
+}
+
 // Generate chapters for Questions
 function generateQuestionsChapters() {
     questionsChaptersList.innerHTML = '';
@@ -201,7 +216,13 @@ function generateQuestionsChapters() {
         foldersData.files.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
-            chapterElement.innerHTML = `<h3>${chapter.name}</h3>`;
+            chapterElement.innerHTML = `
+                <div class="chapter-icon">
+                    <span class="material-icons">auto_stories</span>
+                </div>
+                <h3>${chapter.name}</h3>
+                <div class="chapter-description">حل مسائل</div>
+            `;
             chapterElement.addEventListener('click', () => {
                 currentChapter = chapter;
                 questionsListTitle.innerHTML = `<span class="material-icons">help_outline</span>${chapter.name}`;
@@ -216,7 +237,13 @@ function generateQuestionsChapters() {
         for (let i = 1; i <= 20; i++) {
             const chapter = document.createElement('div');
             chapter.className = 'chapter-card';
-            chapter.innerHTML = `<h3>فصل ${i}</h3>`;
+            chapter.innerHTML = `
+                <div class="chapter-icon">
+                    <span class="material-icons">auto_stories</span>
+                </div>
+                <h3>فصل ${i}</h3>
+                <div class="chapter-description">حل مسائل</div>
+            `;
             chapter.addEventListener('click', () => {
                 currentChapter = `فصل ${i}`;
                 questionsListTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter}`;
@@ -231,46 +258,57 @@ function generateQuestionsChapters() {
 // Generate chapters for Tutorials
 function generateTutorialsChapters() {
     tutorialsChaptersList.innerHTML = '';
+    tutorialChapters = [];
     
     if (foldersData && foldersData.files && foldersData.files.length > 0) {
         console.log("Generating tutorial chapters from JSON data");
         // Use data from JSON file
+        tutorialChapters = foldersData.files;
+        
         foldersData.files.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
-            chapterElement.innerHTML = `<h3>${chapter.name}</h3>`;
+            chapterElement.innerHTML = `
+                <div class="chapter-icon">
+                    <span class="material-icons">menu_book</span>
+                </div>
+                <h3>${chapter.name}</h3>
+                <div class="chapter-description">آموزش‌ها</div>
+            `;
             chapterElement.addEventListener('click', () => {
-                currentTutorialChapter = chapter;
-                tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${chapter.name}`;
-                
-                // Find tutorial subject
-                const tutorialSubject = chapter.subjects.find(subject => subject.name.includes("درسنامه"));
-                if (tutorialSubject && tutorialSubject.id) {
-                    const driveLink = `https://drive.google.com/file/d/${tutorialSubject.id}/view`;
-                    tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده درسنامه ${chapter.name} اینجا کلیک کنید</a>`;
-                } else {
-                    tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
-                }
-                
-                showScreen('tutorialDetailScreen');
+                showTutorialDetails(chapter, index);
             });
             tutorialsChaptersList.appendChild(chapterElement);
         });
     } else {
         console.log("Falling back to numbered tutorial chapters");
         // Fallback to numbered chapters
+        const defaultChapters = [];
+        
         for (let i = 1; i <= 20; i++) {
-            const chapter = document.createElement('div');
-            chapter.className = 'chapter-card';
-            chapter.innerHTML = `<h3>فصل ${i}</h3>`;
-            chapter.addEventListener('click', () => {
-                currentTutorialChapter = `فصل ${i}`;
-                tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${currentTutorialChapter}`;
-                tutorialText.textContent = `درسنامه برای ${currentTutorialChapter} در دسترس نیست.`;
-                showScreen('tutorialDetailScreen');
+            defaultChapters.push({
+                name: `فصل ${i}`,
+                id: null
             });
-            tutorialsChaptersList.appendChild(chapter);
         }
+        
+        tutorialChapters = defaultChapters;
+        
+        defaultChapters.forEach((chapter, index) => {
+            const chapterElement = document.createElement('div');
+            chapterElement.className = 'chapter-card';
+            chapterElement.innerHTML = `
+                <div class="chapter-icon">
+                    <span class="material-icons">menu_book</span>
+                </div>
+                <h3>${chapter.name}</h3>
+                <div class="chapter-description">آموزش‌ها</div>
+            `;
+            chapterElement.addEventListener('click', () => {
+                showTutorialDetails(chapter, index);
+            });
+            tutorialsChaptersList.appendChild(chapterElement);
+        });
     }
 }
 
@@ -281,7 +319,6 @@ function generateQuestions(chapter) {
     
     // Create a container for all questions
     const container = document.createElement('div');
-    container.className = 'question-list';
     
     if (chapter && chapter.subjects) {
         // Find questions subject
@@ -302,7 +339,12 @@ function generateQuestions(chapter) {
             sortedQuestions.forEach((q, index) => {
                 const question = document.createElement('div');
                 question.className = 'question-card';
-                question.innerHTML = `<h3>${q.name}</h3>`;
+                question.innerHTML = `
+                    <div class="question-icon">
+                        <span class="material-icons">help_outline</span>
+                    </div>
+                    <h3>${q.name}</h3>
+                `;
                 question.addEventListener('click', () => {
                     showQuestionDetails(q, index, chapter);
                 });
@@ -331,7 +373,12 @@ function generateQuestions(chapter) {
         defaultQuestions.forEach((q, index) => {
             const question = document.createElement('div');
             question.className = 'question-card';
-            question.innerHTML = `<h3>${q.name}</h3>`;
+            question.innerHTML = `
+                <div class="question-icon">
+                    <span class="material-icons">help_outline</span>
+                </div>
+                <h3>${q.name}</h3>
+            `;
             question.addEventListener('click', () => {
                 showQuestionDetails(q, index);
             });
@@ -363,6 +410,30 @@ function showQuestionDetails(question, index, chapter) {
     
     updateNavigationButtons();
     showScreen('questionDetailScreen');
+}
+
+// Show tutorial details
+function showTutorialDetails(chapter, index) {
+    currentTutorialIndex = index;
+    currentTutorialChapter = chapter;
+    
+    tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${chapter.name}`;
+    
+    if (chapter.subjects) {
+        // Find tutorial subject
+        const tutorialSubject = chapter.subjects.find(subject => subject.name.includes("درسنامه"));
+        if (tutorialSubject && tutorialSubject.id) {
+            const driveLink = `https://drive.google.com/file/d/${tutorialSubject.id}/view`;
+            tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده درسنامه ${chapter.name} اینجا کلیک کنید</a>`;
+        } else {
+            tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
+        }
+    } else {
+        tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
+    }
+    
+    updateTutorialNavigationButtons();
+    showScreen('tutorialDetailScreen');
 }
 
 // Event Listeners
@@ -418,14 +489,15 @@ document.getElementById('nextQuestionBtn').addEventListener('click', () => {
 });
 
 document.getElementById('prevTutorialBtn').addEventListener('click', () => {
-    // Placeholder for tutorial navigation
-    // This would need to be implemented similarly to the question navigation
-    alert('آموزش قبلی در دسترس نیست');
+    if (currentTutorialIndex > 0 && tutorialChapters.length > 0) {
+        showTutorialDetails(tutorialChapters[currentTutorialIndex - 1], currentTutorialIndex - 1);
+    }
 });
 
 document.getElementById('nextTutorialBtn').addEventListener('click', () => {
-    // Placeholder for tutorial navigation
-    alert('آموزش بعدی در دسترس نیست');
+    if (currentTutorialIndex < tutorialChapters.length - 1) {
+        showTutorialDetails(tutorialChapters[currentTutorialIndex + 1], currentTutorialIndex + 1);
+    }
 });
 
 // Call the JSON loading function when the page loads
@@ -460,4 +532,22 @@ document.addEventListener('DOMContentLoaded', function() {
             themeIcon.textContent = 'dark_mode'; // Show dark mode icon when in light mode
         }
     }
+});
+
+// Back to top button functionality
+const backToTopButton = document.getElementById('back-to-top');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+        backToTopButton.classList.add('visible');
+    } else {
+        backToTopButton.classList.remove('visible');
+    }
+});
+
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 });
