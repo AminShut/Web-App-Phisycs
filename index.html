@@ -4,625 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فیزیک هالیدی</title>
-    <style>
-        :root {
-            --primary-color: #7209b7;
-            --secondary-color: #3f37c9;
-            --accent-color: #f72585;
-            --background-color: #10002b;
-            --card-bg-1: #240046;
-            --card-bg-2: #3c096c;
-            --card-bg-3: #5a189a;
-            --text-color: #e0aaff;
-            --text-light: #ffffff;
-            --highlight: #ff9e00;
-            --shadow-color: rgba(0, 0, 0, 0.3);
-            --border-glow: 0 0 10px rgba(230, 0, 255, 0.5);
-            --gradient-1: linear-gradient(135deg, #7209b7, #3a0ca3);
-            --gradient-2: linear-gradient(135deg, #f72585, #b5179e);
-            --gradient-3: linear-gradient(135deg, #4361ee, #4cc9f0);
-            --section-bg: #240046;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--background-color);
-            color: var(--text-light);
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(114, 9, 183, 0.4) 0%, transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(63, 55, 201, 0.4) 0%, transparent 30%),
-                radial-gradient(circle at 50% 50%, rgba(247, 37, 133, 0.2) 0%, transparent 50%);
-        }
-
-        .container {
-            max-width: 100%;
-            padding: 16px;
-            margin: 0 auto;
-            min-height: 100vh;
-        }
-
-        header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 20px;
-            background: var(--gradient-2);
-            border-radius: 16px;
-            box-shadow: 0 8px 20px var(--shadow-color), var(--border-glow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.5;
-        }
-
-        .app-title {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 1;
-        }
-
-        .app-subtitle {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: 5px;
-            font-weight: 400;
-            position: relative;
-            z-index: 1;
-        }
-
-        .main-header {
-            text-align: center;
-            margin-bottom: 20px;
-            background: var(--gradient-2);
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 8px 20px var(--shadow-color), var(--border-glow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-            opacity: 0.5;
-            z-index: 0;
-        }
-
-        .main-header .app-logo {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 10px;
-            background: var(--gradient-3);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 1;
-        }
-
-        .main-header .app-logo .material-icons {
-            font-size: 30px;
-            color: white;
-        }
-
-        .main-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .main-actions {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .action-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 5px;
-            background: var(--card-bg-2);
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 10px var(--shadow-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .action-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(247, 37, 133, 0.4);
-        }
-
-        .action-button .material-icons {
-            font-size: 22px;
-            color: var(--highlight);
-            margin-bottom: 5px;
-        }
-
-        .action-button span {
-            color: var(--text-light);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .about-section {
-            background: var(--card-bg-1);
-            border-radius: 16px;
-            padding: 25px 20px;
-            margin-top: 0;
-            text-align: center;
-            box-shadow: 0 8px 20px var(--shadow-color);
-            border-left: 5px solid var(--highlight);
-            direction: rtl;
-        }
-
-        .about-section h2 {
-            color: var(--highlight);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .about-section p {
-            color: var(--text-light);
-            line-height: 1.6;
-            font-size: 1.1rem;
-        }
-
-        .about-logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .about-logo .material-icons {
-            font-size: 60px;
-            color: var(--highlight);
-        }
-
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.8rem;
-            padding: 10px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .screen {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        .chapter-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .question-list {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin-top: 20px;
-        }
-
-        .chapter-card {
-            background-color: var(--card-bg-2);
-            border-radius: 12px;
-            padding: 15px 10px;
-            box-shadow: 0 4px 10px var(--shadow-color);
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .question-card {
-            background-color: var(--card-bg-2);
-            border-radius: 10px;
-            padding: 10px 5px;
-            box-shadow: 0 4px 10px var(--shadow-color);
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .chapter-card:nth-child(3n+1), .question-card:nth-child(3n+1) {
-            background-color: var(--card-bg-1);
-        }
-
-        .chapter-card:nth-child(3n+2), .question-card:nth-child(3n+2) {
-            background-color: var(--card-bg-2);
-        }
-
-        .chapter-card:nth-child(3n+3), .question-card:nth-child(3n+3) {
-            background-color: var(--card-bg-3);
-        }
-
-        .chapter-card::before, .question-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--highlight);
-        }
-
-        .chapter-card:hover, .question-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(247, 37, 133, 0.4);
-            border-color: var(--highlight);
-        }
-
-        .chapter-card h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-top: 8px;
-            color: var(--text-light);
-        }
-
-        .question-card h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .back-button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: transparent;
-            border: none;
-            color: var(--highlight);
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            padding: 8px 0;
-            margin-bottom: 15px;
-            transition: all 0.2s;
-        }
-
-        .back-button:hover {
-            transform: translateX(-5px);
-            color: var(--accent-color);
-        }
-
-        .back-button .material-icons {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 6px;
-            border-radius: 50%;
-            color: var(--highlight);
-        }
-
-        .back-button:hover .material-icons {
-            color: var(--accent-color);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .screen-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--text-light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            background: var(--section-bg);
-            border-radius: 12px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-            border-left: 5px solid var(--highlight);
-        }
-
-        .screen-title .material-icons {
-            background: var(--accent-color);
-            padding: 8px;
-            border-radius: 50%;
-            color: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .question-content {
-            background-color: var(--card-bg-2);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            margin-top: 20px;
-            border-left: 5px solid var(--highlight);
-        }
-
-        .question-section, .answer-section {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            background: var(--card-bg-1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .question-section h3, .answer-section h3 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--highlight);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .question-section h3::before, .answer-section h3::before {
-            content: '';
-            width: 8px;
-            height: 8px;
-            background: var(--highlight);
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .question-text, .answer-text, .tutorial-text {
-            background-color: var(--card-bg-3);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1rem;
-            line-height: 1.6;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Material Icons */
-        .material-icons {
-            font-family: 'Material Icons';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                padding: 24px;
-                max-width: 1024px;
-            }
-
-            .main-header {
-                padding: 20px;
-            }
-
-            .main-header .app-logo {
-                width: 80px;
-                height: 80px;
-                margin-bottom: 15px;
-            }
-
-            .main-header .app-logo .material-icons {
-                font-size: 40px;
-            }
-
-            .app-title {
-                font-size: 1.8rem;
-            }
-
-            .app-subtitle {
-                font-size: 1rem;
-            }
-            
-            .menu-card {
-                padding: 20px;
-                border-radius: 16px;
-            }
-            
-            .menu-card h2 {
-                font-size: 1.4rem;
-            }
-            
-            .menu-card .material-icons {
-                font-size: 2rem;
-                padding: 12px;
-            }
-            
-            .action-button {
-                padding: 15px 10px;
-            }
-            
-            .action-button .material-icons {
-                font-size: 28px;
-            }
-            
-            .action-button span {
-                font-size: 0.9rem;
-            }
-
-            .chapter-list {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            
-            .question-list {
-                grid-template-columns: repeat(10, 1fr);
-            }
-            
-            .question-card {
-                padding: 12px 8px;
-            }
-            
-            .chapter-card h3 {
-                font-size: 1.1rem;
-            }
-            
-            .question-card h3 {
-                font-size: 0.9rem;
-            }
-        }
-
-        .menu-card {
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3), var(--border-glow);
-        }
-
-        .menu-card:nth-child(1) {
-            background: var(--gradient-1);
-        }
-
-        .menu-card:nth-child(2) {
-            background: var(--gradient-3);
-        }
-
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            z-index: 0;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(247, 37, 133, 0.6);
-        }
-
-        .menu-card h2 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-            color: var(--text-light);
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .menu-card .material-icons {
-            font-size: 1.6rem;
-            color: var(--text-light);
-            background: rgba(255, 255, 255, 0.2);
-            padding: 8px;
-            border-radius: 50%;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1 class="app-title">Halliday Physics</h1>
+            <div class="title-container">
+                <h1 class="app-title">فیزیک هالیدی</h1>
+                <p class="app-subtitle">حل مسائل و آموزش‌های مبتنی بر کتاب فیزیک هالیدی</p>
+            </div>
         </header>
 
         <main>
-            <!-- Main Menu Screen -->
+            <!-- Main Screen -->
             <div class="screen active" id="mainScreen">
                 <div class="main-header">
                     <div class="app-logo">
-                        <span class="material-icons">school</span>
+                        <span class="material-icons">science</span>
                     </div>
                     <h1 class="app-title">فیزیک هالیدی</h1>
                     <p class="app-subtitle">دانشگاه تربیت دبیر شهید رجایی</p>
                 </div>
                 
                 <div class="main-menu">
-                    <div class="menu-card" id="questionsBtn">
-                        <h2>Questions</h2>
+                    <div class="action-button" id="questionsBtn">
                         <span class="material-icons">help_outline</span>
+                        <span>حل مسائل</span>
                     </div>
-                    <div class="menu-card" id="tutorialsBtn">
-                        <h2>Tutorials</h2>
+                    <div class="action-button" id="tutorialsBtn">
                         <span class="material-icons">menu_book</span>
+                        <span>آموزش‌ها</span>
                     </div>
                 </div>
                 
                 <div class="main-actions">
                     <div class="action-button" id="aboutUsBtn">
                         <span class="material-icons">info</span>
-                        <span>About Us</span>
+                        <span>درباره ما</span>
+                    </div>
+                    <div class="action-button">
+                        <span class="material-icons">star</span>
+                        <span>ویژه‌ها</span>
                     </div>
                     <div class="action-button">
                         <span class="material-icons">settings</span>
-                        <span>Settings</span>
+                        <span>تنظیمات</span>
                     </div>
-                    <div class="action-button">
-                        <span class="material-icons">contact_support</span>
-                        <span>Contact</span>
-                    </div>
-                </div>
-                
-                <div class="footer">
-                    <p>© 2023 فیزیک هالیدی</p>
                 </div>
             </div>
             
@@ -630,18 +58,18 @@
             <div class="screen" id="aboutUsScreen">
                 <button class="back-button" id="backToMainFromAboutUs">
                     <span class="material-icons">arrow_back</span>
-                    Back
+                    بازگشت
                 </button>
                 <h2 class="screen-title">
                     <span class="material-icons">info</span>
-                    About Us
+                    درباره ما
                 </h2>
                 <div class="about-section">
                     <div class="about-logo">
                         <span class="material-icons">school</span>
                     </div>
-                    <h2>About Us</h2>
-                    <p>دانشگاه تربیت دبیر شهید رجایی</p>
+                    <h2>دانشگاه تربیت دبیر شهید رجایی</h2>
+                    <p>این اپلیکیشن به منظور کمک به دانشجویان فیزیک و دانش‌آموزان علاقه‌مند به فیزیک طراحی شده است. در این برنامه، نمونه‌های حل شده‌ی مسائل کتاب فیزیک هالیدی به همراه آموزش‌های مربوطه ارائه شده است. این برنامه توسط دانشگاه تربیت دبیر شهید رجایی تهیه شده است.</p>
                 </div>
             </div>
 
@@ -649,11 +77,11 @@
             <div class="screen" id="questionsChaptersScreen">
                 <button class="back-button" id="backToMainFromQuestionsChapters">
                     <span class="material-icons">arrow_back</span>
-                    Back
+                    بازگشت
                 </button>
                 <h2 class="screen-title">
                     <span class="material-icons">help_outline</span>
-                    Questions
+                    فصل‌های کتاب
                 </h2>
                 <div class="chapter-list" id="questionsChaptersList">
                     <!-- Chapters will be dynamically generated here -->
@@ -664,11 +92,11 @@
             <div class="screen" id="questionsListScreen">
                 <button class="back-button" id="backToQuestionsChapters">
                     <span class="material-icons">arrow_back</span>
-                    Back to Chapters
+                    بازگشت به فصل‌ها
                 </button>
                 <h2 class="screen-title" id="questionsListTitle">
                     <span class="material-icons">help_outline</span>
-                    Chapter Questions
+                    سوالات
                 </h2>
                 <div id="questionsList">
                     <!-- Questions will be dynamically generated here -->
@@ -679,15 +107,15 @@
             <div class="screen" id="questionDetailScreen">
                 <button class="back-button" id="backToQuestionsList">
                     <span class="material-icons">arrow_back</span>
-                    Back to Questions
+                    بازگشت به سوالات
                 </button>
                 <h2 class="screen-title" id="questionDetailTitle">
                     <span class="material-icons">help_outline</span>
-                    Question Detail
+                    جزئیات سوال
                 </h2>
                 <div class="question-content">
                     <div class="question-text" id="questionText">
-                        The question link will be placed here.
+                        لینک سوال اینجا قرار می‌گیرد.
                     </div>
                 </div>
             </div>
@@ -696,11 +124,11 @@
             <div class="screen" id="tutorialsChaptersScreen">
                 <button class="back-button" id="backToMainFromTutorialsChapters">
                     <span class="material-icons">arrow_back</span>
-                    Back
+                    بازگشت
                 </button>
                 <h2 class="screen-title">
                     <span class="material-icons">menu_book</span>
-                    Tutorials
+                    آموزش‌ها
                 </h2>
                 <div class="chapter-list" id="tutorialsChaptersList">
                     <!-- Chapters will be dynamically generated here -->
@@ -711,167 +139,21 @@
             <div class="screen" id="tutorialDetailScreen">
                 <button class="back-button" id="backToTutorialsChapters">
                     <span class="material-icons">arrow_back</span>
-                    Back to Chapters
+                    بازگشت به فصل‌ها
                 </button>
                 <h2 class="screen-title" id="tutorialDetailTitle">
                     <span class="material-icons">menu_book</span>
-                    Tutorial
+                    آموزش
                 </h2>
                 <div class="question-content">
                     <div class="tutorial-text" id="tutorialText">
-                        The tutorial link will be placed here.
+                        لینک آموزش اینجا قرار می‌گیرد.
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <script>
-        // DOM Elements
-        const questionsBtn = document.getElementById('questionsBtn');
-        const tutorialsBtn = document.getElementById('tutorialsBtn');
-        const aboutUsBtn = document.getElementById('aboutUsBtn');
-        const backToMainFromQuestionsChapters = document.getElementById('backToMainFromQuestionsChapters');
-        const backToMainFromTutorialsChapters = document.getElementById('backToMainFromTutorialsChapters');
-        const backToMainFromAboutUs = document.getElementById('backToMainFromAboutUs');
-        const backToQuestionsChapters = document.getElementById('backToQuestionsChapters');
-        const backToQuestionsList = document.getElementById('backToQuestionsList');
-        const backToTutorialsChapters = document.getElementById('backToTutorialsChapters');
-        const questionsChaptersList = document.getElementById('questionsChaptersList');
-        const tutorialsChaptersList = document.getElementById('tutorialsChaptersList');
-        const questionsList = document.getElementById('questionsList');
-        const questionText = document.getElementById('questionText');
-        const tutorialText = document.getElementById('tutorialText');
-
-        // Navigation variables
-        let currentChapter = '';
-        let currentQuestion = '';
-        let currentTutorialChapter = '';
-
-        // Screens
-        const screens = {
-            mainScreen: document.getElementById('mainScreen'),
-            aboutUsScreen: document.getElementById('aboutUsScreen'),
-            questionsChaptersScreen: document.getElementById('questionsChaptersScreen'),
-            questionsListScreen: document.getElementById('questionsListScreen'),
-            questionDetailScreen: document.getElementById('questionDetailScreen'),
-            tutorialsChaptersScreen: document.getElementById('tutorialsChaptersScreen'),
-            tutorialDetailScreen: document.getElementById('tutorialDetailScreen')
-        };
-
-        // Screen titles
-        const questionsListTitle = document.getElementById('questionsListTitle');
-        const questionDetailTitle = document.getElementById('questionDetailTitle');
-        const tutorialDetailTitle = document.getElementById('tutorialDetailTitle');
-
-        // Navigation function
-        function showScreen(screenId) {
-            Object.values(screens).forEach(screen => {
-                screen.classList.remove('active');
-            });
-            screens[screenId].classList.add('active');
-        }
-
-        // Generate chapters for Questions
-        function generateQuestionsChapters() {
-            questionsChaptersList.innerHTML = '';
-            for (let i = 1; i <= 20; i++) {
-                const chapter = document.createElement('div');
-                chapter.className = 'chapter-card';
-                chapter.innerHTML = `<h3>Chapter ${i}</h3>`;
-                chapter.addEventListener('click', () => {
-                    currentChapter = `Chapter ${i}`;
-                    questionsListTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter}`;
-                    generateQuestions();
-                    showScreen('questionsListScreen');
-                });
-                questionsChaptersList.appendChild(chapter);
-            }
-        }
-
-        // Generate chapters for Tutorials
-        function generateTutorialsChapters() {
-            tutorialsChaptersList.innerHTML = '';
-            for (let i = 1; i <= 20; i++) {
-                const chapter = document.createElement('div');
-                chapter.className = 'chapter-card';
-                chapter.innerHTML = `<h3>Chapter ${i}</h3>`;
-                chapter.addEventListener('click', () => {
-                    currentTutorialChapter = `Chapter ${i}`;
-                    tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${currentTutorialChapter}`;
-                    tutorialText.textContent = `The tutorial link for ${currentTutorialChapter} will be placed here.`;
-                    showScreen('tutorialDetailScreen');
-                });
-                tutorialsChaptersList.appendChild(chapter);
-            }
-        }
-
-        // Generate questions
-        function generateQuestions() {
-            questionsList.innerHTML = '';
-            
-            // Create a container for all questions
-            const container = document.createElement('div');
-            container.className = 'question-list';
-            
-            for (let i = 1; i <= 100; i++) {
-                const question = document.createElement('div');
-                question.className = 'question-card';
-                question.innerHTML = `<h3>Q${i}</h3>`;
-                question.addEventListener('click', () => {
-                    currentQuestion = `Question ${i}`;
-                    questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter} - ${currentQuestion}`;
-                    questionText.textContent = `The question link for ${currentChapter} - ${currentQuestion} will be placed here.`;
-                    showScreen('questionDetailScreen');
-                });
-                container.appendChild(question);
-            }
-            
-            questionsList.appendChild(container);
-        }
-
-        // Event Listeners
-        questionsBtn.addEventListener('click', () => {
-            generateQuestionsChapters();
-            showScreen('questionsChaptersScreen');
-        });
-
-        tutorialsBtn.addEventListener('click', () => {
-            generateTutorialsChapters();
-            showScreen('tutorialsChaptersScreen');
-        });
-        
-        aboutUsBtn.addEventListener('click', () => {
-            showScreen('aboutUsScreen');
-        });
-
-        backToMainFromQuestionsChapters.addEventListener('click', () => {
-            showScreen('mainScreen');
-        });
-
-        backToMainFromTutorialsChapters.addEventListener('click', () => {
-            showScreen('mainScreen');
-        });
-        
-        backToMainFromAboutUs.addEventListener('click', () => {
-            showScreen('mainScreen');
-        });
-
-        backToQuestionsChapters.addEventListener('click', () => {
-            showScreen('questionsChaptersScreen');
-        });
-
-        backToQuestionsList.addEventListener('click', () => {
-            showScreen('questionsListScreen');
-        });
-
-        backToTutorialsChapters.addEventListener('click', () => {
-            showScreen('tutorialsChaptersScreen');
-        });
-
-        // Initial setup
-        generateQuestionsChapters();
-        generateTutorialsChapters();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html> 

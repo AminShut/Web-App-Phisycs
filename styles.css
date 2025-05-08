@@ -1,0 +1,477 @@
+:root {
+    --primary-color: #7209b7;
+    --secondary-color: #3f37c9;
+    --accent-color: #f72585;
+    --background-color: #10002b;
+    --card-bg-1: #240046;
+    --card-bg-2: #3c096c;
+    --card-bg-3: #5a189a;
+    --text-color: #e0aaff;
+    --text-light: #ffffff;
+    --highlight: #ff9e00;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-glow: 0 0 10px rgba(230, 0, 255, 0.5);
+    --gradient-1: linear-gradient(135deg, #7209b7, #3a0ca3);
+    --gradient-2: linear-gradient(135deg, #f72585, #b5179e);
+    --gradient-3: linear-gradient(135deg, #4361ee, #4cc9f0);
+    --section-bg: #240046;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-light);
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(114, 9, 183, 0.2) 0%, transparent 80%),
+        radial-gradient(circle at 75% 75%, rgba(247, 37, 133, 0.2) 0%, transparent 80%);
+    min-height: 100vh;
+    direction: rtl;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app-title {
+    color: var(--text-light);
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(114, 9, 183, 0.8);
+    text-align: center;
+}
+
+.app-subtitle {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Main screen styles */
+.main-header {
+    background: var(--gradient-1);
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 20px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.app-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.app-logo span {
+    font-size: 4rem;
+    margin-right: 15px;
+    color: var(--text-light);
+}
+
+/* Main menu and action buttons */
+.main-menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.main-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.action-button {
+    background: var(--gradient-2);
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px var(--shadow-color);
+    color: var(--text-light);
+    min-height: 180px;
+}
+
+.action-button:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px var(--shadow-color), var(--border-glow);
+}
+
+.action-button span.material-icons {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.action-button span:not(.material-icons) {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.action-card {
+    background: var(--gradient-3);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.action-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px var(--shadow-color), var(--border-glow);
+}
+
+.action-card span {
+    font-size: 3rem;
+    color: var(--text-light);
+}
+
+.action-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.action-card p {
+    font-size: 1rem;
+    color: var(--text-light);
+    opacity: 0.9;
+}
+
+/* Back Buttons */
+.back-button {
+    background-color: var(--card-bg-3);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 15px;
+    align-self: flex-start;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.back-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--text-light);
+}
+
+.back-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Screen Titles */
+.screen-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--gradient-1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.screen-title .material-icons {
+    font-size: 2rem;
+}
+
+/* Chapter Lists */
+.chapter-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.chapter-grid, .question-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.chapter-card, .question-card {
+    background: var(--gradient-2);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 150px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.chapter-card:hover, .question-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow-color), var(--border-glow);
+}
+
+/* Content Sections */
+.question-content, .tutorial-content {
+    background: var(--section-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.question-text, .tutorial-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    text-align: center;
+}
+
+.question-text a, .tutorial-text a {
+    color: var(--highlight);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 15px 30px;
+    background: var(--card-bg-2);
+    border-radius: 10px;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.question-text a:hover, .tutorial-text a:hover {
+    background: var(--card-bg-3);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.question-detail-content, .tutorial-detail-content {
+    background: var(--section-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* About Us Screen */
+.about-section {
+    background: var(--section-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.about-logo {
+    margin-bottom: 20px;
+}
+
+.about-logo .material-icons {
+    font-size: 5rem;
+    color: var(--highlight);
+}
+
+.about-section h2 {
+    margin-bottom: 20px;
+    color: var(--text-light);
+}
+
+.about-section p {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.about-us-content {
+    background: var(--section-bg);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.about-us-section {
+    margin-bottom: 30px;
+}
+
+.about-us-section h3 {
+    margin-bottom: 15px;
+    color: var(--highlight);
+    font-size: 1.5rem;
+}
+
+.about-us-section p {
+    line-height: 1.6;
+}
+
+/* Loading State */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    width: 100%;
+}
+
+.loading:after {
+    content: "";
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--text-color);
+    border-top-color: var(--accent-color);
+    border-radius: 50%;
+    animation: pulse 1s linear infinite;
+}
+
+@keyframes pulse {
+    to { transform: rotate(360deg); }
+}
+
+.no-questions {
+    text-align: center;
+    padding: 50px;
+    color: var(--text-color);
+    font-size: 1.2rem;
+}
+
+.drive-link {
+    display: inline-block;
+    padding: 15px 30px;
+    background: var(--accent-color);
+    color: var(--text-light);
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1.2rem;
+}
+
+.drive-link:hover {
+    background: var(--highlight);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.drive-link:active {
+    transform: translateY(0px);
+}
+
+/* Material Icons */
+.material-icons {
+    vertical-align: middle;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .app-title {
+        font-size: 2.2rem;
+    }
+    
+    .app-subtitle {
+        font-size: 1rem;
+    }
+    
+    .main-menu, .main-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .chapter-grid, .question-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-button {
+        padding: 20px;
+        min-height: 150px;
+    }
+    
+    .action-button span.material-icons {
+        font-size: 2.5rem;
+    }
+} 
