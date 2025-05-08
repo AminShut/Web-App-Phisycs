@@ -20,20 +20,87 @@ let currentQuestion = '';
 let currentTutorialChapter = '';
 let chaptersData = [];
 
-// Load chapters data from foolders.json
+// Load chapters data
 let foldersData = null;
-fetch('foolders.json')
-    .then(response => response.json())
-    .then(data => {
-        console.log("JSON data loaded successfully", data);
-        foldersData = data;
-        // Generate initial UI with loaded data
-        generateQuestionsChapters();
-        generateTutorialsChapters();
-    })
-    .catch(error => {
-        console.error('Error loading data:', error);
+
+// Load JSON data using XMLHttpRequest instead of fetch
+function loadJSONData() {
+    // Try multiple file options in sequence
+    tryLoadingJSON('foolders_utf8.json', function(success) {
+        if (!success) {
+            tryLoadingJSON('foolders_fixed.json', function(success) {
+                if (!success) {
+                    tryLoadingJSON('foolders.json', function(success) {
+                        if (!success) {
+                            console.error("Failed to load any JSON file");
+                            fallbackToDefaultChapters();
+                        }
+                    });
+                }
+            });
+        }
     });
+}
+
+// Try loading a specific JSON file
+function tryLoadingJSON(filename, callback) {
+    console.log(`Attempting to load ${filename}`);
+    const xhr = new XMLHttpRequest();
+    xhr.overrideMimeType("application/json;charset=UTF-8");
+    xhr.open('GET', filename, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                try {
+                    // Log response details for debugging
+                    console.log(`Response received for ${filename}, length:`, xhr.responseText.length);
+                    console.log(`First few characters:`, xhr.responseText.substring(0, 50));
+                    
+                    // Parse JSON
+                    foldersData = JSON.parse(xhr.responseText);
+                    console.log(`JSON data loaded successfully from ${filename}`);
+                    
+                    if (foldersData && foldersData.files && foldersData.files.length > 0) {
+                        console.log(`Found ${foldersData.files.length} chapters in ${filename}`);
+                        
+                        // Debug: Log the first few chapter names
+                        console.log("First 3 chapter names:");
+                        for (let i = 0; i < Math.min(3, foldersData.files.length); i++) {
+                            console.log(`- ${foldersData.files[i].name}`);
+                        }
+                        
+                        // Generate UI with data
+                        generateQuestionsChapters();
+                        generateTutorialsChapters();
+                        callback(true);
+                    } else {
+                        console.error(`JSON data loaded from ${filename} but no files found`);
+                        callback(false);
+                    }
+                } catch (e) {
+                    console.error(`Error parsing JSON from ${filename}:`, e);
+                    callback(false);
+                }
+            } else {
+                console.error(`Failed to load ${filename}, status:`, xhr.status);
+                callback(false);
+            }
+        }
+    };
+    xhr.onerror = function() {
+        console.error(`Request error while loading ${filename}`);
+        callback(false);
+    };
+    xhr.send();
+}
+
+// Fallback function for when JSON loading fails
+function fallbackToDefaultChapters() {
+    console.warn("Using fallback chapter data");
+    foldersData = null;
+    generateQuestionsChapters();
+    generateTutorialsChapters();
+}
 
 // Screens
 const screens = {
@@ -159,8 +226,8 @@ function generateQuestions(chapter) {
             // Sort questions by name (to ensure proper order)
             const sortedQuestions = [...questionsSubject.questions].sort((a, b) => {
                 // Extract numbers from question names (e.g., "سوال 45" -> 45)
-                const numA = parseInt(a.name.match(/\d+/)[0]);
-                const numB = parseInt(b.name.match(/\d+/)[0]);
+                const numA = parseInt(a.name.match(/\d+/)?.[0] || "0");
+                const numB = parseInt(b.name.match(/\d+/)?.[0] || "0");
                 return numB - numA; // Reverse order (high to low)
             });
             
@@ -245,5 +312,5 @@ backToTutorialsChapters.addEventListener('click', () => {
     showScreen('tutorialsChaptersScreen');
 });
 
-// Initial setup - let fetch complete first
-// Removed initial calls here since they are now triggered from the fetch callback 
+// Initial load
+loadJSONData();
