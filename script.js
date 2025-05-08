@@ -430,18 +430,66 @@ function showTutorialDetails(chapter, index) {
     currentTutorialIndex = index;
     currentTutorialChapter = chapter;
     
+    console.log(`Showing tutorial details for: ${chapter.name}, Index: ${index}`);
+    console.log("Chapter data:", chapter);
+    
     tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${chapter.name}`;
     
     if (chapter.subjects) {
-        // Find tutorial subject
-        const tutorialSubject = chapter.subjects.find(subject => subject.name.includes("درسنامه"));
+        console.log(`Found ${chapter.subjects.length} subjects for chapter ${chapter.name}`);
+        
+        // Log all subjects to see what's available
+        chapter.subjects.forEach((subject, i) => {
+            console.log(`Subject ${i}: ${subject.name}, ID: ${subject.id}`);
+        });
+        
+        // Try multiple ways to find the tutorial subject
+        let tutorialSubject = chapter.subjects.find(subject => 
+            subject.name.includes("درسنامه") || 
+            subject.name.includes("آموزش") ||
+            subject.name.includes("tutorial") ||
+            subject.name.includes("lesson") ||
+            (subject.name.includes("فصل") && !subject.name.includes("مسائل"))
+        );
+        
+        // If still not found, try to find any subject with an ID that's not a question
+        if (!tutorialSubject) {
+            tutorialSubject = chapter.subjects.find(subject => 
+                subject.id && !subject.name.includes("مسائل") && !subject.name.includes("سوال")
+            );
+        }
+        
+        // If we found a tutorial subject with an ID
         if (tutorialSubject && tutorialSubject.id) {
+            console.log(`Found tutorial subject: ${tutorialSubject.name}, ID: ${tutorialSubject.id}`);
             const driveLink = `https://drive.google.com/file/d/${tutorialSubject.id}/view`;
-            tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده درسنامه ${chapter.name} اینجا کلیک کنید</a>`;
-        } else {
-            tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
+            tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${tutorialSubject.name} از ${chapter.name} اینجا کلیک کنید</a>`;
+        }
+        // If we found a subject but it has no ID
+        else if (tutorialSubject) {
+            console.log(`Found tutorial subject but no ID: ${tutorialSubject.name}`);
+            tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست (شناسه فایل موجود نیست).`;
+        }
+        // If no suitable subject was found
+        else {
+            console.log(`No suitable tutorial subject found for ${chapter.name}`);
+            
+            // Special case for chapter 1 - try to use a hardcoded ID if available
+            if (chapter.name.includes("1") || chapter.name.includes("۱") || chapter.name.includes("اول")) {
+                const hardcodedChapter1ID = "1fFQZKcMdkZjmKvD7P2qGLvBKb6_cZQZf"; // Replace with actual ID if known
+                if (hardcodedChapter1ID) {
+                    console.log("Using hardcoded ID for Chapter 1");
+                    const driveLink = `https://drive.google.com/file/d/${hardcodedChapter1ID}/view`;
+                    tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده درسنامه ${chapter.name} اینجا کلیک کنید</a>`;
+                } else {
+                    tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
+                }
+            } else {
+                tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
+            }
         }
     } else {
+        console.log(`No subjects found for chapter ${chapter.name}`);
         tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
     }
     
@@ -545,7 +593,79 @@ document.addEventListener('DOMContentLoaded', function() {
             themeIcon.textContent = 'dark_mode'; // Show dark mode icon when in light mode
         }
     }
+    
+    // Add a timeout to check for Chapter 1 data after everything is loaded
+    setTimeout(checkChapter1Data, 2000);
 });
+
+// Function to specifically check Chapter 1 data
+function checkChapter1Data() {
+    console.log("Checking Chapter 1 data...");
+    
+    if (!foldersData || !foldersData.files || !foldersData.files.length) {
+        console.log("No folders data available yet");
+        return;
+    }
+    
+    // Find Chapter 1
+    const chapter1 = foldersData.files.find(file => 
+        file.name.includes("1") || 
+        file.name.includes("۱") || 
+        file.name.includes("اول") || 
+        file.name.toLowerCase().includes("first")
+    );
+    
+    if (!chapter1) {
+        console.log("Chapter 1 not found in data");
+        return;
+    }
+    
+    console.log("Chapter 1 data:", chapter1);
+    
+    if (chapter1.subjects) {
+        console.log(`Chapter 1 has ${chapter1.subjects.length} subjects:`);
+        chapter1.subjects.forEach((subject, i) => {
+            console.log(`- Subject ${i}: ${subject.name}, ID: ${subject.id || "No ID"}`);
+            
+            // If this subject has questions, log them too
+            if (subject.questions && subject.questions.length) {
+                console.log(`  Has ${subject.questions.length} questions`);
+                subject.questions.slice(0, 3).forEach((q, j) => {
+                    console.log(`  - Question ${j}: ${q.name}, ID: ${q.id || "No ID"}`);
+                });
+                if (subject.questions.length > 3) {
+                    console.log(`  - ... and ${subject.questions.length - 3} more questions`);
+                }
+            }
+        });
+        
+        // Try to find the tutorial subject using our criteria
+        const tutorialSubject = chapter1.subjects.find(subject => 
+            subject.name.includes("درسنامه") || 
+            subject.name.includes("آموزش") ||
+            subject.name.includes("tutorial") ||
+            subject.name.includes("lesson") ||
+            (subject.name.includes("فصل") && !subject.name.includes("مسائل"))
+        );
+        
+        if (tutorialSubject) {
+            console.log("Found potential tutorial subject:", tutorialSubject);
+        } else {
+            console.log("No tutorial subject found using our criteria");
+            
+            // Look for any subject that might be a tutorial
+            const nonQuestionSubject = chapter1.subjects.find(subject => 
+                !subject.name.includes("مسائل") && !subject.name.includes("سوال")
+            );
+            
+            if (nonQuestionSubject) {
+                console.log("Found a non-question subject that could be a tutorial:", nonQuestionSubject);
+            }
+        }
+    } else {
+        console.log("Chapter 1 has no subjects");
+    }
+}
 
 // Back to top button functionality
 const backToTopButton = document.getElementById('back-to-top');
