@@ -31,29 +31,31 @@ let foldersData = null;
 function loadJSONData() {
     console.log("Attempting to load JSON data...");
     
-    // First try loading from a global variable if it exists (used for inline JSON)
+    // First try loading from files
+    tryLoadingJSON('foolders.json', function(success) {
+        if (!success) {
+            tryLoadingJSON('foolders_fixed.json', function(success) {
+                if (!success) {
+                    tryLoadingJSON('foolders_utf8.json', function(success) {
+                        if (!success) {
+                            console.log("Failed to load JSON files, trying inline data as last resort");
+                            // Try using inline data as last resort
     if (typeof window.inlineJsonData !== 'undefined' && window.inlineJsonData) {
         console.log("Found inline JSON data, using it");
         try {
             foldersData = window.inlineJsonData;
-            console.log(`Found ${foldersData.files.length} chapters in inline JSON`);
+                                    console.log(`Found ${foldersData.files ? foldersData.files.length : (Array.isArray(foldersData) ? foldersData.length : 0)} chapters in inline JSON`);
             generateQuestionsChapters();
             generateTutorialsChapters();
             return;
         } catch (e) {
             console.error("Error using inline JSON:", e);
-        }
-    }
-    
-    // Then try loading from files
-    tryLoadingJSON('foolders_utf8.json', function(success) {
-        if (!success) {
-            tryLoadingJSON('foolders_fixed.json', function(success) {
-                if (!success) {
-                    tryLoadingJSON('foolders.json', function(success) {
-                        if (!success) {
+                                    fallbackToDefaultChapters();
+                                }
+                            } else {
                             console.error("Failed to load any JSON file");
                             fallbackToDefaultChapters();
+                            }
                         }
                     });
                 }
@@ -67,9 +69,20 @@ function tryLoadingJSON(filename, callback) {
     console.log(`Attempting to load ${filename}`);
     const xhr = new XMLHttpRequest();
     xhr.overrideMimeType("application/json;charset=UTF-8");
-    xhr.open('GET', filename, true);
+    
+    // Use a cache-busting technique to avoid cached responses
+    const cacheBuster = new Date().getTime();
+    xhr.open('GET', `${filename}?nocache=${cacheBuster}`, true);
+    
+    // Add more debug info
+    console.log(`XHR opened for ${filename}`);
+    
     xhr.onreadystatechange = function() {
+        console.log(`XHR readyState changed to ${xhr.readyState} for ${filename}`);
+        
         if (xhr.readyState === 4) {
+            console.log(`XHR complete for ${filename}, status: ${xhr.status}`);
+            
             if (xhr.status === 200) {
                 try {
                     // Check if response is empty
@@ -103,6 +116,29 @@ function tryLoadingJSON(filename, callback) {
                         console.log(`JSON data loaded successfully from ${filename}`);
                     }
                     
+                    // تشخیص ساختار فایل JSON - آرایه یا شیء با کلید files
+                    let chapters = [];
+                    if (Array.isArray(foldersData)) {
+                        console.log(`Found JSON data as Array with ${foldersData.length} items`);
+                        chapters = foldersData;
+                    } else if (foldersData && foldersData.files && Array.isArray(foldersData.files)) {
+                        console.log(`Found JSON data as Object with ${foldersData.files.length} chapters in 'files' property`);
+                        chapters = foldersData.files;
+                    } else {
+                        console.error(`JSON data does not have the expected structure`);
+                        callback(false);
+                        return;
+                    }
+                    
+                    // تنظیم داده ها به فرمت استاندارد
+                    if (Array.isArray(foldersData) && !foldersData.files) {
+                        // اگر داده آرایه است، آن را به فرمت مورد نظر تبدیل می‌کنیم
+                        // ایجاد یک شیء با کلید files که آرایه فعلی را در بر می‌گیرد
+                        const tempFoldersData = { files: foldersData };
+                        foldersData = tempFoldersData;
+                        console.log(`Converted array to object with 'files' property`);
+                    }
+                    
                     if (foldersData && foldersData.files && foldersData.files.length > 0) {
                         console.log(`Found ${foldersData.files.length} chapters in ${filename}`);
                         
@@ -110,7 +146,22 @@ function tryLoadingJSON(filename, callback) {
                         console.log("First 3 chapter names:");
                         for (let i = 0; i < Math.min(3, foldersData.files.length); i++) {
                             console.log(`- ${foldersData.files[i].name}`);
+                            
+                            // Count questions in this chapter
+                            const subjects = foldersData.files[i].subjects || [];
+                            let questionsCount = 0;
+                            
+                            for (const subject of subjects) {
+                                if (subject.questions && Array.isArray(subject.questions)) {
+                                    questionsCount += subject.questions.length;
+                                    console.log(`  - Subject: ${subject.name}, Questions: ${subject.questions.length}`);
+                                }
+                            }
+                            
+                            console.log(`  - Total questions in chapter: ${questionsCount}`);
                         }
+                        
+                        console.log(`Total chapters loaded: ${foldersData.files.length}`);
                         
                         // Generate UI with data
                         generateQuestionsChapters();
@@ -136,6 +187,13 @@ function tryLoadingJSON(filename, callback) {
                 }
             } else {
                 console.error(`Failed to load ${filename}, status:`, xhr.status);
+                
+                // Additional debugging for status 0
+                if (xhr.status === 0) {
+                    console.error(`Status 0 received for ${filename}. This could indicate a CORS issue, network error, or the file doesn't exist.`);
+                    console.error(`Make sure you're running this from a web server and not opening the HTML file directly.`);
+                }
+                
                 callback(false);
             }
         }
@@ -335,18 +393,50 @@ function generateQuestions(chapter) {
     questionsList.innerHTML = '';
     chapterQuestions = [];
     
+    console.log(`Generating questions for chapter: ${chapter?.name || 'unknown'}`);
+    
     if (chapter && chapter.subjects) {
-        // Find questions subject
-        const questionsSubject = chapter.subjects.find(subject => subject.name.includes("مسائل کتاب هالیدی"));
+        console.log(`Chapter has ${chapter.subjects.length} subjects`);
+        
+        // Debug: log all subjects to see what we're working with
+        chapter.subjects.forEach((subject, i) => {
+            console.log(`Subject ${i}: ${subject.name}, has questions: ${!!(subject.questions && subject.questions.length)}`);
+            if (subject.questions && subject.questions.length) {
+                console.log(`  - Has ${subject.questions.length} questions`);
+            }
+        });
+        
+        // Find questions subject - try different patterns
+        let questionsSubject = chapter.subjects.find(subject => 
+            subject.name.includes("مسائل کتاب هالیدی") || 
+            subject.name.includes("مسائل") ||
+            subject.name.includes("problems") ||
+            subject.name.includes("exercises")
+        );
+        
+        if (!questionsSubject) {
+            // If we still didn't find it, look for any subject with questions array
+            questionsSubject = chapter.subjects.find(subject => 
+                subject.questions && Array.isArray(subject.questions) && subject.questions.length > 0
+            );
+        }
         
         if (questionsSubject && questionsSubject.questions && questionsSubject.questions.length > 0) {
             console.log(`Found ${questionsSubject.questions.length} questions for chapter`, chapter.name);
+            console.log(`Questions subject: ${questionsSubject.name}, ID: ${questionsSubject.id}`);
+            
             // Sort questions by name (to ensure proper order)
             const sortedQuestions = [...questionsSubject.questions].sort((a, b) => {
                 // Extract numbers from question names (e.g., "سوال 45" -> 45)
                 const numA = parseInt(a.name.match(/\d+/)?.[0] || "0");
                 const numB = parseInt(b.name.match(/\d+/)?.[0] || "0");
                 return numA - numB; // Ascending order (low to high)
+            });
+            
+            // Debug: Check sorted questions
+            console.log(`Sorted ${sortedQuestions.length} questions. First few:`);
+            sortedQuestions.slice(0, 3).forEach((q, i) => {
+                console.log(`Question ${i}: ${q.name}, ID: ${q.id}`);
             });
             
             chapterQuestions = sortedQuestions;
@@ -361,6 +451,7 @@ function generateQuestions(chapter) {
                     <h3>${q.name}</h3>
                 `;
                 question.addEventListener('click', () => {
+                    console.log(`Question clicked: ${q.name}, ID: ${q.id}`);
                     showQuestionDetails(q, index, chapter);
                 });
                 questionsList.appendChild(question);
@@ -371,6 +462,17 @@ function generateQuestions(chapter) {
             noQuestions.className = 'no-questions';
             noQuestions.textContent = `هیچ سوالی برای ${chapter.name} یافت نشد.`;
             questionsList.appendChild(noQuestions);
+            
+            // Debug: Show what subjects we found instead
+            console.log(`Chapter subjects available instead:`);
+            chapter.subjects.forEach((subject, i) => {
+                console.log(`Subject ${i}: ${subject.name}`);
+                console.log(`  Has ID: ${!!subject.id}`);
+                console.log(`  Has questions array: ${!!subject.questions}`);
+                if (subject.questions) {
+                    console.log(`  Questions array length: ${subject.questions.length}`);
+                }
+            });
         }
     } else {
         console.log("No chapter data, falling back to default questions");
@@ -407,23 +509,27 @@ function showQuestionDetails(question, index, chapter) {
     currentQuestionIndex = index;
     currentQuestion = question.name;
     
+    console.log(`Showing details for question: ${question.name}, ID: ${question.id}, Index: ${index}`);
+    
     if (chapter) {
         questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${chapter.name} - ${currentQuestion}`;
         
         if (question.id) {
             // استفاده از لینک پوشه گوگل درایو
             const driveLink = `https://drive.google.com/drive/folders/${question.id}`;
+            console.log(`Created drive link for question: ${driveLink}`);
             questionText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${currentQuestion} از ${chapter.name} اینجا کلیک کنید</a>`;
         } else {
+            console.error(`Question ${question.name} has no ID!`);
             questionText.textContent = `لینک سوال برای ${chapter.name} - ${currentQuestion} در دسترس نیست.`;
         }
     } else {
-        questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter} - ${currentQuestion}`;
-        questionText.textContent = `لینک سوال برای ${currentChapter} - ${currentQuestion} در دسترس نیست.`;
+                questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${currentChapter} - ${currentQuestion}`;
+                questionText.textContent = `لینک سوال برای ${currentChapter} - ${currentQuestion} در دسترس نیست.`;
     }
     
     updateNavigationButtons();
-    showScreen('questionDetailScreen');
+                showScreen('questionDetailScreen');
 }
 
 // Show tutorial details
@@ -435,6 +541,14 @@ function showTutorialDetails(chapter, index) {
     console.log("Chapter data:", chapter);
     
     tutorialDetailTitle.innerHTML = `<span class="material-icons">menu_book</span>${chapter.name}`;
+    
+    // تست داده‌های فصل فعلی
+    console.log(`Testing chapter data structure:`, chapter);
+    if (chapter.id) {
+        console.log(`Chapter ID: ${chapter.id}`);
+    } else {
+        console.error(`Chapter missing ID!`);
+    }
     
     if (chapter.subjects) {
         console.log(`Found ${chapter.subjects.length} subjects for chapter ${chapter.name}`);
@@ -466,6 +580,7 @@ function showTutorialDetails(chapter, index) {
             
             // استفاده از لینک پوشه گوگل درایو
             const driveLink = `https://drive.google.com/drive/folders/${tutorialSubject.id}`;
+            console.log(`Created drive link: ${driveLink}`);
             tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${tutorialSubject.name} از ${chapter.name} اینجا کلیک کنید</a>`;
         }
         // If we found a subject but it has no ID
@@ -630,11 +745,19 @@ function checkChapter1Data() {
         chapter1.subjects.forEach((subject, i) => {
             console.log(`- Subject ${i}: ${subject.name}, ID: ${subject.id || "No ID"}`);
             
+            // Log driveLink that would be used
+            const driveLink = `https://drive.google.com/drive/folders/${subject.id}`;
+            console.log(`  - Drive link would be: ${driveLink}`);
+            
             // If this subject has questions, log them too
             if (subject.questions && subject.questions.length) {
                 console.log(`  Has ${subject.questions.length} questions`);
                 subject.questions.slice(0, 3).forEach((q, j) => {
                     console.log(`  - Question ${j}: ${q.name}, ID: ${q.id || "No ID"}`);
+                    
+                    // Log driveLink that would be used for questions
+                    const questionDriveLink = `https://drive.google.com/drive/folders/${q.id}`;
+                    console.log(`    - Question drive link would be: ${questionDriveLink}`);
                 });
                 if (subject.questions.length > 3) {
                     console.log(`  - ... and ${subject.questions.length - 3} more questions`);
@@ -653,6 +776,7 @@ function checkChapter1Data() {
         
         if (tutorialSubject) {
             console.log("Found potential tutorial subject:", tutorialSubject);
+            console.log("Tutorial link would be:", `https://drive.google.com/drive/folders/${tutorialSubject.id}`);
         } else {
             console.log("No tutorial subject found using our criteria");
             
@@ -668,6 +792,50 @@ function checkChapter1Data() {
     } else {
         console.log("Chapter 1 has no subjects");
     }
+    
+    // Debug check if all chapters have valid data structure
+    console.log("Checking all chapters for valid data structure...");
+    let valid = true;
+    let chaptersWithSubjects = 0;
+    let chaptersWithQuestions = 0;
+    let totalQuestions = 0;
+    
+    foldersData.files.forEach((chapter, i) => {
+        if (!chapter.id || !chapter.name) {
+            console.error(`Chapter ${i} missing ID or name!`);
+            valid = false;
+        }
+        
+        if (chapter.subjects && Array.isArray(chapter.subjects)) {
+            chaptersWithSubjects++;
+            
+            chapter.subjects.forEach((subject, j) => {
+                if (!subject.id || !subject.name) {
+                    console.error(`Subject ${j} in Chapter ${chapter.name} missing ID or name!`);
+                    valid = false;
+                }
+                
+                if (subject.questions && Array.isArray(subject.questions)) {
+                    chaptersWithQuestions++;
+                    totalQuestions += subject.questions.length;
+                    
+                    subject.questions.forEach((question, k) => {
+                        if (!question.id || !question.name) {
+                            console.error(`Question ${k} in Subject ${subject.name} in Chapter ${chapter.name} missing ID or name!`);
+                            valid = false;
+                        }
+                    });
+                }
+            });
+        } else {
+            console.warn(`Chapter ${chapter.name} has no subjects array!`);
+        }
+    });
+    
+    console.log(`Data validation complete. Valid structure: ${valid}`);
+    console.log(`Chapters with subjects: ${chaptersWithSubjects}/${foldersData.files.length}`);
+    console.log(`Chapters with questions: ${chaptersWithQuestions}/${foldersData.files.length}`);
+    console.log(`Total questions found: ${totalQuestions}`);
 }
 
 // Back to top button functionality
