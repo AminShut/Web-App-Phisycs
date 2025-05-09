@@ -63,13 +63,50 @@
                         <span class="material-icons">info</span>
                         <span>درباره ما</span>
                     </div>
-                    <div class="action-button">
-                        <span class="material-icons">star</span>
-                        <span>ویژه‌ها</span>
+                    <div class="action-button" id="booksBtn">
+                        <span class="material-icons">menu_book</span>
+                        <span>کتاب‌ها</span>
                     </div>
                     <div class="action-button">
                         <span class="material-icons">settings</span>
                         <span>تنظیمات</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Books Screen -->
+            <div class="screen" id="booksScreen">
+                <button class="back-button" id="backToMainFromBooks">
+                    <span class="material-icons">arrow_back</span>
+                    بازگشت
+                </button>
+                <h2 class="screen-title">
+                    <span class="material-icons">menu_book</span>
+                    دریافت کتاب‌های فیزیک هالیدی
+                </h2>
+                <div class="books-container">
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <span class="material-icons">language</span>
+                        </div>
+                        <h3>فیزیک هالیدی چاپ دهم (اصلی)</h3>
+                        <p class="book-description">نسخه اصلی کتاب فیزیک هالیدی به زبان انگلیسی</p>
+                        <a href="https://drive.google.com/file/d/1rk34E9zpRWheg771k_bJmT2JKic_DZx1/view?usp=sharing" target="_blank" class="book-download-btn">
+                            <span class="material-icons">download</span>
+                            دریافت کتاب
+                        </a>
+                    </div>
+                    
+                    <div class="book-card">
+                        <div class="book-icon">
+                            <span class="material-icons">translate</span>
+                        </div>
+                        <h3>فیزیک هالیدی چاپ دهم (فارسی)</h3>
+                        <p class="book-description">نسخه ترجمه شده کتاب فیزیک هالیدی به زبان فارسی</p>
+                        <a href="https://drive.google.com/file/d/1riqDpNwJpQiIZLiouu8HH73JIC0qwRTR/view?usp=sharing" target="_blank" class="book-download-btn">
+                            <span class="material-icons">download</span>
+                            دریافت کتاب
+                        </a>
                     </div>
                 </div>
             </div>
@@ -90,6 +127,13 @@
                     </div>
                     <h2>آموزش و حل مسائل فیزیک</h2>
                     <p>این اپلیکیشن به منظور کمک به دانشجویان فیزیک و دانش‌آموزان علاقه‌مند به فیزیک طراحی شده است. در این برنامه، نمونه‌های حل شده‌ی مسائل کتاب فیزیک هالیدی به همراه آموزش‌های مربوطه ارائه شده است.</p>
+                    <div class="university-info">
+                        <div class="university-logo">
+                            <span class="material-icons">account_balance</span>
+                        </div>
+                        <h3>دانشگاه تربیت دبیر شهید رجایی</h3>
+                        <p>این پروژه توسط دانشجویان دانشگاه تربیت دبیر شهید رجایی تهیه و ارائه شده است.</p>
+                    </div>
                 </div>
             </div>
 
@@ -206,11 +250,25 @@
                 <span class="material-icons">science</span>
             </div>
         </div>
+        <div class="footer-university">
+            دانشگاه تربیت دبیر شهید رجایی
+        </div>
         <div class="footer-copyright">
             © 2025 فیزیک هالیدی. تمامی حقوق محفوظ است.
         </div>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Debugging code to check booksScreen functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded');
+            console.log('booksScreen element:', document.getElementById('booksScreen'));
+            document.getElementById('booksBtn').addEventListener('click', function() {
+                console.log('Books button clicked');
+                console.log('is booksScreen in screens object:', 'booksScreen' in window.screens);
+            });
+        });
+    </script>
 </body>
 </html> 

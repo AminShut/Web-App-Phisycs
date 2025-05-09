@@ -2,9 +2,11 @@
 const questionsBtn = document.getElementById('questionsBtn');
 const tutorialsBtn = document.getElementById('tutorialsBtn');
 const aboutUsBtn = document.getElementById('aboutUsBtn');
+const booksBtn = document.getElementById('booksBtn');
 const backToMainFromQuestionsChapters = document.getElementById('backToMainFromQuestionsChapters');
 const backToMainFromTutorialsChapters = document.getElementById('backToMainFromTutorialsChapters');
 const backToMainFromAboutUs = document.getElementById('backToMainFromAboutUs');
+const backToMainFromBooks = document.getElementById('backToMainFromBooks');
 const backToQuestionsChapters = document.getElementById('backToQuestionsChapters');
 const backToQuestionsList = document.getElementById('backToQuestionsList');
 const backToTutorialsChapters = document.getElementById('backToTutorialsChapters');
@@ -217,6 +219,7 @@ function fallbackToDefaultChapters() {
 const screens = {
     mainScreen: document.getElementById('mainScreen'),
     aboutUsScreen: document.getElementById('aboutUsScreen'),
+    booksScreen: document.getElementById('booksScreen'),
     questionsChaptersScreen: document.getElementById('questionsChaptersScreen'),
     questionsListScreen: document.getElementById('questionsListScreen'),
     questionDetailScreen: document.getElementById('questionDetailScreen'),
@@ -630,6 +633,22 @@ aboutUsBtn.addEventListener('click', () => {
     showScreen('aboutUsScreen');
 });
 
+booksBtn.addEventListener('click', () => {
+    console.log('Books button clicked - inside script.js');
+    console.log('booksScreen element:', document.getElementById('booksScreen'));
+    if (screens.booksScreen) {
+        console.log('booksScreen exists in screens object');
+        screens.booksScreen.classList.add('active');
+        Object.values(screens).forEach(screen => {
+            if (screen !== screens.booksScreen) {
+                screen.classList.remove('active');
+            }
+        });
+    } else {
+        console.log('booksScreen does NOT exist in screens object');
+    }
+});
+
 backToMainFromQuestionsChapters.addEventListener('click', () => {
     showScreen('mainScreen');
 });
@@ -639,6 +658,10 @@ backToMainFromTutorialsChapters.addEventListener('click', () => {
 });
 
 backToMainFromAboutUs.addEventListener('click', () => {
+    showScreen('mainScreen');
+});
+
+backToMainFromBooks.addEventListener('click', () => {
     showScreen('mainScreen');
 });
 

@@ -869,6 +869,14 @@ main {
     opacity: 0.9;
 }
 
+.footer-university {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 5px 0;
+    color: var(--text-light);
+    opacity: 0.95;
+}
+
 .footer-copyright {
     font-size: 0.9rem;
     opacity: 0.8;
@@ -1158,7 +1166,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     position: relative;
 }
 
@@ -1188,6 +1196,61 @@ main {
     line-height: 1.8;
     color: var(--text-color);
     max-width: 700px;
+}
+
+/* University Info Styles */
+.university-info {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(124, 58, 237, 0.05);
+    border-radius: var(--border-radius);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border-top: 3px solid var(--primary-color);
+}
+
+.university-logo {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    background: rgba(124, 58, 237, 0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.university-logo::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.1);
+    animation: pulse 2s infinite;
+}
+
+.university-logo .material-icons {
+    font-size: 2.5rem;
+}
+
+.university-info h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.university-info p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.9;
 }
 
 /* Remove old footer atom styles that are no longer needed */
@@ -1240,5 +1303,139 @@ main {
 @media (min-width: 1280px) {
     #questionsList {
         grid-template-columns: repeat(5, 1fr) !important;
+    }
+}
+
+/* Books Section Styles */
+.books-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.book-card {
+    background: var(--card-bg-1);
+    border-radius: var(--card-radius);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.book-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-3);
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow);
+    border-color: rgba(124, 58, 237, 0.3);
+}
+
+.book-icon {
+    width: 70px;
+    height: 70px;
+    background: rgba(124, 58, 237, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    position: relative;
+}
+
+.book-icon::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(124, 58, 237, 0.1);
+    animation: pulse 2s infinite;
+}
+
+.book-icon .material-icons {
+    font-size: 2.2rem;
+}
+
+.book-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.book-description {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    margin-bottom: 20px;
+}
+
+.book-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--gradient-3);
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: var(--button-radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.book-download-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.2), transparent 70%);
+    pointer-events: none;
+}
+
+.book-download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--hover-shadow);
+}
+
+.book-download-btn .material-icons {
+    font-size: 1.2rem;
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    .books-container {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .book-card {
+        flex: 1;
+        min-width: 300px;
+        max-width: 380px;
     }
 }
