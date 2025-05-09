@@ -411,22 +411,8 @@ function showQuestionDetails(question, index, chapter) {
         questionDetailTitle.innerHTML = `<span class="material-icons">help_outline</span>${chapter.name} - ${currentQuestion}`;
         
         if (question.id) {
-            // Check if the ID is a folder ID or file ID based on format
-            let driveLink;
-            
-            // If the ID contains "folders" or matches folder pattern, it's a folder link
-            if (question.id.includes("folders/") || question.id.length > 40) {
-                // Extract just the folder ID if the full URL is stored
-                const folderId = question.id.includes("folders/") 
-                    ? question.id.split("folders/")[1].split("?")[0].split("/")[0]
-                    : question.id;
-                
-                driveLink = `https://drive.google.com/drive/folders/${folderId}`;
-            } else {
-                // It's a file link
-                driveLink = `https://drive.google.com/file/d/${question.id}/view`;
-            }
-            
+            // استفاده از لینک پوشه گوگل درایو
+            const driveLink = `https://drive.google.com/drive/folders/${question.id}`;
             questionText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${currentQuestion} از ${chapter.name} اینجا کلیک کنید</a>`;
         } else {
             questionText.textContent = `لینک سوال برای ${chapter.name} - ${currentQuestion} در دسترس نیست.`;
@@ -478,22 +464,8 @@ function showTutorialDetails(chapter, index) {
         if (tutorialSubject && tutorialSubject.id) {
             console.log(`Found tutorial subject: ${tutorialSubject.name}, ID: ${tutorialSubject.id}`);
             
-            // Check if the ID is a folder ID or file ID based on length or format
-            let driveLink;
-            
-            // If the ID contains "folders" or matches folder pattern, it's a folder link
-            if (tutorialSubject.id.includes("folders/") || tutorialSubject.id.length > 40) {
-                // Extract just the folder ID if the full URL is stored
-                const folderId = tutorialSubject.id.includes("folders/") 
-                    ? tutorialSubject.id.split("folders/")[1].split("?")[0].split("/")[0]
-                    : tutorialSubject.id;
-                
-                driveLink = `https://drive.google.com/drive/folders/${folderId}`;
-            } else {
-                // It's a file link
-                driveLink = `https://drive.google.com/file/d/${tutorialSubject.id}/view`;
-            }
-            
+            // استفاده از لینک پوشه گوگل درایو
+            const driveLink = `https://drive.google.com/drive/folders/${tutorialSubject.id}`;
             tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده ${tutorialSubject.name} از ${chapter.name} اینجا کلیک کنید</a>`;
         }
         // If we found a subject but it has no ID
@@ -510,7 +482,7 @@ function showTutorialDetails(chapter, index) {
                 const hardcodedChapter1ID = "1CG6yriHCwBpf0pgNs4jyHO2NUb88W3zU"; // Using the ID from the example
                 if (hardcodedChapter1ID) {
                     console.log("Using hardcoded ID for Chapter 1");
-                    const driveLink = `https://drive.google.com/file/d/${hardcodedChapter1ID}/view`;
+                    const driveLink = `https://drive.google.com/drive/folders/${hardcodedChapter1ID}`;
                     tutorialText.innerHTML = `<a href="${driveLink}" target="_blank" class="drive-link">برای مشاهده درسنامه ${chapter.name} اینجا کلیک کنید</a>`;
                 } else {
                     tutorialText.textContent = `درسنامه برای ${chapter.name} در دسترس نیست.`;
