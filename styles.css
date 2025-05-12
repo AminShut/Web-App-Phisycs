@@ -204,7 +204,9 @@ body {
 
 /* Main header with icon styling */
 .main-header {
-    background: var(--header-bg);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-size: 200% 200%;
+    animation: gradient-animation 10s ease infinite;
     padding: 35px 20px;
     border-radius: var(--border-radius);
     margin-bottom: 24px;
@@ -212,51 +214,33 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
 }
 
+.main-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.15), transparent 70%);
+    pointer-events: none;
+}
+
 /* اضافه کردن انیمیشن به آیکون باکس اصلی */
 .main-header-icon {
-    font-size: 4rem;
-    color: var(--header-text);
-    margin-bottom: 15px;
-    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
-    width: 80px !important;
-    height: 80px !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: pulseIcon 3s infinite ease-in-out;
+    display: none;
 }
 
-@keyframes pulseIcon {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-
-/* اطمینان از قرارگیری آیکون در وسط دایره */
 .main-header-icon.large-icon {
-    background: none;
-    background-image: none;
-    animation: pulseIcon 3s infinite ease-in-out;
+    display: none;
 }
 
 .main-header-icon.large-icon span.material-icons {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 40px;
-    line-height: 1;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
+    display: none;
 }
 
 /* انیمیشن جدید با ترکیب بزرگنمایی و چرخش */
@@ -484,6 +468,25 @@ body {
     display: flex;
     flex-direction: column;
     flex: 1;
+    overflow-x: hidden;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px 8px;
+        overflow-x: hidden;
+        width: 100%;
+    }
+    
+    main {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .screen {
+        width: 100%;
+        overflow-x: hidden;
+    }
 }
 
 main {
@@ -507,121 +510,147 @@ main {
 /* Physics logo */
 .physics-logo {
     position: relative;
-    width: 40px;
-    height: 40px;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: visible;
-    margin-left: 10px;
+    background-color: transparent;
+    transform-style: preserve-3d;
+    perspective: 800px;
 }
 
-.physics-logo .nucleus {
+.atom-core {
     position: absolute;
-    width: 14px;
-    height: 14px;
-    background: radial-gradient(circle, #ff4500, #ff8c00);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, var(--logo-center), var(--accent-color));
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+    animation: pulse-core 3s infinite ease-in-out;
+}
+
+@keyframes pulse-core {
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+    50% { transform: scale(1.1); box-shadow: 0 0 25px rgba(6, 182, 212, 0.8); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+}
+
+.electron-orbit {
+    position: absolute;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.orbit-a {
+    width: 65px;
+    height: 45px;
+    transform: rotateZ(30deg);
+    animation: rotate-a 8s linear infinite;
+    border-color: rgba(124, 58, 237, 0.8);
+}
+
+.orbit-b {
+    width: 45px;
+    height: 65px;
+    transform: rotateZ(-30deg);
+    animation: rotate-b 6s linear infinite;
+    border-color: rgba(79, 70, 229, 0.8);
+}
+
+.orbit-c {
+    width: 50px;
+    height: 50px;
+    animation: rotate-c 10s linear infinite;
+    border-color: rgba(6, 182, 212, 0.8);
+}
+
+.electron {
+    position: absolute;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     z-index: 10;
-    box-shadow: 0 0 10px rgba(255, 69, 0, 0.7);
 }
 
-.physics-logo .electron {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background-color: #00ffff;
-    border-radius: 50%;
-    z-index: 20;
-    box-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+.electron-1 {
+    top: 0;
+    left: calc(50% - 4px);
+    animation: orbit-1 8s linear infinite;
+    background-color: #7c3aed;
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.8);
 }
 
-.physics-logo .e1 {
-    animation: orbit-1 3s linear infinite;
+.electron-2 {
+    bottom: 16px;
+    right: 8px;
+    animation: orbit-2 6s linear infinite;
+    background-color: #4f46e5;
+    box-shadow: 0 0 10px rgba(79, 70, 229, 0.8);
 }
 
-.physics-logo .e2 {
-    animation: orbit-2 4s linear infinite;
+.electron-3 {
+    bottom: 16px;
+    left: 8px;
+    animation: orbit-3 10s linear infinite;
+    background-color: #06b6d4;
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.8);
 }
 
-.physics-logo .e3 {
-    animation: orbit-3 5s linear infinite;
+@keyframes rotate-a {
+    0% { transform: rotateZ(30deg) rotateX(0deg); }
+    100% { transform: rotateZ(30deg) rotateX(360deg); }
 }
 
-.physics-logo .orbit {
-    position: absolute;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
+@keyframes rotate-b {
+    0% { transform: rotateZ(-30deg) rotateY(0deg); }
+    100% { transform: rotateZ(-30deg) rotateY(360deg); }
 }
 
-.physics-logo .orbit-1 {
-    width: 55px;
-    height: 30px;
-    transform: rotateX(60deg) rotateZ(0deg);
-    animation: rotate-orbit1 8s linear infinite;
-}
-
-.physics-logo .orbit-2 {
-    width: 40px;
-    height: 40px;
-    transform: rotateX(30deg) rotateY(40deg);
-    animation: rotate-orbit2 6s linear infinite;
-}
-
-.physics-logo .orbit-3 {
-    width: 30px;
-    height: 50px;
-    transform: rotateX(50deg) rotateY(-20deg);
-    animation: rotate-orbit3 10s linear infinite;
-}
-
-@keyframes rotate-orbit1 {
-    0% { transform: rotateX(60deg) rotateZ(0deg); }
-    100% { transform: rotateX(60deg) rotateZ(360deg); }
-}
-
-@keyframes rotate-orbit2 {
-    0% { transform: rotateX(30deg) rotateY(40deg) rotateZ(0deg); }
-    100% { transform: rotateX(30deg) rotateY(40deg) rotateZ(360deg); }
-}
-
-@keyframes rotate-orbit3 {
-    0% { transform: rotateX(50deg) rotateY(-20deg) rotateZ(0deg); }
-    100% { transform: rotateX(50deg) rotateY(-20deg) rotateZ(360deg); }
+@keyframes rotate-c {
+    0% { transform: rotateZ(0deg); }
+    100% { transform: rotateZ(360deg); }
 }
 
 @keyframes orbit-1 {
-    0% { transform: rotate(0deg) translate(18px) rotate(0deg); }
-    100% { transform: rotate(360deg) translate(18px) rotate(-360deg); }
+    0% { transform: rotate(0deg) translateY(-20px) rotate(0deg); }
+    100% { transform: rotate(360deg) translateY(-20px) rotate(-360deg); }
 }
 
 @keyframes orbit-2 {
-    0% { transform: rotate(120deg) translate(14px) rotate(-120deg); }
-    100% { transform: rotate(480deg) translate(14px) rotate(-480deg); }
+    0% { transform: rotate(0deg) translate(16px, 12px) rotate(0deg); }
+    100% { transform: rotate(360deg) translate(16px, 12px) rotate(-360deg); }
 }
 
 @keyframes orbit-3 {
-    0% { transform: rotate(240deg) translate(22px) rotate(-240deg); }
-    100% { transform: rotate(600deg) translate(22px) rotate(-600deg); }
+    0% { transform: rotate(0deg) translate(-16px, 12px) rotate(0deg); }
+    100% { transform: rotate(360deg) translate(-16px, 12px) rotate(-360deg); }
 }
 
 .app-title {
     color: var(--header-text);
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    font-size: 2.8rem;
+    margin-bottom: 12px;
     text-align: center;
     font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 5;
 }
 
-.app-subtitle {
+.university-title {
+    font-size: 1.1rem;
+    font-weight: 500;
     color: var(--header-text);
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    text-align: center;
+    margin-top: 5px;
     opacity: 0.9;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 5;
 }
 
 /* Main menu and action buttons */
@@ -839,7 +868,7 @@ main {
     }
 }
 
-/* Questions container - always show 4 per row */
+/* Questions container - always show 4 per row on desktop, 2 per row on mobile */
 .questions-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -847,51 +876,24 @@ main {
     justify-content: center;
     padding: 8px;
     margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-/* Media queries for responsive questions grid layout - maintain 4 buttons per row */
+/* Media queries for responsive questions grid layout */
 @media (max-width: 480px) {
     .questions-container {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
         gap: 8px;
+        padding: 5px;
     }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 481px) and (max-width: 768px) {
     .questions-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 640px) {
-    .questions-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 768px) {
-    .questions-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 1024px) {
-    .questions-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 1280px) {
-    .questions-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-@media (min-width: 1536px) {
-    .questions-container {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 1400px;
-        margin: 0 auto;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
     }
 }
 
@@ -899,36 +901,48 @@ main {
 #questionsList {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 8px !important;
+    gap: 10px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
 }
 
-@media (min-width: 480px) {
+@media (max-width: 480px) {
     #questionsList {
-        grid-template-columns: repeat(4, 1fr) !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+        padding: 5px !important;
+    }
+    
+    .question-card {
+        padding: 5px 8px;
+        height: 35px;
+        font-size: 0.75rem;
+    }
+    
+    .question-card h3 {
+        font-size: 0.75rem;
+    }
+    
+    .question-card .question-icon {
+        width: 16px !important;
+        height: 16px !important;
     }
 }
 
-@media (min-width: 640px) {
+@media (min-width: 481px) and (max-width: 768px) {
     #questionsList {
-        grid-template-columns: repeat(4, 1fr) !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
     }
-}
-
-@media (min-width: 768px) {
-    #questionsList {
-        grid-template-columns: repeat(4, 1fr) !important;
+    
+    .question-card {
+        padding: 5px 10px;
+        height: 40px;
     }
-}
-
-@media (min-width: 1024px) {
-    #questionsList {
-        grid-template-columns: repeat(4, 1fr) !important;
-    }
-}
-
-@media (min-width: 1280px) {
-    #questionsList {
-        grid-template-columns: repeat(4, 1fr) !important;
+    
+    .question-card h3 {
+        font-size: 0.8rem;
     }
 }
 
@@ -2126,11 +2140,9 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at top right, rgba(255, 255, 255, 0.15), transparent 70%),
-        linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.15), transparent 70%);
     pointer-events: none;
 }
 
@@ -2263,4 +2275,44 @@ main {
 
 .next-button span:not(.material-icons) {
     order: 1;
+}
+
+/* Question Card specific styles for better mobile fit */
+.question-card {
+    width: 100%;
+    padding: 10px;
+    min-width: auto;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.question-card h3 {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.3;
+    position: relative;
+    color: var(--text-color);
+    text-align: right;
+    flex: 1;
+    padding-right: 8px;
+    order: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+    .question-card {
+        padding: 5px 8px;
+        height: 35px;
+        font-size: 0.75rem;
+        min-width: 0;
+    }
+    
+    .question-card h3 {
+        font-size: 0.7rem;
+        padding-right: 5px;
+    }
 }
