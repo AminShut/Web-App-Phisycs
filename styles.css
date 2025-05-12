@@ -360,7 +360,7 @@ body {
     content: "biotech";
 }
 
-/* Make RGB line have rounded top corners */
+/* Make RGB line have rounded top corners with slower animation */
 .screen-title::after {
     content: "";
     position: absolute;
@@ -371,7 +371,7 @@ body {
     background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
     background-size: 800% 100%;
     border-radius: 6px 6px 0 0;
-    animation: fullRainbow 5s linear infinite;
+    animation: fullRainbow 10s linear infinite; /* Slowed down from 5s to 10s */
     width: 100%;
 }
 
@@ -1039,7 +1039,7 @@ main {
     border-color: rgba(124, 58, 237, 0.5);
 }
 
-/* Enhanced Question Card */
+/* Enhanced Question Card with slower RGB animation */
 .question-card {
     background: var(--card-bg-1);
     padding: 4px 8px;
@@ -1070,7 +1070,7 @@ main {
     height: 100%;
     background: linear-gradient(to bottom, red, orange, yellow, green, blue, indigo, violet, red);
     background-size: 100% 800%;
-    animation: fullRainbow 5s linear infinite;
+    animation: fullRainbow 10s linear infinite; /* Slowed down from 5s to 10s */
 }
 
 .question-card::after {
@@ -1082,7 +1082,7 @@ main {
     height: 4px;
     background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
     background-size: 800% 100%;
-    animation: fullRainbow 5s linear infinite;
+    animation: fullRainbow 10s linear infinite; /* Slowed down from 5s to 10s */
 }
 
 .question-card .question-icon {
@@ -1124,6 +1124,7 @@ main {
     border-color: rgba(79, 70, 229, 0.5);
 }
 
+/* Slower animation for rainbow effects */
 @keyframes fullRainbow {
     0% { background-position: 0% 0%; }
     50% { background-position: 100% 100%; }
