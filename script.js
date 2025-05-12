@@ -964,3 +964,28 @@ backToTopButton.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
+// اضافه کردن کد مربوط به مودال ارتباط با ما
+const contactUsBtn = document.getElementById('contactUsBtn');
+const contactModal = document.getElementById('contactModal');
+const closeModal = document.querySelector('.close-modal');
+
+// باز کردن مودال با کلیک روی دکمه ارتباط با ما
+contactUsBtn.addEventListener('click', () => {
+    contactModal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // جلوگیری از اسکرول صفحه پشت مودال
+});
+
+// بستن مودال با کلیک روی دکمه ضربدر
+closeModal.addEventListener('click', () => {
+    contactModal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // برگرداندن اسکرول صفحه به حالت عادی
+});
+
+// بستن مودال با کلیک خارج از محتوای مودال
+window.addEventListener('click', (event) => {
+    if (event.target === contactModal) {
+        contactModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+});

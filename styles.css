@@ -257,32 +257,52 @@ body {
     align-items: flex-end;
     justify-content: space-between;
     flex-wrap: nowrap;
-    margin-bottom: 10px; /* کاهش فاصله با المان‌های زیرین */
-    position: relative;
+    margin-bottom: 10px;
+    position: sticky;
+    top: 0;
     width: 100%;
     gap: 15px;
+    z-index: 90;
+    padding: 10px 0;
+    background-color: var(--background-color);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    transition: all 0.3s ease;
 }
 
+/* بهبود استایل عنوان فصل */
 .screen-title {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 5px 5px 5px;
-    margin-bottom: 12px;
-    font-size: 1.4rem;
+    padding: 14px 15px 5px 15px;
+    margin-bottom: 0;
+    font-size: 1.3rem;
     color: var(--text-color);
     position: relative;
     overflow: visible;
     border-bottom: none;
-    border-radius: 0;
+    border-radius: var(--border-radius);
     background: none;
     box-shadow: none;
     width: auto;
     flex: 1;
+    max-width: 80%;
     order: 1;
     text-align: right;
+    min-height: 40px;
+    border-right: none;
 }
 
+/* حذف کلمه "فصل" از عنوان */
+.screen-title::before {
+    content: "";
+    display: none;
+}
+
+/* بهبود استایل دکمه بازگشت */
 .back-button {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: var(--text-light);
@@ -310,7 +330,7 @@ body {
     flex-shrink: 0;
     touch-action: manipulation;
     margin-bottom: 0;
-    bottom: -8px;
+    bottom: 0;
     max-width: 110px;
     text-align: center;
 }
@@ -397,20 +417,36 @@ body {
         justify-content: space-between;
         gap: 5px;
         margin-bottom: 8px; /* کاهش فاصله در نمای موبایل */
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        padding: 8px 0;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
     }
     
     .screen-title {
         margin-top: 0;
         margin-right: 0;
-        padding: 4px 5px 5px 5px;
+        padding: 10px 15px 5px 15px;
         font-size: 1.1rem;
         max-width: 65%;
         flex: none;
+        min-height: 40px;
     }
     
     .back-button {
         max-width: 100px; /* کاهش عرض دکمه در نمای موبایل */
         padding: 4px 10px; /* کاهش پدینگ در نمای موبایل */
+        min-width: 80px;
+    }
+    
+    #questionsListScreen .screen-title,
+    #tutorialDetailScreen .screen-title {
+        font-size: 1rem;
+        padding: 8px 10px;
+        min-height: 30px;
+        max-width: 60%;
     }
 }
 
@@ -500,6 +536,7 @@ main {
     flex-direction: column;
     gap: 16px;
     flex: 1;
+    scroll-behavior: smooth;
 }
 
 .screen.active {
@@ -689,7 +726,7 @@ main {
     overflow: hidden;
     border: 1px solid rgba(124, 58, 237, 0.2);
     color: var(--text-light);
-    gap: 25px; /* اضافه کردن فاصله بین آیکون و متن */
+    gap: 10px; /* کاهش فاصله بین آیکون و متن */
 }
 
 .main-menu .action-button::before {
@@ -714,7 +751,7 @@ main {
 /* افزایش فاصله بین آیکون و متن در دکمه‌ها */
 .main-menu .action-button span.material-icons {
     font-size: 24px;
-    margin-left: 5px !important;
+    margin-left: 0 !important; /* حذف مارجین اضافی */
     color: var(--text-light);
     opacity: 0.9;
     transition: transform 0.3s ease, filter 0.3s ease;
@@ -785,7 +822,7 @@ main {
     border: 1px solid rgba(124, 58, 237, 0.2);
     color: var(--text-light);
     white-space: nowrap;
-    gap: 25px; /* اضافه کردن فاصله بین آیکون و متن */
+    gap: 10px; /* کاهش فاصله بین آیکون و متن */
 }
 
 .main-actions .action-button:nth-child(1) {
@@ -1240,7 +1277,8 @@ main {
 }
 
 .prev-button .material-icons {
-    order: -1;
+    order: 1;
+    transform: rotate(180deg);
 }
 
 /* تنظیم موقعیت آیکون‌ها در دکمه بعدی */
@@ -1249,7 +1287,8 @@ main {
 }
 
 .next-button .material-icons {
-    order: 1;
+    order: 2;
+    transform: rotate(180deg);
 }
 
 /* Footer */
@@ -1438,6 +1477,19 @@ main {
     .screen-title .material-icons {
         font-size: 1.4rem;
     }
+    
+    .question-navigation, .tutorial-navigation {
+        flex-direction: row;
+        gap: 8px;
+        justify-content: space-between;
+    }
+    
+    .nav-button {
+        width: 48%;
+        min-width: 0;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1531,12 +1583,16 @@ main {
     }
     
     .question-navigation, .tutorial-navigation {
-        flex-direction: column;
+        flex-direction: row;
         gap: 8px;
+        justify-content: space-between;
     }
     
     .nav-button {
-        width: 100%;
+        width: 48%;
+        min-width: 0;
+        padding: 8px 10px;
+        font-size: 0.85rem;
         justify-content: center;
     }
 }
@@ -2169,10 +2225,11 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px; /* کاهش فاصله بین آیکون و متن */
 }
 
 .main-menu .action-button span.material-icons {
-    margin-left: 5px !important;
+    margin-left: 0 !important;
     margin-right: 0 !important;
 }
 
@@ -2181,10 +2238,11 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 10px; /* کاهش فاصله بین آیکون و متن */
 }
 
 .main-actions .action-button span.material-icons {
-    margin-left: 5px !important;
+    margin-left: 0 !important;
     margin-right: 0 !important;
 }
 
@@ -2253,6 +2311,7 @@ main {
     order: 1;
     margin: 0;
     margin-right: 8px;
+    transform: rotate(180deg);
 }
 
 .prev-button span:not(.material-icons) {
@@ -2271,6 +2330,7 @@ main {
     order: 2;
     margin: 0;
     margin-left: 8px;
+    transform: rotate(180deg);
 }
 
 .next-button span:not(.material-icons) {
@@ -2314,5 +2374,307 @@ main {
     .question-card h3 {
         font-size: 0.7rem;
         padding-right: 5px;
+    }
+}
+
+/* بهبود استایل عنوان فصل */
+.screen-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 15px 5px 15px;
+    margin-bottom: 0;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    position: relative;
+    overflow: visible;
+    border-bottom: none;
+    border-radius: var(--border-radius);
+    background: none;
+    box-shadow: none;
+    width: auto;
+    flex: 1;
+    max-width: 80%;
+    order: 1;
+    text-align: right;
+    min-height: 40px;
+    border-right: none;
+}
+
+/* حذف کلمه "فصل" از عنوان */
+.screen-title::before {
+    content: "";
+    display: none;
+}
+
+/* بهبود استایل عنوان فقط در صفحه نمایش سوالات یک فصل و صفحه نمایش آموزش یک فصل */
+#questionsListScreen .screen-title,
+#tutorialDetailScreen .screen-title {
+    background: linear-gradient(145deg, var(--card-bg-1), var(--card-bg-2));
+    box-shadow: var(--card-shadow);
+    border-radius: var(--border-radius);
+    border-right: 4px solid var(--primary-color);
+    position: relative;
+    padding: 10px 15px;
+    color: var(--text-color);
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    max-width: 70%;
+    margin-right: 5px;
+    font-size: 1.2rem;
+    min-height: 35px;
+}
+
+#questionsListScreen .screen-title::after,
+#tutorialDetailScreen .screen-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+/* استایل‌های اصلی برای سایر صفحات */
+#questionsChaptersScreen .screen-title,
+#tutorialsChaptersScreen .screen-title,
+#aboutUsScreen .screen-title,
+#booksScreen .screen-title,
+#questionDetailScreen .screen-title {
+    background: none;
+    border-right: none;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+#questionsChaptersScreen .screen-title::after,
+#tutorialsChaptersScreen .screen-title::after,
+#aboutUsScreen .screen-title::after,
+#booksScreen .screen-title::after,
+#questionDetailScreen .screen-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
+    background-size: 800% 100%;
+    animation: fullRainbow 10s linear infinite;
+    width: 100%;
+    border-radius: 0;
+}
+
+/* اصلاح عرض دکمه بازگشت در همه حالت‌ها */
+#questionsListScreen .back-button,
+#tutorialDetailScreen .back-button,
+#questionsChaptersScreen .back-button,
+#tutorialsChaptersScreen .back-button,
+#aboutUsScreen .back-button,
+#booksScreen .back-button,
+#questionDetailScreen .back-button {
+    position: relative;
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+/* دکمه بازگشت ثابت در گوشه پایین صفحه */
+.fixed-back-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.fixed-back-button.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.fixed-back-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.fixed-back-button .material-icons {
+    font-size: 1.5rem;
+}
+
+/* استایل مودال ارتباط با ما */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+    background: var(--card-bg-1);
+    margin: 10% auto;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    width: 85%;
+    position: relative;
+    color: var(--text-color);
+    text-align: center;
+    animation: slideIn 0.4s ease;
+    border-top: 5px solid var(--primary-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.modal-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.close-modal:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.contact-methods {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--card-bg-2);
+    padding: 15px;
+    border-radius: var(--card-radius);
+    transition: all 0.3s ease;
+    text-align: right;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow);
+}
+
+.contact-item .material-icons {
+    font-size: 2rem;
+    color: var(--primary-color);
+    background-color: rgba(124, 58, 237, 0.1);
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.contact-info p {
+    margin: 0;
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+.contact-info a {
+    color: var(--tertiary-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.contact-info a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.contact-note {
+    font-style: italic;
+    opacity: 0.8;
+    margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        margin: 15% auto;
+        padding: 20px;
+        width: 90%;
+    }
+
+    .contact-item {
+        padding: 12px;
+        gap: 15px;
+    }
+    
+    .contact-item .material-icons {
+        font-size: 1.5rem;
+        padding: 8px;
+    }
+    
+    .contact-info h3 {
+        font-size: 1rem;
+    }
+    
+    .contact-info p {
+        font-size: 0.85rem;
     }
 }

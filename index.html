@@ -55,9 +55,9 @@
                         <span class="material-icons">auto_stories</span>
                         <span>کتاب‌ها</span>
                     </div>
-                    <div class="action-button">
-                        <span class="material-icons">settings</span>
-                        <span>تنظیمات</span>
+                    <div class="action-button" id="contactUsBtn">
+                        <span class="material-icons">contact_support</span>
+                        <span>ارتباط با ما</span>
                     </div>
                 </div>
             </div>
@@ -157,6 +157,10 @@
                 <div class="questions-container" id="questionsList">
                     <!-- Questions will be dynamically generated here -->
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToQuestionsChapters">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
 
             <!-- Question Detail Screen -->
@@ -185,6 +189,10 @@
                         </button>
                     </div>
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToQuestionsList">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
 
             <!-- Tutorials Chapters Screen -->
@@ -229,6 +237,10 @@
                         </button>
                     </div>
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToTutorialsChapters">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
         </main>
     </div>
@@ -245,6 +257,35 @@
         </div>
     </footer>
 
+    <!-- اضافه کردن مودال ارتباط با ما -->
+    <div class="modal" id="contactModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>ارتباط با ما</h2>
+            <p>برای گزارش مشکلات، پیشنهادات یا سوالات خود، می‌توانید از طریق یکی از راه‌های زیر با ما در ارتباط باشید:</p>
+            
+            <div class="contact-methods">
+                <div class="contact-item">
+                    <span class="material-icons">telegram</span>
+                    <div class="contact-info">
+                        <h3>تلگرام</h3>
+                        <p><a href="https://t.me/ahmadidahr" target="_blank">@ahmadidahr</a></p>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <span class="material-icons">email</span>
+                    <div class="contact-info">
+                        <h3>ایمیل</h3>
+                        <p><a href="mailto:aminahmadidahr1385@gmail.com">aminahmadidahr1385@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="contact-note">ما از بازخوردهای شما استقبال می‌کنیم و به زودی به پیام‌های شما پاسخ خواهیم داد.</p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         // Debugging code to check booksScreen functionality
@@ -255,6 +296,109 @@
                 console.log('Books button clicked');
                 console.log('is booksScreen in screens object:', 'booksScreen' in window.screens);
             });
+        });
+
+        // اضافه کردن به history مرورگر هنگام نمایش صفحات مختلف
+        window.addEventListener('DOMContentLoaded', () => {
+            // اضافه کردن event listener به همه دکمه‌های ناوبری بین صفحات
+            document.querySelectorAll('.back-button, .chapter-card, .action-button, .question-card').forEach(button => {
+                button.addEventListener('click', function() {
+                    // اضافه کردن حالت فعلی به تاریخچه قبل از تغییر صفحه
+                    const currentScreen = document.querySelector('.screen.active')?.id || 'homeScreen';
+                    window.history.pushState({screen: currentScreen}, document.title);
+                    
+                    // اسکرول به بالای صفحه هنگام تغییر صفحه
+                    window.scrollTo(0, 0);
+                });
+            });
+
+            // هندل کردن دکمه بازگشت مرورگر
+            window.addEventListener('popstate', function() {
+                // بررسی صفحه فعال کنونی
+                const activeScreen = document.querySelector('.screen.active');
+                if (activeScreen) {
+                    // پیدا کردن دکمه بازگشت در صفحه فعال
+                    const backButton = activeScreen.querySelector('.back-button');
+                    if (backButton) {
+                        // شبیه‌سازی کلیک روی دکمه بازگشت
+                        backButton.click();
+                        return;
+                    }
+                }
+                
+                // اگر دکمه بازگشت پیدا نشد، به صفحه اصلی برمی‌گردیم
+                showScreen('homeScreen');
+            });
+            
+            // نمایش دکمه بازگشت ثابت هنگام اسکرول
+            window.addEventListener('scroll', function() {
+                // اگر بیشتر از 200 پیکسل اسکرول شد، دکمه بازگشت ثابت را نمایش بده
+                const fixedBackButtons = document.querySelectorAll('.fixed-back-button');
+                const activeScreen = document.querySelector('.screen.active');
+                
+                if (window.scrollY > 200 && activeScreen) {
+                    const activeScreenId = activeScreen.id;
+                    
+                    // نمایش دکمه بازگشت مربوط به صفحه فعال
+                    fixedBackButtons.forEach(button => {
+                        if (button.id.includes(activeScreenId.replace('Screen', ''))) {
+                            button.classList.add('visible');
+                        } else {
+                            button.classList.remove('visible');
+                        }
+                    });
+                } else {
+                    // مخفی کردن همه دکمه‌های بازگشت ثابت
+                    fixedBackButtons.forEach(button => {
+                        button.classList.remove('visible');
+                    });
+                }
+            });
+            
+            // اضافه کردن event listener به دکمه‌های بازگشت ثابت
+            document.querySelectorAll('.fixed-back-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    // پیدا کردن دکمه بازگشت متناظر و کلیک روی آن
+                    const backButtonId = this.id.replace('fixed', '');
+                    const backButton = document.getElementById(backButtonId);
+                    if (backButton) {
+                        backButton.click();
+                    }
+                });
+            });
+            
+            // تابع نمایش صفحه - اصلاح شده برای اسکرول به بالا
+            window.showScreen = function(screenId) {
+                // مخفی کردن همه صفحات
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                
+                // نمایش صفحه مورد نظر
+                const targetScreen = document.getElementById(screenId);
+                if (targetScreen) {
+                    targetScreen.classList.add('active');
+                    // اسکرول به بالای صفحه
+                    window.scrollTo(0, 0);
+                }
+            };
+            
+            // افزودن منطق اسکرول به بالا برای سایر توابع مرتبط
+            if (window.loadChapterQuestions) {
+                const originalLoadChapterQuestions = window.loadChapterQuestions;
+                window.loadChapterQuestions = function(chapterId) {
+                    originalLoadChapterQuestions(chapterId);
+                    window.scrollTo(0, 0);
+                };
+            }
+            
+            if (window.loadQuestion) {
+                const originalLoadQuestion = window.loadQuestion;
+                window.loadQuestion = function(questionId) {
+                    originalLoadQuestion(questionId);
+                    window.scrollTo(0, 0);
+                };
+            }
         });
     </script>
 </body>
