@@ -238,6 +238,14 @@ function showScreen(screenId) {
         screen.classList.remove('active');
     });
     screens[screenId].classList.add('active');
+    
+    // Add to browser history
+    const state = { screen: screenId };
+    
+    // Only add history state if it's different from the current one
+    if (!history.state || history.state.screen !== screenId) {
+        history.pushState(state, '', `#${screenId}`);
+    }
 }
 
 // Update navigation buttons state
@@ -286,16 +294,29 @@ function generateQuestionsChapters() {
         sortedChapters.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
+            chapterElement.setAttribute('data-chapter-index', index);
+            
+            // حذف شماره فصل از ابتدای عنوان
+            let chapterTitle = chapter.name;
+            if (chapterTitle.match(/^\d+\s*\.*\s*/) || chapterTitle.match(/^فصل\s*\d+\s*\.*\s*/)) {
+                chapterTitle = chapterTitle.replace(/^\d+\s*\.*\s*/, '').replace(/^فصل\s*\d+\s*\.*\s*/, '');
+            }
+            
             chapterElement.innerHTML = `
                 <div class="chapter-icon">
                     <span class="material-icons">auto_stories</span>
                 </div>
-                <h3>${chapter.name}</h3>
+                <h3>${chapterTitle}</h3>
                 <div class="chapter-description">حل مسائل</div>
             `;
             chapterElement.addEventListener('click', () => {
                 currentChapter = chapter;
-                questionsListTitle.innerHTML = `<span class="material-icons">help_outline</span>${chapter.name}`;
+                // حذف شماره فصل از عنوان در نمایش جزئیات هم
+                let displayTitle = chapter.name;
+                if (displayTitle.match(/^\d+\s*\.*\s*/) || displayTitle.match(/^فصل\s*\d+\s*\.*\s*/)) {
+                    displayTitle = displayTitle.replace(/^\d+\s*\.*\s*/, '').replace(/^فصل\s*\d+\s*\.*\s*/, '');
+                }
+                questionsListTitle.innerHTML = `<span class="material-icons">help_outline</span>${displayTitle}`;
                 generateQuestions(chapter);
                 showScreen('questionsListScreen');
             });
@@ -307,6 +328,7 @@ function generateQuestionsChapters() {
         for (let i = 1; i <= 20; i++) {
             const chapter = document.createElement('div');
             chapter.className = 'chapter-card';
+            chapter.setAttribute('data-chapter-index', i - 1);
             chapter.innerHTML = `
                 <div class="chapter-icon">
                     <span class="material-icons">auto_stories</span>
@@ -347,14 +369,27 @@ function generateTutorialsChapters() {
         sortedChapters.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
+            chapterElement.setAttribute('data-chapter-index', index);
+            
+            // حذف شماره فصل از ابتدای عنوان
+            let chapterTitle = chapter.name;
+            if (chapterTitle.match(/^\d+\s*\.*\s*/) || chapterTitle.match(/^فصل\s*\d+\s*\.*\s*/)) {
+                chapterTitle = chapterTitle.replace(/^\d+\s*\.*\s*/, '').replace(/^فصل\s*\d+\s*\.*\s*/, '');
+            }
+            
             chapterElement.innerHTML = `
                 <div class="chapter-icon">
                     <span class="material-icons">menu_book</span>
                 </div>
-                <h3>${chapter.name}</h3>
+                <h3>${chapterTitle}</h3>
                 <div class="chapter-description">آموزش‌ها</div>
             `;
             chapterElement.addEventListener('click', () => {
+                // حذف شماره فصل از عنوان در نمایش جزئیات هم
+                let displayTitle = chapter.name;
+                if (displayTitle.match(/^\d+\s*\.*\s*/) || displayTitle.match(/^فصل\s*\d+\s*\.*\s*/)) {
+                    displayTitle = displayTitle.replace(/^\d+\s*\.*\s*/, '').replace(/^فصل\s*\d+\s*\.*\s*/, '');
+                }
                 showTutorialDetails(chapter, index);
             });
             tutorialsChaptersList.appendChild(chapterElement);
@@ -376,11 +411,16 @@ function generateTutorialsChapters() {
         defaultChapters.forEach((chapter, index) => {
             const chapterElement = document.createElement('div');
             chapterElement.className = 'chapter-card';
+            chapterElement.setAttribute('data-chapter-index', index);
+            
+            // حذف شماره فصل از ابتدای عنوان
+            let chapterTitle = chapter.name;
+            
             chapterElement.innerHTML = `
                 <div class="chapter-icon">
                     <span class="material-icons">menu_book</span>
                 </div>
-                <h3>${chapter.name}</h3>
+                <h3>${chapterTitle}</h3>
                 <div class="chapter-description">آموزش‌ها</div>
             `;
             chapterElement.addEventListener('click', () => {
@@ -725,18 +765,64 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Function to set the theme
     function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
+        // Add a fade-out effect to the body
+        document.body.style.opacity = "0.8";
         
-        // Update icon based on theme
-        if (theme === 'dark') {
-            themeIcon.textContent = 'light_mode'; // Show light mode icon when in dark mode
-        } else {
-            themeIcon.textContent = 'dark_mode'; // Show dark mode icon when in light mode
-        }
+        // Set the theme after a small delay to allow for transition
+        setTimeout(() => {
+            document.documentElement.setAttribute('data-theme', theme);
+            document.body.setAttribute('data-theme', theme);
+            
+            // Update all elements with class that might need theme changes
+            const themeElements = document.querySelectorAll('.app-header, .main-menu, .main-actions, .chapter-card, .question-card, .screen-title, .footer');
+            themeElements.forEach(element => {
+                element.setAttribute('data-theme', theme);
+            });
+            
+            // Update icon based on current theme
+            const themeIcon = document.querySelector('.theme-toggle .material-icons');
+            if (theme === 'dark') {
+                themeIcon.textContent = 'light_mode'; // Sun icon for dark mode
+            } else {
+                themeIcon.textContent = 'dark_mode'; // Moon icon for light mode
+            }
+
+            // Fade back in
+            document.body.style.opacity = "1";
+        }, 50);
     }
     
     // Add a timeout to check for Chapter 1 data after everything is loaded
     setTimeout(checkChapter1Data, 2000);
+    
+    // Handle browser back button with popstate event
+    window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.screen) {
+            // Show the screen without adding a new history entry
+            Object.values(screens).forEach(screen => {
+                screen.classList.remove('active');
+            });
+            screens[event.state.screen].classList.add('active');
+        } else {
+            // Default to main screen if there's no state
+            Object.values(screens).forEach(screen => {
+                screen.classList.remove('active');
+            });
+            screens.mainScreen.classList.add('active');
+        }
+    });
+    
+    // Initialize history with the current screen
+    const initialScreen = 'mainScreen';
+    history.replaceState({ screen: initialScreen }, '', `#${initialScreen}`);
+
+    // افزودن رویداد برای دکمه بازگشت بالایی
+    const topBackButton = document.getElementById('topBackButton');
+    if (topBackButton) {
+        topBackButton.addEventListener('click', () => {
+            showScreen('questionsChaptersScreen');
+        });
+    }
 });
 
 // Function to specifically check Chapter 1 data

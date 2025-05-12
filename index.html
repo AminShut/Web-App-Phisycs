@@ -12,18 +12,6 @@
 <body>
     <!-- Header -->
     <header class="app-header">
-        <div class="header-logo">
-            <div class="atom-logo">
-                <div class="orbit-1"></div>
-                <div class="orbit-2"></div>
-                <div class="orbit-3"></div>
-            </div>
-            <div class="header-title">
-                <h1>فیزیک هالیدی</h1>
-                <p>آموزش و حل مسائل فیزیک</p>
-            </div>
-        </div>
-        
         <div class="theme-toggle" id="themeToggle">
             <span class="material-icons">dark_mode</span>
         </div>
@@ -34,17 +22,11 @@
             <!-- Main Screen -->
             <div class="screen active" id="mainScreen">
                 <div class="main-header">
-                    <div class="physics-logo">
-                        <div class="atom-core"></div>
-                        <div class="electron-orbit orbit-a"></div>
-                        <div class="electron-orbit orbit-b"></div>
-                        <div class="electron-orbit orbit-c"></div>
-                        <div class="electron electron-1"></div>
-                        <div class="electron electron-2"></div>
-                        <div class="electron electron-3"></div>
+                    <div class="main-header-icon large-icon">
+                        <span class="material-icons">school</span>
                     </div>
                     <h1 class="app-title">فیزیک هالیدی</h1>
-                    <p class="app-subtitle">آموزش و حل مسائل فیزیک</p>
+                    <h3 class="university-title">دانشگاه تربیت دبیر شهید رجایی</h3>
                 </div>
                 
                 <div class="main-menu">
@@ -53,7 +35,7 @@
                         <span>حل مسائل</span>
                     </div>
                     <div class="action-button" id="tutorialsBtn">
-                        <span class="material-icons">menu_book</span>
+                        <span class="material-icons">biotech</span>
                         <span>آموزش‌ها</span>
                     </div>
                 </div>
@@ -64,7 +46,7 @@
                         <span>درباره ما</span>
                     </div>
                     <div class="action-button" id="booksBtn">
-                        <span class="material-icons">menu_book</span>
+                        <span class="material-icons">auto_stories</span>
                         <span>کتاب‌ها</span>
                     </div>
                     <div class="action-button">
@@ -76,14 +58,15 @@
             
             <!-- Books Screen -->
             <div class="screen" id="booksScreen">
-                <button class="back-button" id="backToMainFromBooks">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت
-                </button>
-                <h2 class="screen-title">
-                    <span class="material-icons">menu_book</span>
-                    دریافت کتاب‌های فیزیک هالیدی
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title">
+                        دریافت کتاب‌های فیزیک هالیدی
+                    </h2>
+                    <button class="back-button" id="backToMainFromBooks">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="books-container">
                     <div class="book-card">
                         <div class="book-icon">
@@ -113,14 +96,15 @@
             
             <!-- About Us Screen -->
             <div class="screen" id="aboutUsScreen">
-                <button class="back-button" id="backToMainFromAboutUs">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت
-                </button>
-                <h2 class="screen-title">
-                    <span class="material-icons">info</span>
-                    درباره ما
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title">
+                        درباره ما
+                    </h2>
+                    <button class="back-button" id="backToMainFromAboutUs">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="about-section">
                     <div class="about-icon">
                         <span class="material-icons">school</span>
@@ -139,14 +123,15 @@
 
             <!-- Questions Chapters Screen -->
             <div class="screen" id="questionsChaptersScreen">
-                <button class="back-button" id="backToMainFromQuestionsChapters">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت
-                </button>
-                <h2 class="screen-title">
-                    <span class="material-icons">help_outline</span>
-                    فصل‌های کتاب
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title">
+                        فصل‌های کتاب
+                    </h2>
+                    <button class="back-button" id="backToMainFromQuestionsChapters">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="chapter-list" id="questionsChaptersList">
                     <!-- Chapters will be dynamically generated here -->
                 </div>
@@ -154,14 +139,15 @@
 
             <!-- Questions List Screen -->
             <div class="screen" id="questionsListScreen">
-                <button class="back-button" id="backToQuestionsChapters">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت به فصل‌ها
-                </button>
-                <h2 class="screen-title" id="questionsListTitle">
-                    <span class="material-icons">help_outline</span>
-                    سوالات
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title" id="questionsListTitle">
+                        سوالات
+                    </h2>
+                    <button class="back-button" id="backToQuestionsChapters">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="questions-container" id="questionsList">
                     <!-- Questions will be dynamically generated here -->
                 </div>
@@ -169,26 +155,27 @@
 
             <!-- Question Detail Screen -->
             <div class="screen" id="questionDetailScreen">
-                <button class="back-button" id="backToQuestionsList">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت به سوالات
-                </button>
-                <h2 class="screen-title" id="questionDetailTitle">
-                    <span class="material-icons">help_outline</span>
-                    جزئیات سوال
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title" id="questionDetailTitle">
+                        جزئیات سوال
+                    </h2>
+                    <button class="back-button" id="backToQuestionsList">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="question-content">
                     <div class="question-text" id="questionText">
                         لینک سوال اینجا قرار می‌گیرد.
                     </div>
                     <div class="question-navigation">
                         <button class="nav-button prev-button" id="prevQuestionBtn">
+                            <span class="material-icons">arrow_back</span>
                             <span>سوال قبلی</span>
-                            <span class="material-icons">arrow_forward</span>
                         </button>
                         <button class="nav-button next-button" id="nextQuestionBtn">
                             <span>سوال بعدی</span>
-                            <span class="material-icons">arrow_back</span>
+                            <span class="material-icons">arrow_forward</span>
                         </button>
                     </div>
                 </div>
@@ -196,14 +183,15 @@
 
             <!-- Tutorials Chapters Screen -->
             <div class="screen" id="tutorialsChaptersScreen">
-                <button class="back-button" id="backToMainFromTutorialsChapters">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت
-                </button>
-                <h2 class="screen-title">
-                    <span class="material-icons">menu_book</span>
-                    آموزش‌ها
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title">
+                        آموزش‌ها
+                    </h2>
+                    <button class="back-button" id="backToMainFromTutorialsChapters">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="chapter-list" id="tutorialsChaptersList">
                     <!-- Chapters will be dynamically generated here -->
                 </div>
@@ -211,26 +199,27 @@
 
             <!-- Tutorial Detail Screen -->
             <div class="screen" id="tutorialDetailScreen">
-                <button class="back-button" id="backToTutorialsChapters">
-                    <span class="material-icons">arrow_back</span>
-                    بازگشت به فصل‌ها
-                </button>
-                <h2 class="screen-title" id="tutorialDetailTitle">
-                    <span class="material-icons">menu_book</span>
-                    آموزش
-                </h2>
+                <div class="screen-header-container">
+                    <h2 class="screen-title" id="tutorialDetailTitle">
+                        آموزش
+                    </h2>
+                    <button class="back-button" id="backToTutorialsChapters">
+                        <span class="material-icons">arrow_back</span>
+                        بازگشت
+                    </button>
+                </div>
                 <div class="question-content">
                     <div class="tutorial-text" id="tutorialText">
                         لینک آموزش اینجا قرار می‌گیرد.
                     </div>
                     <div class="tutorial-navigation">
                         <button class="nav-button prev-button" id="prevTutorialBtn">
+                            <span class="material-icons">arrow_back</span>
                             <span>آموزش قبلی</span>
-                            <span class="material-icons">arrow_forward</span>
                         </button>
                         <button class="nav-button next-button" id="nextTutorialBtn">
                             <span>آموزش بعدی</span>
-                            <span class="material-icons">arrow_back</span>
+                            <span class="material-icons">arrow_forward</span>
                         </button>
                     </div>
                 </div>
@@ -245,14 +234,6 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-        <div class="footer-logo">
-            <div class="footer-icon">
-                <span class="material-icons">science</span>
-            </div>
-        </div>
-        <div class="footer-university">
-            دانشگاه تربیت دبیر شهید رجایی
-        </div>
         <div class="footer-copyright">
             © 2025 فیزیک هالیدی. تمامی حقوق محفوظ است.
         </div>
