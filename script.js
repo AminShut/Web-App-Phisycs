@@ -237,16 +237,32 @@ const tutorialDetailTitle = document.getElementById('tutorialDetailTitle');
 
 // Navigation function - اصلاح شده برای پشتیبانی از دکمه بازگشت مرورگر
 function showScreen(screenId, addToHistory = true) {
+    console.log(`Showing screen: ${screenId}, addToHistory: ${addToHistory}`);
+    
     // مخفی کردن همه صفحات
     Object.values(screens).forEach(screen => {
         screen.classList.remove('active');
     });
     
     // نمایش صفحه مورد نظر
-    screens[screenId].classList.add('active');
+    if (screens[screenId]) {
+        screens[screenId].classList.add('active');
+    } else {
+        console.error(`Screen ${screenId} not found!`);
+        // نمایش صفحه اصلی در صورت خطا
+        screens.mainScreen.classList.add('active');
+        screenId = 'mainScreen';
+    }
     
     // اضافه کردن به تاریخچه و تاریخچه مرورگر
     if (addToHistory) {
+        // اگر این صفحه قبلاً در تاریخچه بوده و آخرین صفحه نیست، حذف تکرارها
+        const historyIndex = screenHistory.indexOf(screenId);
+        if (historyIndex !== -1 && historyIndex !== screenHistory.length - 1) {
+            // حذف این صفحه از محل قبلی تا بتوانیم آن را در انتها اضافه کنیم
+            screenHistory.splice(historyIndex, 1);
+        }
+        
         // اضافه کردن به تاریخچه داخلی
         screenHistory.push(screenId);
         
@@ -254,9 +270,12 @@ function showScreen(screenId, addToHistory = true) {
         const state = { screen: screenId, history: screenHistory };
         history.pushState(state, '', `#${screenId}`);
         
-        // اسکرول به بالای صفحه
-        window.scrollTo(0, 0);
+        console.log(`History state: ${JSON.stringify(state)}`);
+        console.log(`Current history stack: ${JSON.stringify(screenHistory)}`);
     }
+    
+    // اسکرول به بالای صفحه
+    window.scrollTo(0, 0);
 }
 
 // Update navigation buttons state
@@ -816,63 +835,83 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('popstate', function(event) {
         console.log("Browser back button pressed", event.state);
         
-        if (event.state && event.state.screen) {
-            // کاهش تاریخچه داخلی
-            if (screenHistory.length > 1) {
-                screenHistory.pop();
-            }
-            
-            // شناسایی صفحه فعلی
-            const currentScreen = document.querySelector('.screen.active').id;
-            console.log("Current active screen:", currentScreen);
-            
-            // تشخیص دکمه بازگشت مناسب برای صفحه فعلی
-            let backButtonId = null;
-            
-            switch (currentScreen) {
-                case 'questionsChaptersScreen':
-                    backButtonId = 'backToMainFromQuestionsChapters';
-                    break;
-                case 'tutorialsChaptersScreen':
-                    backButtonId = 'backToMainFromTutorialsChapters';
-                    break;
-                case 'aboutUsScreen':
-                    backButtonId = 'backToMainFromAboutUs';
-                    break;
-                case 'booksScreen':
-                    backButtonId = 'backToMainFromBooks';
-                    break;
-                case 'questionsListScreen':
-                    backButtonId = 'backToQuestionsChapters';
-                    break;
-                case 'questionDetailScreen':
-                    backButtonId = 'backToQuestionsList';
-                    break;
-                case 'tutorialDetailScreen':
-                    backButtonId = 'backToTutorialsChapters';
-                    break;
-            }
-            
-            // کلیک روی دکمه بازگشت مناسب
-            if (backButtonId) {
-                console.log("Clicking back button:", backButtonId);
-                document.getElementById(backButtonId).click();
-                return;
-            }
-            
-            // اگر دکمه بازگشت مناسب پیدا نشد، مستقیماً صفحه را نمایش بده
-            Object.values(screens).forEach(screen => {
-                screen.classList.remove('active');
-            });
-            screens[event.state.screen].classList.add('active');
-        } else {
-            // پیش‌فرض: بازگشت به صفحه اصلی
-            Object.values(screens).forEach(screen => {
-                screen.classList.remove('active');
-            });
+        // اگر صفحه فعلی را تشخیص بدهیم
+        const activeScreen = document.querySelector('.screen.active');
+        if (!activeScreen) {
+            // اگر صفحه‌ای فعال نیست، به صفحه اصلی برگرد
             screens.mainScreen.classList.add('active');
             screenHistory = ['mainScreen'];
+            return;
         }
+        
+        const currentScreenId = activeScreen.id;
+        console.log("Current active screen:", currentScreenId);
+        
+        // تشخیص دکمه بازگشت مناسب برای صفحه فعلی
+        let backButtonId = null;
+        
+        switch (currentScreenId) {
+            case 'questionsChaptersScreen':
+                backButtonId = 'backToMainFromQuestionsChapters';
+                break;
+            case 'tutorialsChaptersScreen':
+                backButtonId = 'backToMainFromTutorialsChapters';
+                break;
+            case 'aboutUsScreen':
+                backButtonId = 'backToMainFromAboutUs';
+                break;
+            case 'booksScreen':
+                backButtonId = 'backToMainFromBooks';
+                break;
+            case 'questionsListScreen':
+                backButtonId = 'backToQuestionsChapters';
+                break;
+            case 'questionDetailScreen':
+                backButtonId = 'backToQuestionsList';
+                break;
+            case 'tutorialDetailScreen':
+                backButtonId = 'backToTutorialsChapters';
+                break;
+            case 'mainScreen':
+                // در صفحه اصلی هستیم، اما event.state خالی نیست
+                // می‌خواهیم اپلیکیشن را ترک نکنیم
+                window.history.pushState({ noExit: true }, document.title);
+                return;
+        }
+        
+        // کلیک روی دکمه بازگشت مناسب
+        if (backButtonId) {
+            console.log("Clicking back button:", backButtonId);
+            const backButton = document.getElementById(backButtonId);
+            if (backButton) {
+                backButton.click();
+                // جلوگیری از اجرای کدهای بعدی
+                return;
+            }
+        }
+        
+        // اگر دکمه بازگشت مناسب پیدا نشد یا عمل نکرد:
+        
+        // اگر تاریخچه داخلی وجود دارد از آن استفاده کنیم
+        if (screenHistory.length > 1) {
+            screenHistory.pop(); // حذف صفحه فعلی
+            const previousScreen = screenHistory[screenHistory.length - 1];
+            console.log("Using screenHistory to go back to:", previousScreen);
+            
+            // نمایش صفحه قبلی
+            Object.values(screens).forEach(screen => {
+                screen.classList.remove('active');
+            });
+            screens[previousScreen].classList.add('active');
+            return;
+        }
+        
+        // در نهایت به صفحه اصلی برگردیم
+        Object.values(screens).forEach(screen => {
+            screen.classList.remove('active');
+        });
+        screens.mainScreen.classList.add('active');
+        screenHistory = ['mainScreen'];
     });
     
     // افزودن رویداد برای دکمه بازگشت بالایی
@@ -882,7 +921,41 @@ document.addEventListener('DOMContentLoaded', function() {
             showScreen('questionsChaptersScreen');
         });
     }
+    
+    // پیکربندی تاریخچه اولیه
+    checkInitialHash();
+    
+    // اطمینان از اینکه تمام صفحات تعریف شده‌اند
+    const screensValid = Object.values(screens).every(screen => screen !== null);
+    if (!screensValid) {
+        console.error("Some screens are not defined properly!", screens);
+    } else {
+        console.log("All screens initialized properly:", Object.keys(screens));
+    }
 });
+
+// بررسی و تنظیم اولیه صفحه از هش URL
+function checkInitialHash() {
+    // بررسی صفحه اولیه از URL
+    const hash = window.location.hash;
+    let initialScreen = 'mainScreen';
+    
+    if (hash && hash.length > 1) {
+        const targetScreen = hash.substring(1); // حذف کاراکتر #
+        if (screens[targetScreen]) {
+            initialScreen = targetScreen;
+        }
+    }
+    
+    console.log("Initial screen set to:", initialScreen);
+    
+    // تنظیم تاریخچه اولیه
+    screenHistory = [initialScreen];
+    history.replaceState({ screen: initialScreen, history: screenHistory }, '', `#${initialScreen}`);
+    
+    // نمایش صفحه اولیه
+    showScreen(initialScreen, false);
+}
 
 // Function to specifically check Chapter 1 data
 function checkChapter1Data() {
