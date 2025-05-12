@@ -400,6 +400,33 @@
                 };
             }
         });
+
+        // کد اضافی برای پشتیبانی بهتر از دکمه بازگشت مرورگر در موبایل
+        window.addEventListener('load', function() {
+            // ایجاد یک state اولیه در تاریخچه برای جلوگیری از خارج شدن از اپلیکیشن با دکمه بازگشت
+            window.history.pushState({ noExit: true }, document.title);
+            
+            // دکمه بازگشت فقط در صفحه اصلی باعث خروج شود
+            window.addEventListener('popstate', function(e) {
+                if (e.state === null) {
+                    // اگر در صفحه اصلی هستیم، اجازه بده back عادی کار کند
+                    if (document.querySelector('#mainScreen.active')) {
+                        // باز کردن یک دیالوگ تأیید برای خروج (اختیاری)
+                        /*
+                        if (confirm('آیا می‌خواهید از برنامه خارج شوید؟')) {
+                            window.close(); // در بعضی مرورگرها کار نمی‌کند
+                        } else {
+                            window.history.pushState({ noExit: true }, document.title);
+                        }
+                        */
+                    } else {
+                        // اگر در صفحه اصلی نیستیم، به صفحه اصلی برویم
+                        window.history.pushState({ noExit: true }, document.title);
+                        showScreen('mainScreen');
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html> 

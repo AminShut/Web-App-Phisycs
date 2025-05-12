@@ -2201,7 +2201,6 @@ main {
     background: radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.15), transparent 70%);
     pointer-events: none;
 }
-
 /* استایل برای دکمه بازگشت بالایی */
 .top-back-button {
     position: fixed !important;
@@ -2678,3 +2677,4 @@ main {
         font-size: 0.85rem;
     }
 }
+

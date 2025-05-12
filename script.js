@@ -29,6 +29,9 @@ let tutorialChapters = [];
 // Load chapters data
 let foldersData = null;
 
+// نگهداری تاریخچه نمایش صفحات برای پشتیبانی از دکمه بازگشت مرورگر
+let screenHistory = ['mainScreen'];
+
 // Load JSON data using XMLHttpRequest instead of fetch
 function loadJSONData() {
     console.log("Attempting to load JSON data...");
@@ -232,19 +235,27 @@ const questionsListTitle = document.getElementById('questionsListTitle');
 const questionDetailTitle = document.getElementById('questionDetailTitle');
 const tutorialDetailTitle = document.getElementById('tutorialDetailTitle');
 
-// Navigation function
-function showScreen(screenId) {
+// Navigation function - اصلاح شده برای پشتیبانی از دکمه بازگشت مرورگر
+function showScreen(screenId, addToHistory = true) {
+    // مخفی کردن همه صفحات
     Object.values(screens).forEach(screen => {
         screen.classList.remove('active');
     });
+    
+    // نمایش صفحه مورد نظر
     screens[screenId].classList.add('active');
     
-    // Add to browser history
-    const state = { screen: screenId };
-    
-    // Only add history state if it's different from the current one
-    if (!history.state || history.state.screen !== screenId) {
+    // اضافه کردن به تاریخچه و تاریخچه مرورگر
+    if (addToHistory) {
+        // اضافه کردن به تاریخچه داخلی
+        screenHistory.push(screenId);
+        
+        // اضافه کردن به تاریخچه مرورگر
+        const state = { screen: screenId, history: screenHistory };
         history.pushState(state, '', `#${screenId}`);
+        
+        // اسکرول به بالای صفحه
+        window.scrollTo(0, 0);
     }
 }
 
@@ -744,6 +755,12 @@ document.getElementById('nextTutorialBtn').addEventListener('click', () => {
 
 // Call the JSON loading function when the page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // اضافه کردن وضعیت اولیه به تاریخچه مرورگر
+    const initialScreen = 'mainScreen';
+    screenHistory = [initialScreen];
+    history.replaceState({ screen: initialScreen, history: screenHistory }, '', `#${initialScreen}`);
+    
+    // سایر کدهای DOMContentLoaded
     loadJSONData();
     
     // Theme toggle functionality
@@ -795,27 +812,69 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add a timeout to check for Chapter 1 data after everything is loaded
     setTimeout(checkChapter1Data, 2000);
     
-    // Handle browser back button with popstate event
+    // Handle browser back button with popstate event - بهبود یافته
     window.addEventListener('popstate', function(event) {
+        console.log("Browser back button pressed", event.state);
+        
         if (event.state && event.state.screen) {
-            // Show the screen without adding a new history entry
+            // کاهش تاریخچه داخلی
+            if (screenHistory.length > 1) {
+                screenHistory.pop();
+            }
+            
+            // شناسایی صفحه فعلی
+            const currentScreen = document.querySelector('.screen.active').id;
+            console.log("Current active screen:", currentScreen);
+            
+            // تشخیص دکمه بازگشت مناسب برای صفحه فعلی
+            let backButtonId = null;
+            
+            switch (currentScreen) {
+                case 'questionsChaptersScreen':
+                    backButtonId = 'backToMainFromQuestionsChapters';
+                    break;
+                case 'tutorialsChaptersScreen':
+                    backButtonId = 'backToMainFromTutorialsChapters';
+                    break;
+                case 'aboutUsScreen':
+                    backButtonId = 'backToMainFromAboutUs';
+                    break;
+                case 'booksScreen':
+                    backButtonId = 'backToMainFromBooks';
+                    break;
+                case 'questionsListScreen':
+                    backButtonId = 'backToQuestionsChapters';
+                    break;
+                case 'questionDetailScreen':
+                    backButtonId = 'backToQuestionsList';
+                    break;
+                case 'tutorialDetailScreen':
+                    backButtonId = 'backToTutorialsChapters';
+                    break;
+            }
+            
+            // کلیک روی دکمه بازگشت مناسب
+            if (backButtonId) {
+                console.log("Clicking back button:", backButtonId);
+                document.getElementById(backButtonId).click();
+                return;
+            }
+            
+            // اگر دکمه بازگشت مناسب پیدا نشد، مستقیماً صفحه را نمایش بده
             Object.values(screens).forEach(screen => {
                 screen.classList.remove('active');
             });
             screens[event.state.screen].classList.add('active');
         } else {
-            // Default to main screen if there's no state
+            // پیش‌فرض: بازگشت به صفحه اصلی
             Object.values(screens).forEach(screen => {
                 screen.classList.remove('active');
             });
             screens.mainScreen.classList.add('active');
+            screenHistory = ['mainScreen'];
         }
     });
     
-    // Initialize history with the current screen
-    const initialScreen = 'mainScreen';
-    history.replaceState({ screen: initialScreen }, '', `#${initialScreen}`);
-
     // افزودن رویداد برای دکمه بازگشت بالایی
     const topBackButton = document.getElementById('topBackButton');
     if (topBackButton) {
