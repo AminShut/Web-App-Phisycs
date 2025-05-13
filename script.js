@@ -16,6 +16,15 @@ const questionsList = document.getElementById('questionsList');
 const questionText = document.getElementById('questionText');
 const tutorialText = document.getElementById('tutorialText');
 
+// Fixed back buttons
+const fixedBackToMainFromQuestionsChapters = document.getElementById('fixedBackToMainFromQuestionsChapters');
+const fixedBackToMainFromTutorialsChapters = document.getElementById('fixedBackToMainFromTutorialsChapters');
+const fixedBackToMainFromAboutUs = document.getElementById('fixedBackToMainFromAboutUs');
+const fixedBackToMainFromBooks = document.getElementById('fixedBackToMainFromBooks');
+const fixedBackToQuestionsChapters = document.getElementById('fixedBackToQuestionsChapters');
+const fixedBackToQuestionsList = document.getElementById('fixedBackToQuestionsList');
+const fixedBackToTutorialsChapters = document.getElementById('fixedBackToTutorialsChapters');
+
 // Navigation variables
 let currentChapter = '';
 let currentQuestion = '';
@@ -284,8 +293,8 @@ function updateNavigationButtons() {
     const nextQuestionBtn = document.getElementById('nextQuestionBtn');
     
     if (chapterQuestions.length > 0) {
-        prevQuestionBtn.disabled = currentQuestionIndex <= 0;
-        nextQuestionBtn.disabled = currentQuestionIndex >= chapterQuestions.length - 1;
+        prevQuestionBtn.disabled = currentQuestionIndex >= chapterQuestions.length - 1;
+        nextQuestionBtn.disabled = currentQuestionIndex <= 0;
     } else {
         prevQuestionBtn.disabled = true;
         nextQuestionBtn.disabled = true;
@@ -297,8 +306,8 @@ function updateTutorialNavigationButtons() {
     const nextTutorialBtn = document.getElementById('nextTutorialBtn');
     
     if (tutorialChapters.length > 0) {
-        prevTutorialBtn.disabled = currentTutorialIndex <= 0;
-        nextTutorialBtn.disabled = currentTutorialIndex >= tutorialChapters.length - 1;
+        prevTutorialBtn.disabled = currentTutorialIndex >= tutorialChapters.length - 1;
+        nextTutorialBtn.disabled = currentTutorialIndex <= 0;
     } else {
         prevTutorialBtn.disabled = true;
         nextTutorialBtn.disabled = true;
@@ -749,26 +758,26 @@ backToTutorialsChapters.addEventListener('click', () => {
 
 // Navigation buttons event listeners
 document.getElementById('prevQuestionBtn').addEventListener('click', () => {
-    if (currentQuestionIndex > 0 && chapterQuestions.length > 0) {
-        showQuestionDetails(chapterQuestions[currentQuestionIndex - 1], currentQuestionIndex - 1, currentChapter);
-    }
-});
-
-document.getElementById('nextQuestionBtn').addEventListener('click', () => {
     if (currentQuestionIndex < chapterQuestions.length - 1) {
         showQuestionDetails(chapterQuestions[currentQuestionIndex + 1], currentQuestionIndex + 1, currentChapter);
     }
 });
 
+document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+    if (currentQuestionIndex > 0 && chapterQuestions.length > 0) {
+        showQuestionDetails(chapterQuestions[currentQuestionIndex - 1], currentQuestionIndex - 1, currentChapter);
+    }
+});
+
 document.getElementById('prevTutorialBtn').addEventListener('click', () => {
-    if (currentTutorialIndex > 0 && tutorialChapters.length > 0) {
-        showTutorialDetails(tutorialChapters[currentTutorialIndex - 1], currentTutorialIndex - 1);
+    if (currentTutorialIndex < tutorialChapters.length - 1) {
+        showTutorialDetails(tutorialChapters[currentTutorialIndex + 1], currentTutorialIndex + 1);
     }
 });
 
 document.getElementById('nextTutorialBtn').addEventListener('click', () => {
-    if (currentTutorialIndex < tutorialChapters.length - 1) {
-        showTutorialDetails(tutorialChapters[currentTutorialIndex + 1], currentTutorialIndex + 1);
+    if (currentTutorialIndex > 0 && tutorialChapters.length > 0) {
+        showTutorialDetails(tutorialChapters[currentTutorialIndex - 1], currentTutorialIndex - 1);
     }
 });
 
@@ -932,6 +941,74 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.log("All screens initialized properly:", Object.keys(screens));
     }
+
+    // Handle fixed back buttons
+    if (fixedBackToMainFromQuestionsChapters) {
+        fixedBackToMainFromQuestionsChapters.addEventListener('click', function() {
+            showScreen('mainScreen');
+        });
+    }
+    
+    if (fixedBackToMainFromTutorialsChapters) {
+        fixedBackToMainFromTutorialsChapters.addEventListener('click', function() {
+            showScreen('mainScreen');
+        });
+    }
+    
+    if (fixedBackToMainFromAboutUs) {
+        fixedBackToMainFromAboutUs.addEventListener('click', function() {
+            showScreen('mainScreen');
+        });
+    }
+    
+    if (fixedBackToMainFromBooks) {
+        fixedBackToMainFromBooks.addEventListener('click', function() {
+            showScreen('mainScreen');
+        });
+    }
+    
+    if (fixedBackToQuestionsChapters) {
+        fixedBackToQuestionsChapters.addEventListener('click', function() {
+            showScreen('questionsChaptersScreen');
+        });
+    }
+    
+    if (fixedBackToQuestionsList) {
+        fixedBackToQuestionsList.addEventListener('click', function() {
+            showScreen('questionsListScreen');
+        });
+    }
+    
+    if (fixedBackToTutorialsChapters) {
+        fixedBackToTutorialsChapters.addEventListener('click', function() {
+            showScreen('tutorialsChaptersScreen');
+        });
+    }
+    
+    // نمایش یا مخفی کردن دکمه بازگشت ثابت با اسکرول
+    window.addEventListener('scroll', function() {
+        const activeScreen = document.querySelector('.screen.active');
+        if (!activeScreen) return;
+        
+        const fixedButtons = document.querySelectorAll('.fixed-back-button');
+        const scrollThreshold = 200;
+        
+        if (window.scrollY > scrollThreshold) {
+            fixedButtons.forEach(button => {
+                // فقط دکمه مربوط به صفحه فعال را نمایش بده
+                if (button.id.includes(activeScreen.id.replace('Screen', ''))) {
+                    button.classList.add('visible');
+                } else {
+                    button.classList.remove('visible');
+                }
+            });
+        } else {
+            // مخفی کردن همه دکمه‌ها در اسکرول کم
+            fixedButtons.forEach(button => {
+                button.classList.remove('visible');
+            });
+        }
+    });
 });
 
 // بررسی و تنظیم اولیه صفحه از هش URL

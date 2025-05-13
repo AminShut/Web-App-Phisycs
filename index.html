@@ -104,6 +104,10 @@
                         </a>
                     </div>
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToMainFromBooks">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
             
             <!-- About Us Screen -->
@@ -131,6 +135,10 @@
                         <p>این پروژه توسط دانشجویان دانشگاه تربیت دبیر شهید رجایی تهیه و ارائه شده است.</p>
                     </div>
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToMainFromAboutUs">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
 
             <!-- Questions Chapters Screen -->
@@ -147,6 +155,10 @@
                 <div class="chapter-list" id="questionsChaptersList">
                     <!-- Chapters will be dynamically generated here -->
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToMainFromQuestionsChapters">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
 
             <!-- Questions List Screen -->
@@ -187,10 +199,10 @@
                     <div class="question-navigation">
                         <button class="nav-button prev-button" id="prevQuestionBtn">
                             <span class="material-icons">arrow_back</span>
-                            <span>سوال بعدی</span>
+                            <span>سوال قبلی</span>
                         </button>
                         <button class="nav-button next-button" id="nextQuestionBtn">
-                            <span>سوال قبلی </span>
+                            <span>سوال بعدی </span>
                             <span class="material-icons">arrow_forward</span>
                         </button>
                     </div>
@@ -215,6 +227,10 @@
                 <div class="chapter-list" id="tutorialsChaptersList">
                     <!-- Chapters will be dynamically generated here -->
                 </div>
+                <!-- دکمه بازگشت ثابت -->
+                <button class="fixed-back-button" id="fixedBackToMainFromTutorialsChapters">
+                    <span class="material-icons">arrow_back</span>
+                </button>
             </div>
 
             <!-- Tutorial Detail Screen -->
@@ -235,10 +251,10 @@
                     <div class="tutorial-navigation">
                         <button class="nav-button prev-button" id="prevTutorialBtn">
                             <span class="material-icons">arrow_back</span>
-                            <span>آموزش بعدی</span>
+                            <span>آموزش قبلی</span>
                         </button>
                         <button class="nav-button next-button" id="nextTutorialBtn">
-                            <span>آموزش قبلی</span>
+                            <span>آموزش بعدی</span>
                             <span class="material-icons">arrow_forward</span>
                         </button>
                     </div>
@@ -352,6 +368,11 @@
                     if (backButton) {
                         backButton.click();
                     }
+                    // اسکرول به بالای صفحه
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
                 });
             });
             
