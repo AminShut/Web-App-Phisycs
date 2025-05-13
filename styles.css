@@ -139,37 +139,192 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* حذف کامل آیکون هدر */
-.app-header::after {
-    content: none;
-    display: none;
+/* آیکون اتم زیبا برای هدر */
+.atom-icon {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-style: preserve-3d;
+    perspective: 800px;
 }
 
-/* حذف انیمیشن فلوت هدر که دیگر مورد نیاز نیست */
-@keyframes floatHeaderIcon {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0); }
+.atom-core {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, var(--accent-color), #06b6d4);
+    border-radius: 50%;
+    z-index: 5;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.8);
+    animation: pulse-core 3s infinite ease-in-out;
 }
 
-/* Add app title to the header */
-.app-header::before {
-    content: "فیزیک هالیدی";
+@keyframes pulse-core {
+    0% { transform: scale(1); box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+    50% { transform: scale(1.2); box-shadow: 0 0 25px rgba(6, 182, 212, 0.9); }
+    100% { transform: scale(1); box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
+}
+
+.atom-orbit {
+    position: absolute;
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.orbit-1 {
+    width: 45px;
+    height: 28px;
+    transform: rotateX(65deg) rotateZ(0deg);
+    animation: rotate-orbit1 8s linear infinite;
+}
+
+.orbit-2 {
+    width: 30px;
+    height: 45px;
+    transform: rotateX(5deg) rotateY(65deg);
+    animation: rotate-orbit2 6s linear infinite;
+}
+
+.orbit-3 {
+    width: 38px;
+    height: 38px;
+    transform: rotateX(40deg) rotateY(40deg);
+    animation: rotate-orbit3 10s linear infinite;
+}
+
+.electron {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+    z-index: 4;
+}
+
+.electron-1 {
+    top: -3px;
+    left: calc(50% - 3px);
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.electron-2 {
+    bottom: -3px;
+    left: calc(50% - 3px);
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
+}
+
+.electron-3 {
+    top: calc(50% - 3px);
+    right: -3px;
+    background-color: var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+@keyframes rotate-orbit1 {
+    0% { transform: rotateX(65deg) rotateZ(0deg); }
+    100% { transform: rotateX(65deg) rotateZ(360deg); }
+}
+
+@keyframes rotate-orbit2 {
+    0% { transform: rotateX(5deg) rotateY(65deg) rotateZ(0deg); }
+    100% { transform: rotateX(5deg) rotateY(65deg) rotateZ(360deg); }
+}
+
+@keyframes rotate-orbit3 {
+    0% { transform: rotateX(40deg) rotateY(40deg) rotateZ(0deg); }
+    100% { transform: rotateX(40deg) rotateY(40deg) rotateZ(360deg); }
+}
+
+/* App title in header */
+.app-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--header-text);
-    display: flex;
-    align-items: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
 }
 
-/* Style university title in main header */
-.university-title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--header-text);
-    margin-top: 5px;
-    opacity: 0.9;
-    text-align: center;
+/* Mobile styles for atom icon */
+@media (max-width: 768px) {
+    .atom-icon {
+        width: 35px;
+        height: 35px;
+        margin-right: 10px;
+    }
+    
+    .atom-core {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .orbit-1 {
+        width: 35px;
+        height: 22px;
+    }
+    
+    .orbit-2 {
+        width: 22px;
+        height: 35px;
+    }
+    
+    .orbit-3 {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .electron {
+        width: 5px;
+        height: 5px;
+    }
+    
+    .app-title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .atom-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+    }
+    
+    .atom-core {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .orbit-1 {
+        width: 30px;
+        height: 18px;
+    }
+    
+    .orbit-2 {
+        width: 18px;
+        height: 30px;
+    }
+    
+    .orbit-3 {
+        width: 24px;
+        height: 24px;
+    }
+    
+    .electron {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .app-title {
+        font-size: 1.1rem;
+    }
 }
 
 /* Position theme toggle to the left */
@@ -254,61 +409,37 @@ body {
 .screen-header-container {
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     flex-wrap: nowrap;
     margin-bottom: 10px;
     position: sticky;
     top: 0;
     width: 100%;
-    gap: 15px;
+    gap: 20px;
     z-index: 90;
-    padding: 10px 0;
+    padding: 15px 20px;
     background-color: var(--background-color);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    border-radius: var(--border-radius);
     transition: all 0.3s ease;
 }
 
 /* بهبود استایل عنوان فصل */
-.screen-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 15px 5px 15px;
-    margin-bottom: 0;
-    font-size: 1.3rem;
-    color: var(--text-color);
-    position: relative;
-    overflow: visible;
-    border-bottom: none;
-    border-radius: var(--border-radius);
-    background: none;
-    box-shadow: none;
-    width: auto;
-    flex: 1;
-    max-width: 80%;
-    order: 1;
-    text-align: right;
-    min-height: 40px;
-    border-right: none;
-}
+
 
 /* حذف کلمه "فصل" از عنوان */
-.screen-title::before {
-    content: "";
-    display: none;
-}
+
 
 /* بهبود استایل دکمه بازگشت */
 .back-button {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: var(--text-light);
     border: none;
-    border-radius: 20px;
-    padding: 6px 16px;
+    border-radius: 10px;
+    padding: 6px 10px;
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 600;
@@ -320,9 +451,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 5px;
     flex-direction: row-reverse;
-    align-self: flex-end;
+    align-self: center;
     height: fit-content;
     z-index: 5;
     white-space: nowrap;
@@ -330,8 +461,7 @@ body {
     flex-shrink: 0;
     touch-action: manipulation;
     margin-bottom: 0;
-    bottom: 0;
-    max-width: 110px;
+    max-width: 100px;
     text-align: center;
 }
 
@@ -365,19 +495,7 @@ body {
 }
 
 /* Make RGB line have rounded top corners with slower animation */
-.screen-title::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
-    background-size: 800% 100%;
-    border-radius: 6px 6px 0 0;
-    animation: fullRainbow 10s linear infinite; /* Slowed down from 5s to 10s */
-    width: 100%;
-}
+
 
 .screen-title .material-icons {
     display: none;
@@ -418,36 +536,23 @@ body {
         gap: 5px;
         margin-bottom: 8px; /* کاهش فاصله در نمای موبایل */
         position: sticky;
-        top: 0;
+        top: 5px;
         z-index: 90;
-        padding: 8px 0;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        padding: 25px 10px;
+        backdrop-filter: blur(50px);
+        -webkit-backdrop-filter: blur(52px);
     }
     
-    .screen-title {
-        margin-top: 0;
-        margin-right: 0;
-        padding: 10px 15px 5px 15px;
-        font-size: 1.1rem;
-        max-width: 65%;
-        flex: none;
-        min-height: 40px;
-    }
+    
     
     .back-button {
         max-width: 100px; /* کاهش عرض دکمه در نمای موبایل */
         padding: 4px 10px; /* کاهش پدینگ در نمای موبایل */
         min-width: 80px;
+        align-self: center;
     }
     
-    #questionsListScreen .screen-title,
-    #tutorialDetailScreen .screen-title {
-        font-size: 1rem;
-        padding: 8px 10px;
-        min-height: 30px;
-        max-width: 60%;
-    }
+   
 }
 
 /* استایل برای آیکون هدر اصلی - دقیقاً وسط */
@@ -679,15 +784,12 @@ main {
 }
 
 .university-title {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--header-text);
     margin-top: 5px;
     opacity: 0.9;
     text-align: center;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    position: relative;
-    z-index: 5;
 }
 
 /* Main menu and action buttons */
@@ -1360,14 +1462,7 @@ main {
         align-items: flex-end;
     }
     
-    .screen-title {
-        margin-top: 0;
-        margin-right: 0;
-        width: auto;
-        max-width: 70%;
-        order: 1;
-        font-size: 1.2rem;
-    }
+    
     
     .back-button {
         margin-left: 0;
@@ -1480,7 +1575,7 @@ main {
     
     .question-navigation, .tutorial-navigation {
         flex-direction: row;
-        gap: 8px;
+        gap: 120px;
         justify-content: space-between;
     }
     
@@ -1641,30 +1736,30 @@ main {
     width: 50px;
     height: 50px;
     animation: rotate-c 10s linear infinite;
-}
-
-.electron {
+    }
+    
+    .electron {
     position: absolute;
     width: 8px;
     height: 8px;
     background-color: var(--text-light);
     border-radius: 50%;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-}
-
-.electron-1 {
+    }
+    
+    .electron-1 {
     top: 0;
     left: calc(50% - 4px);
     animation: orbit-1 8s linear infinite;
-}
-
-.electron-2 {
+    }
+    
+    .electron-2 {
     bottom: 16px;
     right: 8px;
     animation: orbit-2 6s linear infinite;
-}
-
-.electron-3 {
+    }
+    
+    .electron-3 {
     bottom: 16px;
     left: 8px;
     animation: orbit-3 10s linear infinite;
@@ -1931,7 +2026,7 @@ main {
 }
 
 .book-card h3 {
-    font-size: 1.3rem;
+        font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 10px;
     color: var(--text-color);
@@ -2309,7 +2404,7 @@ main {
 .prev-button span.material-icons {
     order: 1;
     margin: 0;
-    margin-right: 8px;
+        margin-right: 8px;
     transform: rotate(180deg);
 }
 
@@ -2377,28 +2472,6 @@ main {
 }
 
 /* بهبود استایل عنوان فصل */
-.screen-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px 15px 5px 15px;
-    margin-bottom: 0;
-    font-size: 1.3rem;
-    color: var(--text-color);
-    position: relative;
-    overflow: visible;
-    border-bottom: none;
-    border-radius: var(--border-radius);
-    background: none;
-    box-shadow: none;
-    width: auto;
-    flex: 1;
-    max-width: 80%;
-    order: 1;
-    text-align: right;
-    min-height: 40px;
-    border-right: none;
-}
 
 /* حذف کلمه "فصل" از عنوان */
 .screen-title::before {
@@ -2406,13 +2479,13 @@ main {
     display: none;
 }
 
-/* بهبود استایل عنوان فقط در صفحه نمایش سوالات یک فصل و صفحه نمایش آموزش یک فصل */
-#questionsListScreen .screen-title,
-#tutorialDetailScreen .screen-title {
+/* بهبود استایل عنوان در تمام صفحات */
+.screen-title {
     background: linear-gradient(145deg, var(--card-bg-1), var(--card-bg-2));
     box-shadow: var(--card-shadow);
     border-radius: var(--border-radius);
     border-right: 4px solid var(--primary-color);
+    border-bottom: 4px solid rgb(76, 0, 252);
     position: relative;
     padding: 10px 15px;
     color: var(--text-color);
@@ -2424,48 +2497,32 @@ main {
     margin-right: 5px;
     font-size: 1.2rem;
     min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#questionsListScreen .screen-title::after,
-#tutorialDetailScreen .screen-title::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-    border-radius: 0 0 var(--border-radius) var(--border-radius);
-}
-
-/* استایل‌های اصلی برای سایر صفحات */
+/* حذف استایل‌های متفاوت برای صفحات مختلف */
+#questionsListScreen .screen-title,
+#tutorialDetailScreen .screen-title,
 #questionsChaptersScreen .screen-title,
 #tutorialsChaptersScreen .screen-title,
 #aboutUsScreen .screen-title,
 #booksScreen .screen-title,
 #questionDetailScreen .screen-title {
-    background: none;
-    border-right: none;
-    box-shadow: none;
-    border-radius: 0;
+    background: linear-gradient(145deg, var(--card-bg-1), var(--card-bg-2));
+    border-right: 4px solid var(--primary-color);
+    box-shadow: var(--card-shadow);
+    border-radius: var(--border-radius);
 }
 
+/* حذف خط رنگین کمانی زیر عنوان‌ها */
 #questionsChaptersScreen .screen-title::after,
 #tutorialsChaptersScreen .screen-title::after,
 #aboutUsScreen .screen-title::after,
 #booksScreen .screen-title::after,
 #questionDetailScreen .screen-title::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
-    background-size: 800% 100%;
-    animation: fullRainbow 10s linear infinite;
-    width: 100%;
-    border-radius: 0;
+    display: none;
 }
 
 /* اصلاح عرض دکمه بازگشت در همه حالت‌ها */
@@ -2479,6 +2536,7 @@ main {
     position: relative;
     min-width: 100px;
     white-space: nowrap;
+    align-self: center;
 }
 
 /* دکمه بازگشت ثابت در گوشه پایین صفحه */
@@ -2515,6 +2573,19 @@ main {
 
 .fixed-back-button .material-icons {
     font-size: 1.5rem;
+}
+
+@media (max-width: 480px) {
+    .fixed-back-button {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    .fixed-back-button .material-icons {
+        font-size: 1.3rem;
+    }
 }
 
 /* استایل مودال ارتباط با ما */
@@ -2675,6 +2746,142 @@ main {
     
     .contact-info p {
         font-size: 0.85rem;
+    }
+}
+
+/* Mobile responsiveness adjustments */
+@media (max-width: 768px) {
+    .screen-title {
+        max-width: 65%;
+        font-size: 1.1rem;
+    }
+
+    .back-button {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+        order: 2;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        align-self: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .screen-title {
+        max-width: 60%;
+        font-size: 1rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header::before {
+        width: 35px;
+        height: 35px;
+        font-size: 1.4rem;
+        margin-right: 8px;
+    }
+    
+    .app-header::after {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .app-header::before {
+        width: 30px;
+        height: 30px;
+        font-size: 1.2rem;
+        margin-right: 6px;
+    }
+    
+    .app-header::after {
+        font-size: 1.1rem;
+    }
+}
+
+/* آیکون جدید فیزیک برای هدر */
+.physics-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.physics-icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent 70%);
+    pointer-events: none;
+}
+
+.formula {
+    color: white;
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    animation: glow 2s infinite alternate;
+}
+
+.formula sup {
+    font-size: 0.7rem;
+    position: relative;
+    top: -5px;
+    right: 1px;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px rgba(255, 255, 255, 0.7); }
+    to { text-shadow: 0 0 15px rgba(255, 255, 255, 1); }
+}
+
+/* Mobile styles for physics icon */
+@media (max-width: 768px) {
+    .physics-icon {
+        width: 38px;
+        height: 38px;
+        margin-right: 10px;
+    }
+    
+    .formula {
+        font-size: 0.9rem;
+    }
+    
+    .formula sup {
+        font-size: 0.6rem;
+        top: -4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .physics-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+    }
+    
+    .formula {
+        font-size: 0.8rem;
+    }
+    
+    .formula sup {
+        font-size: 0.5rem;
+        top: -3px;
     }
 }
 
