@@ -293,8 +293,8 @@ function updateNavigationButtons() {
     const nextQuestionBtn = document.getElementById('nextQuestionBtn');
     
     if (chapterQuestions.length > 0) {
-        prevQuestionBtn.disabled = currentQuestionIndex >= chapterQuestions.length - 1;
-        nextQuestionBtn.disabled = currentQuestionIndex <= 0;
+        prevQuestionBtn.disabled = currentQuestionIndex <= 0;
+        nextQuestionBtn.disabled = currentQuestionIndex >= chapterQuestions.length - 1;
     } else {
         prevQuestionBtn.disabled = true;
         nextQuestionBtn.disabled = true;
@@ -306,8 +306,8 @@ function updateTutorialNavigationButtons() {
     const nextTutorialBtn = document.getElementById('nextTutorialBtn');
     
     if (tutorialChapters.length > 0) {
-        prevTutorialBtn.disabled = currentTutorialIndex >= tutorialChapters.length - 1;
-        nextTutorialBtn.disabled = currentTutorialIndex <= 0;
+        prevTutorialBtn.disabled = currentTutorialIndex <= 0;
+        nextTutorialBtn.disabled = currentTutorialIndex >= tutorialChapters.length - 1;
     } else {
         prevTutorialBtn.disabled = true;
         nextTutorialBtn.disabled = true;
@@ -758,26 +758,26 @@ backToTutorialsChapters.addEventListener('click', () => {
 
 // Navigation buttons event listeners
 document.getElementById('prevQuestionBtn').addEventListener('click', () => {
-    if (currentQuestionIndex < chapterQuestions.length - 1) {
-        showQuestionDetails(chapterQuestions[currentQuestionIndex + 1], currentQuestionIndex + 1, currentChapter);
-    }
-});
-
-document.getElementById('nextQuestionBtn').addEventListener('click', () => {
     if (currentQuestionIndex > 0 && chapterQuestions.length > 0) {
         showQuestionDetails(chapterQuestions[currentQuestionIndex - 1], currentQuestionIndex - 1, currentChapter);
     }
 });
 
+document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+    if (currentQuestionIndex < chapterQuestions.length - 1) {
+        showQuestionDetails(chapterQuestions[currentQuestionIndex + 1], currentQuestionIndex + 1, currentChapter);
+    }
+});
+
 document.getElementById('prevTutorialBtn').addEventListener('click', () => {
-    if (currentTutorialIndex < tutorialChapters.length - 1) {
-        showTutorialDetails(tutorialChapters[currentTutorialIndex + 1], currentTutorialIndex + 1);
+    if (currentTutorialIndex > 0 && tutorialChapters.length > 0) {
+        showTutorialDetails(tutorialChapters[currentTutorialIndex - 1], currentTutorialIndex - 1);
     }
 });
 
 document.getElementById('nextTutorialBtn').addEventListener('click', () => {
-    if (currentTutorialIndex > 0 && tutorialChapters.length > 0) {
-        showTutorialDetails(tutorialChapters[currentTutorialIndex - 1], currentTutorialIndex - 1);
+    if (currentTutorialIndex < tutorialChapters.length - 1) {
+        showTutorialDetails(tutorialChapters[currentTutorialIndex + 1], currentTutorialIndex + 1);
     }
 });
 
